@@ -30,7 +30,7 @@ elixir(function(mix) {
     mix.copy("resources/assets/email_templates", "public/email_templates");
     mix.copy("resources/assets/font-awesome", "public/font-awesome");
     mix.copy("resources/assets/fonts", "public/fonts");
-    mix.copy("resources/img", "public/img");
+    mix.copy("resources/assets/img", "public/img");
     
     mix.copy("resources/assets/css/patterns", "public/css/patterns");
     mix.copy("resources/assets/css/plugins", "public/css/plugins");
