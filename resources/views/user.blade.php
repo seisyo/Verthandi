@@ -31,31 +31,50 @@
                     <div class="ibox float-e-margins">
                         <div class="ibox-content">
                             <div class="">
-                                <a onclick="fnClickAddRow();" href="javascript:void(0);" class="btn btn-primary ">新增使用者</a>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                                    ＋新增使用者
+                                </button>
+                                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title" id="myModalLabel">新增使用者</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                @include("component.modal_content")
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                                <button type="button" class="btn btn-primary">新增</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>序號</th>
-                                        <th>帳號</th>
-                                        <th>名稱</th>
-                                        <th>權限</th>
-                                        <th>操作</th>
+                                        <th class="col-sm-1">序號</th>
+                                        <th class="col-sm-2">帳號</th>
+                                        <th class="col-sm-2">名稱</th>
+                                        <th class="col-sm-1">權限</th>
+                                        <th class="col-sm-2">操作</th>
                                     </tr>
                                 </thead>
                                 @for($i = 0; $i < 10; $i++)
-                                    <tbody>
-                                        <tr>
-                                            <td>{{$i+1}}</td>
-                                            <td>seisyo{{$i+1}}</td>
-                                            <td>seisyo-{{$i+1}}號</td>
-                                            <td>1</td>
-                                            <td>
-                                                <button type="button" class="btn btn-w-m btn-default btn-sm">編輯</button>
-                                                <button type="button" class="btn btn-w-m btn-danger btn-sm">刪除</button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
+                                <tbody>
+                                    <tr>
+                                        <td>{{$i+1}}</td>
+                                        <td>seisyo{{$i+1}}</td>
+                                        <td>seisyo-{{$i+1}}號</td>
+                                        <td>1</td>
+                                        <td>
+                                            <button type="button" class="btn btn-default btn-sm">編輯</button>
+                                            <button type="button" class="btn btn-danger btn-sm">刪除</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
                                 @endfor
                             </table>
                         </div>
@@ -63,7 +82,7 @@
                 </div>
             </div>
         </div>
-        @include('component.footer')
+    @include('component.footer')
     </div>
 </body>
 
