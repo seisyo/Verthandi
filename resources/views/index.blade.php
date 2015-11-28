@@ -21,9 +21,13 @@
 
 </head>
 
-<body>
+<body class="pace-done">
     @include('component.left_navbar')
-    @include('component.top_navbar')
+    <div id="page-wrapper" class="gray-bg">
+        @include('component.top_navbar')
+        @include('component.footer')
+    </div>
 </body>
+
 
 </html>
