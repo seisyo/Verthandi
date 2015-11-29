@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>SITCON財務系統 | 使用者管理</title>
+    <title>SITCON財務系統 | 會計科目管理</title>
 
     <link href="css/all.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -30,19 +30,34 @@
                 <div class="col-lg-12">
                     <div class="ibox float-e-margins">
                         <div class="ibox-content">
-                            <div class="">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <select class="input-sm form-control input-s-sm inline">
+                                        <option value="資產">資產</option>
+                                        <option value="負債">負債</option>
+                                        <option value="餘絀">餘絀</option>
+                                        <option value="收益">收益</option>
+                                        <option value="費損">費損</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="input-group"><input type="text" placeholder="搜尋" class="input-sm form-control"> <span class="input-group-btn">
+                                        <button type="button" class="btn btn-sm btn-primary"> 搜尋</button> </span></div>
+                                </div>
+                            </div>
+                            <div>
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#adduser">
-                                    ＋新增使用者
+                                    ＋新增會計科目
                                 </button>
                                 <div class="modal fade" id="adduser">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                <h4 class="modal-title" id="myModalLabel">新增使用者</h4>
+                                                <h4 class="modal-title" id="myModalLabel">新增會計科目</h4>
                                             </div>
                                             <div class="modal-body">
-                                                @include("component.modal_content")
+                                                @include("component.modal_account")
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
@@ -55,20 +70,21 @@
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th class="col-sm-1">序號</th>
-                                        <th class="col-sm-2">帳號</th>
-                                        <th class="col-sm-2">名稱</th>
-                                        <th class="col-sm-1">權限</th>
+                                        <th class="col-sm-1">會計科目編號</th>
+                                        <th class="col-sm-2">會計要素</th>
+                                        <th class="col-sm-2">科目名稱</th>
+                                        <th class="col-sm-1">方向</th>
+                                        <th class="col-sm-2">備註</th>
                                         <th class="col-sm-2">操作</th>
                                     </tr>
                                 </thead>
-                                @for($i = 0; $i < 10; $i++)
                                 <tbody>
                                     <tr>
-                                        <td>{{$i+1}}</td>
-                                        <td>seisyo{{$i+1}}</td>
-                                        <td>seisyo-{{$i+1}}號</td>
-                                        <td>1</td>
+                                        <td>1001</td>
+                                        <td>資產</td>
+                                        <td>現金</td>
+                                        <td>借</td>
+                                        <td>---</td>
                                         <td>
                                             <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#edituser">編輯</button>
                                             <div class="modal fade" id="edituser">
@@ -76,10 +92,10 @@
                                                     <div class="modal-content">
                                                         <div class="modal-header">
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                            <h4 class="modal-title" id="myModalLabel">編輯使用者</h4>
+                                                            <h4 class="modal-title" id="myModalLabel">編輯會計科目</h4>
                                                         </div>
                                                         <div class="modal-body">
-                                                            @include("component.modal_content")
+                                                            @include("component.modal_account")
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
@@ -94,10 +110,10 @@
                                                     <div class="modal-content">
                                                         <div class="modal-header">
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                            <h4 class="modal-title" id="myModalLabel">刪除使用者</h4>
+                                                            <h4 class="modal-title" id="myModalLabel">刪除會計科目</h4>
                                                         </div>
                                                         <div class="modal-body">
-                                                            確定要刪除此使用者嗎？
+                                                            確定要刪除此會計科目嗎？
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
@@ -109,7 +125,6 @@
                                         </td>
                                     </tr>
                                 </tbody>
-                                @endfor
                             </table>
                         </div>
                     </div>
