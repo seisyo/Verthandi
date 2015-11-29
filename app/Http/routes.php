@@ -23,3 +23,6 @@ Route::get('/user', function () {
 Route::get('/account', function () {
     return view('account');
 });
+Route::get('/event_manage', function () {
+    return view('event_manage');
+});
