@@ -17,10 +17,10 @@
                     IN+
                 </div>
             </li>
-            <li class="active">
-                <a href=""><i class="fa fa-th-large"></i> <span class="nav-label">活動帳簿管理</span><span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level collapse in">
-                    <li class="active"><a href="index.html">SITCON2016</a></li>
+            <li class="">
+                <a href=""><i class="fa fa-th-large"></i><span class="nav-label">活動帳簿管理</span><span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+                    <li class=""><a href="index.html">SITCON2016</a></li>
                     <li><a href="">hackgen2015</a></li>
                     <li><a href="">SITCON2015</a></li>
                     <li><a href="">管理帳簿<span class="label label-primary pull-right">NEW</span></a></li>

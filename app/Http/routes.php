@@ -26,3 +26,14 @@ Route::get('/account', function () {
 Route::get('/event_manage', function () {
     return view('event_manage');
 });
+Route::get('/event', function () {
+    return view('event');
+});
+Route::get('/event_diary', function () {
+    return view('event_diary');
+});
+Route::get('/modal_trans', function () {
+    return view('component.modal_trans');
+});
+
+

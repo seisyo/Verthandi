@@ -27,11 +27,11 @@
         @include('component.top_navbar')
         <div class="wrapper wrapper-content animated fadeInRight">
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-md-12">
                     <div class="ibox float-e-margins">
                         <div class="ibox-content">
                             <div class="row">
-                                <div class="col-sm-3">
+                                <div class="col-md-3">
                                     <select class="input-sm form-control input-s-sm inline">
                                         <option value="資產">資產</option>
                                         <option value="負債">負債</option>
@@ -40,12 +40,12 @@
                                         <option value="費損">費損</option>
                                     </select>
                                 </div>
-                                <div class="col-sm-3">
+                                <div class="col-md-3">
                                     <div class="input-group"><input type="text" placeholder="搜尋" class="input-sm form-control"> <span class="input-group-btn">
                                         <button type="button" class="btn btn-sm btn-primary"> 搜尋</button> </span></div>
                                 </div>
                             </div>
-                            <div>
+                            <div class="">
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#adduser">
                                     ＋新增會計科目
                                 </button>
