@@ -1,6 +1,4 @@
-@extends('component.layout')
-
-@section('title', '首頁')
+@extends('component.layout', ['title' => '首頁'])
 
 {{-- Custom css section --}}
 @section('custom_css')
