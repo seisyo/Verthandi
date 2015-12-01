@@ -17,7 +17,7 @@ elixir(function(mix) {
         "animate.css",
         "bootstrap.css",
         "style.css"
-    ], "public/css");
+    ], "public/assets/css");
 
     mix.scripts([
         "jquery-2.1.1.js",
@@ -25,15 +25,15 @@ elixir(function(mix) {
         "inspinia.js",
         "jquery-ui-1.10.4.min.js",
         "jquery-ui.custom.min.js"
-    ], "public/js");
+    ], "public/assets/js");
 
-    // mix.copy("resources/assets/email_templates", "public/email_templates");
-    mix.copy("resources/assets/font-awesome", "public/font-awesome");
-    mix.copy("resources/assets/fonts", "public/fonts");
-    mix.copy("resources/assets/img", "public/img");
+    // mix.copy("resources/assets/email_templates", "public/assets/email_templates");
+    mix.copy("resources/assets/font-awesome", "public/assets/font-awesome");
+    mix.copy("resources/assets/fonts", "public/assets/fonts");
+    mix.copy("resources/assets/img", "public/assets/img");
     
-    mix.copy("resources/assets/css/patterns", "public/css/patterns");
-    mix.copy("resources/assets/css/plugins", "public/css/plugins");
+    mix.copy("resources/assets/css/patterns", "public/cassets/ss/patterns");
+    mix.copy("resources/assets/css/plugins", "public/assets/css/plugins");
     
-    mix.copy("resources/assets/js/plugins", "public/js/plugins");
+    mix.copy("resources/assets/js/plugins", "public/assets/js/plugins");
 });
