@@ -1,33 +1,3 @@
-<!DOCTYPE html>
-<html>
+@extends('component.layout')
 
-<head>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>SITCON財務系統 | 首頁</title>
-
-    <link href="css/all.css" rel="stylesheet">
-    <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
-
-    <!-- Mainly scripts -->
-    <script src="js/all.js"></script>
-    <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
-    <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-
-    <!-- Custom and plugin javascript -->
-    <script src="js/plugins/pace/pace.min.js"></script>
-
-</head>
-
-<body class="pace-done">
-    @include('component.left_navbar')
-    <div id="page-wrapper" class="gray-bg">
-        @include('component.top_navbar')
-        @include('component.footer')
-    </div>
-</body>
-
-
-</html>
+@section('title', '首頁')
