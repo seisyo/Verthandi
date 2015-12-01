@@ -27,7 +27,7 @@ elixir(function(mix) {
         "jquery-ui.custom.min.js"
     ], "public/js");
 
-    mix.copy("resources/assets/email_templates", "public/email_templates");
+    // mix.copy("resources/assets/email_templates", "public/email_templates");
     mix.copy("resources/assets/font-awesome", "public/font-awesome");
     mix.copy("resources/assets/fonts", "public/fonts");
     mix.copy("resources/assets/img", "public/img");
