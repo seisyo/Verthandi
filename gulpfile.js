@@ -32,7 +32,7 @@ elixir(function(mix) {
     mix.copy("resources/assets/fonts", "public/assets/fonts");
     mix.copy("resources/assets/img", "public/assets/img");
     
-    mix.copy("resources/assets/css/patterns", "public/assets/ss/patterns");
+    mix.copy("resources/assets/css/patterns", "public/assets/css/patterns");
     mix.copy("resources/assets/css/plugins", "public/assets/css/plugins");
     
     mix.copy("resources/assets/js/plugins", "public/assets/js/plugins");
