@@ -3,3 +3,9 @@
 Homestead.yaml
 Homestead.json
 .env
+/public/css
+/public/email_templates
+/public/font-awesome
+/public/fonts
+/public/img
+/public/js
