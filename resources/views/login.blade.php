@@ -18,7 +18,7 @@
                         <input type="password" class="form-control" placeholder="密碼" required="">
                     </div>
 
-                    <button type="submit" class="btn btn-primary block full-width m-b">登入</button>
+                    <button type="submit" class="btn btn-primary block full-width m-b"><a href="{{url('/')}}"}}>登入</a></button>
 
                     <a href="#"><small>忘記密碼?</small></a>
                 </form>

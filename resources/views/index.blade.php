@@ -2,6 +2,7 @@
 
 {{-- Custom css section --}}
 @section('custom_css')
+
 @endsection
 
 {{-- Custom js section --}}
@@ -16,8 +17,9 @@
 
 {{-- Breadcrumb section --}}
 @section('breadcrumb')
+<h2>首頁</h2>
 <li>
-    <a href="{{url('')}}">首頁</a>
+    <a href="{{url('/')}}">/首頁</a>
 </li>
 @endsection
 

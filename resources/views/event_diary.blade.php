@@ -1,12 +1,13 @@
-@extends('component.layout', ['title' => 'SITCON 2015'])
+@extends('component.layout', ['title' => 'SITCON 2016'])
 
 {{-- Custom css section --}}
 @section('custom_css')
+    @parent
 @endsection
 
 {{-- Custom js section --}}
 @section('custom_js')
-
+    @parent
 @endsection
 
 {{-- Sidebar default/event --}}
@@ -16,14 +17,17 @@
 
 {{-- Breadcrumb section --}}
 @section('breadcrumb')
+<h2>
+    SITCON 2016
+</h2>
 <li>
-    <a href="{{url('')}}">首頁</a>
+    <a href="{{url('/')}}">首頁</a>
 </li>
 <li>
-    <a>活動帳簿</a>
+    <a>活動帳簿管理</a>
 </li>
 <li>
-    <a>SITCON2016</a>
+    <a>SITCON 2016</a>
 </li>
 <li>
     <a>日記簿</a>
@@ -38,7 +42,6 @@
                 <div class="ibox-title">
                     <div class="row">
                         <div class="col-md-12">
-                            <!-- ？？不知道為什麼有row和沒row邊際有差 -->
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#adduser">
                                 ＋新增交易分錄
                             </button>
@@ -62,6 +65,7 @@
                                     </div>
                                 </div>
                             </div>
+                            <!-- modal end -->
                         </div>
 
                     </div>
@@ -116,7 +120,7 @@
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                                                            <button type="button" class="btn btn-success">確定修改</button>
+                                                            <button type="button" class="btn btn-primary">確定修改</button>
                                                         </div>
                                                     </div>
                                                 </div>

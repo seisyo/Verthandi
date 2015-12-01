@@ -2,24 +2,43 @@
 
 {{-- Custom css section --}}
 @section('custom_css')
+    @parent
 @endsection
 
 {{-- Custom js section --}}
 @section('custom_js')
+    @parent
+@endsection
+
+{{-- Sidebar default/event --}}
+@section('sidebar')
+    @parent
+@endsection
+
+{{-- Breadcrumb section --}}
+@section('breadcrumb')
+<h2>使用者管理</h2>
+<li>
+    <a href="{{url('/')}}">/首頁</a>
+</li>
+<li>
+    <a href="{{url('/account')}}">/使用者管理</a>
+</li>
 
 @endsection
 
 {{-- Content section --}}
 @section('content')
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-md-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-content">
                     <div class="row">
-                        <div class="col-sm-1">
+                        <div class="col-md-2">
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#adduser">
                                 ＋新增使用者
                             </button>
+                            
                             <div class="modal fade" id="adduser">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
@@ -37,11 +56,12 @@
                                     </div>
                                 </div>
                             </div>
+                            <!-- modal end -->
                         </div>
-                        <!-- <div class="col-sm-3">
+                        <div class="col-md-3 pull-right">
                             <div class="input-group"><input type="text" placeholder="搜尋" class="input-sm form-control"> <span class="input-group-btn">
                                 <button type="button" class="btn btn-sm btn-primary"> 搜尋</button> </span></div>
-                        </div> -->
+                        </div>
                     </div>
                     
                     <table class="table table-bordered">
@@ -75,7 +95,7 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                                                    <button type="button" class="btn btn-success">確定修改</button>
+                                                    <button type="button" class="btn btn-primary">確定修改</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -99,7 +119,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    {{-- modal end --}}
+                                    <!-- modal end -->
                                 </td>
                             </tr>
                         </tbody>
