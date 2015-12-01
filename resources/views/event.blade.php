@@ -1,31 +1,25 @@
-<!DOCTYPE html>
-<html>
+@extends('component.layout', ['title' => 'SITCON 2015'])
 
-<head>
+{{-- Custom css section --}}
+@section('custom_css')
+@endsection
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{{-- Custom js section --}}
+@section('custom_js')
 
-    <title>SITCON財務系統 | 首頁</title>
+@endsection
 
-    <link href="css/all.css" rel="stylesheet">
-    <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+{{-- Sidebar default/event --}}
+@section('sidebar')
+    @include('component.navbar.event')
+@endsection
 
-    <!-- Mainly scripts -->
-    <script src="js/all.js"></script>
-    <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
-    <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+{{-- Breadcrumb section --}}
+@section('breadcrumb')
 
-    <!-- Custom and plugin javascript -->
-    <script src="js/plugins/pace/pace.min.js"></script>
+@endsection
 
-</head>
-
-<body class="pace-done">
-    @include('component.event_left_navbar')
-    <div id="page-wrapper" class="gray-bg">
-        @include('component.top_navbar')
-        @include('component.footer')
-    </div>
-</body>
-</html>
+{{-- Content section --}}
+@section('content')
+    
+@endsection
