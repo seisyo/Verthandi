@@ -6,6 +6,7 @@
 
 {{-- Custom js section --}}
 @section('custom_js')
+
 @endsection
 
 {{-- Content section --}}
