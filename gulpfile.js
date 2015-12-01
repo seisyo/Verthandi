@@ -35,6 +35,5 @@ elixir(function(mix) {
     mix.copy("resources/assets/css/patterns", "public/css/patterns");
     mix.copy("resources/assets/css/plugins", "public/css/plugins");
     
-    mix.copy("resources/assets/js/demo", "public/js/demo");
     mix.copy("resources/assets/js/plugins", "public/js/plugins");
 });
