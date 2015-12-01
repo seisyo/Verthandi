@@ -31,6 +31,11 @@
 
     <div id="page-wrapper" class="gray-bg">
         @include('component.navbar.top')
+        
+        <div class="wrapper wrapper-content">
+            @yield('content')    
+        </div>
+        
         @include('component.footer')
     </div>
 </body>
