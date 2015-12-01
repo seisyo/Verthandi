@@ -9,6 +9,18 @@
 
 @endsection
 
+{{-- Sidebar default/event --}}
+@section('sidebar')
+    @parent
+@endsection
+
+{{-- Breadcrumb section --}}
+@section('breadcrumb')
+<li>
+    <a href="{{url('')}}">首頁</a>
+</li>
+@endsection
+
 {{-- Content section --}}
 @section('content')
     
