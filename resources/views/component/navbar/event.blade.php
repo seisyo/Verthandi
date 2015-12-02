@@ -24,7 +24,7 @@
                 </div>
             </li>
             <li class="active">
-                <a href=""><span class="nav-label">SITCON 2016</span></a>
+                <a href="/event"><span class="nav-label">SITCON 2016</span></a>
             </li>
             <li class="">
                 <a href="/event_diary"><span class="nav-label"><i class="fa fa-th-large"></i>日記簿</span> </a>

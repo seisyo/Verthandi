@@ -18,6 +18,9 @@
                 </div>
             </li>
             <li class="">
+                <a href="/event_manage"><i class="fa fa-th-large"></i> <span class="nav-label">活動帳簿管理</span> </a>
+            </li>
+            <!-- <li class="">
                 <a href=""><i class="fa fa-th-large"></i><span class="nav-label">活動帳簿管理</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
                     <li class="{{url('/event')}}"><a href="{{url('/event')}}">SITCON 2016</a></li>
@@ -25,7 +28,7 @@
                     <li><a href="">SITCON2015</a></li>
                     <li><a href="{{url('/event_manage')}}">管理帳簿<span class="label label-primary pull-right">NEW</span></a></li>
                 </ul>
-            </li>
+            </li> -->
             <li class="">
                 <a href="/"><i class="fa fa-th-large"></i> <span class="nav-label">報表輸出</span> </a>
             </li>

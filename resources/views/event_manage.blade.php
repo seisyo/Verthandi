@@ -18,13 +18,13 @@
 @section('breadcrumb')
 <h2>管理帳簿</h2>
 <li>
-    <a href="{{url('/')}}">/首頁</a>
+    <a href="{{url('/')}}">首頁</a>
 </li>
 <li>
-    <a href="{{url('/account')}}">/活動帳簿管理</a>
+    <a href="{{url('/account')}}">活動帳簿管理</a>
 </li>
 <li>
-    <a href="{{url('/account')}}">/管理帳簿</a>
+    <a href="{{url('/account')}}">管理帳簿</a>
 </li>
 
 @endsection
