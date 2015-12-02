@@ -61,7 +61,8 @@
                 $('#debit_account').attr("id", "debit_account"+debit_count);
                 $('#debit_delbtn').attr("id", "debit_account"+debit_count);
             });
-            $('[id^=debit_delbtn]').on("click", function(){
+            
+            $('#account_row_debit').on('click', '.btn-danger',function(){
               $(this).parent().parent().remove();
               credit_count = credit_count - 1;
             });
@@ -96,16 +97,15 @@
             
             <script>
             $('#credit_addbtn').click(function(){
-                $('#account_row_credit').append('<div class="row"><div class="form-group col-md-6"><input type="text" class="form-control" placeholder="會計科目"></div><div class="form-group col-md-4"><input type="text" class="form-control" placeholder="金額"></div><div class="col-md-2"><button type="button" class="btn btn-outline btn-danger" id="credit_delbtn">-</button></div></div>');
+                $('#account_row_credit').append('<div class="row" id="credit_account"><div class="form-group col-md-6"><input type="text" class="form-control" placeholder="會計科目"></div><div class="form-group col-md-4"><input type="text" class="form-control" placeholder="金額"></div><div class="col-md-2"><button type="button" class="btn btn-outline btn-danger" id="credit_delbtn">-</button></div></div>');
                 credit_count = credit_count + 1;
                 $('#credit_account').attr("id", "credit_account"+credit_count);
                 $('#credit_delbtn').attr("id", "credit_delbtn"+credit_count);
             });
-            $('[id^=credit_delbtn]').on("click",function(){
-                $(this).parent().parent().remove();
-                credit_count = credit_count - 1;
+            $('#account_row_credit').on('click', '.btn-danger',function(){
+              $(this).parent().parent().remove();
+              credit_count = credit_count - 1;
             });
-            $(this)
             </script>
 
         </div>
