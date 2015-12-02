@@ -91,6 +91,8 @@
                                         <td>---</td>
                                         <td>
                                             <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#viewtrans">預覽</button>
+                                            
+                                            <!-- modal start -->
                                             <div class="modal fade" id="viewtrans">
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
@@ -107,9 +109,11 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <!-- modal end -->
                                             
                                             <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#edittrans">編輯</button>
                                             
+                                            <!-- modal start -->
                                             <div class="modal fade" id="edittrans">
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
@@ -118,7 +122,7 @@
                                                             <h4 class="modal-title" id="myModalLabel">編輯交易分錄</h4>
                                                         </div>
                                                         <div class="modal-body">
-                                                            
+                                                            <!-- @include('component.modal.transaction') -->
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
@@ -129,8 +133,9 @@
                                             </div>
                                             <!-- modal end -->
 
-
                                             <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deletetrans">刪除</button>
+                                            
+                                            <!-- modal start -->
                                             <div class="modal fade" id="deletetrans">
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
@@ -148,6 +153,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <!-- modal end -->
                                         </td>
                                     </tr>
                                 </tbody>
