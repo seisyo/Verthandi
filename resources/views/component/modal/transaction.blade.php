@@ -34,13 +34,13 @@
 
             <div class="row">
                 <div class="col-md-1">
-                    <button type="button" class="btn btn-outline btn-default" id="addbtn1">
+                    <button type="button" class="btn btn-outline btn-default" id="debit_addbtn">
                         ＋
                     </button>
                 </div>
             </div>
 
-            <div class="row" id="account1">
+            <div class="row" id="debit_account1">
                 <div class="form-group col-md-6">
                     <input type="text" class="form-control" placeholder="會計科目">
                 </div>
@@ -48,21 +48,22 @@
                     <input type="text" class="form-control" placeholder="金額">
                 </div>
                 <div class="col-md-2">
-                    <button type="button" class="btn btn-outline btn-danger" id="delbtn1">
+                    <button type="button" class="btn btn-outline btn-danger" id="debit_delbtn1">
                         -
                     </button>
                 </div>
             </div>
             
             <script>
-            $('#addbtn1').click(function(){
-                $('#account_row_debit').append('<div class="row" id="account"><div class="form-group col-md-6"><input type="text" class="form-control" placeholder="會計科目"></div><div class="form-group col-md-4"><input type="text" class="form-control" placeholder="金額"></div><div class="col-md-2"><button type="button" class="btn btn-outline btn-danger" id="delbtn1">-</button></div></div>');
+            $('#debit_addbtn').click(function(){
+                $('#account_row_debit').append('<div class="row" id="debit_account"><div class="form-group col-md-6"><input type="text" class="form-control" placeholder="會計科目"></div><div class="form-group col-md-4"><input type="text" class="form-control" placeholder="金額"></div><div class="col-md-2"><button type="button" class="btn btn-outline btn-danger" id="debit_delbtn">-</button></div></div>');
                 debit_count = debit_count + 1;
-                $('#account').attr("id", "account"+debit_count);
+                $('#debit_account').attr("id", "debit_account"+debit_count);
+                $('#debit_delbtn').attr("id", "debit_account"+debit_count);
             });
-            $('delbtn1').click(function(){
-                $('.row').remove();
-                debit_count = debit_count - 1;
+            $('[id^=debit_delbtn]').on("click", function(){
+              $(this).parent().parent().remove();
+              credit_count = credit_count - 1;
             });
             </script>
 
@@ -73,13 +74,13 @@
             
             <div class="row">
                 <div class="col-md-1">
-                    <button type="button" class="btn btn-outline btn-default" id="addbtn2">
+                    <button type="button" class="btn btn-outline btn-default" id="credit_addbtn">
                         ＋
                     </button>
                 </div>
             </div>
             
-            <div class="row" id="account1">
+            <div class="row" id="credit_account1">
                 <div class="form-group col-md-6">
                     <input type="text" class="form-control" placeholder="會計科目">
                 </div>
@@ -87,21 +88,24 @@
                     <input type="text" class="form-control" placeholder="金額">
                 </div>
                 <div class="col-md-2">
-                    <button type="button" class="btn btn-outline btn-danger" id="delbtn2">
+                    <button type="button" class="btn btn-outline btn-danger" id="credit_delbtn1">
                         -
                     </button>
                 </div>
             </div>
             
             <script>
-            $('#addbtn2').click(function(){
-                $('#account_row_credit').append('<div class="row" id="account"><div class="form-group col-md-6"><input type="text" class="form-control" placeholder="會計科目"></div><div class="form-group col-md-4"><input type="text" class="form-control" placeholder="金額"></div><div class="col-md-2"><button type="button" class="btn btn-outline btn-danger" id="delbtn2">-</button></div></div>');
+            $('#credit_addbtn').click(function(){
+                $('#account_row_credit').append('<div class="row"><div class="form-group col-md-6"><input type="text" class="form-control" placeholder="會計科目"></div><div class="form-group col-md-4"><input type="text" class="form-control" placeholder="金額"></div><div class="col-md-2"><button type="button" class="btn btn-outline btn-danger" id="credit_delbtn">-</button></div></div>');
                 credit_count = credit_count + 1;
-                $('#account').attr("id", "account"+credit_count);
+                $('#credit_account').attr("id", "credit_account"+credit_count);
+                $('#credit_delbtn').attr("id", "credit_delbtn"+credit_count);
             });
-            $('delbtn2').click(function(){
-                $(".row").remove();
+            $('[id^=credit_delbtn]').on("click",function(){
+                $(this).parent().parent().remove();
+                credit_count = credit_count - 1;
             });
+            $(this)
             </script>
 
         </div>
