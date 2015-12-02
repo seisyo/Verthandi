@@ -2,6 +2,7 @@
 
 {{-- Custom css section --}}
 @section('custom_css')
+
 @endsection
 
 {{-- Custom js section --}}

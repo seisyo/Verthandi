@@ -1,9 +1,13 @@
 <div class="col-md-12">
     <div class="row">
         <div class="col-md-12">
-            <div class="form-group">
+            <div class="form-group" id="sandbox-container">
                 <label>日期</label>
-                <input type="text" class="form-control">
+                <input type="text" class="form-control"> 
+                <!-- <input type="text" class="form-control"> -->
+                <script>
+                    $('#sandbox-container input').datepicker({});
+                </script>
             </div>
             <div class="form-group">
                 <label>交易內容</label>

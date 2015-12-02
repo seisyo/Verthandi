@@ -3,11 +3,13 @@
 {{-- Custom css section --}}
 @section('custom_css')
     @parent
+    <link rel="stylesheet" href="{{url('assets/css/bootstrap-datepicker3.css')}}">
 @endsection
 
 {{-- Custom js section --}}
 @section('custom_js')
     @parent
+    <script src="{{url('assets/js/bootstrap-datepicker.js')}}"></script>
 @endsection
 
 {{-- Sidebar default/event --}}
