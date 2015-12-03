@@ -83,12 +83,12 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th class="col-sm-1">會計科目編號</th>
-                                    <th class="col-sm-2">會計要素</th>
-                                    <th class="col-sm-2">科目名稱</th>
-                                    <th class="col-sm-1">方向</th>
-                                    <th class="col-sm-2">備註</th>
-                                    <th class="col-sm-2">操作</th>
+                                    <th class="col-md-1">會計科目編號</th>
+                                    <th class="col-md-2">會計要素</th>
+                                    <th class="col-md-2">科目名稱</th>
+                                    <th class="col-md-1">方向</th>
+                                    <th class="col-md-2">備註</th>
+                                    <th class="col-md-2">操作</th>
                                 </tr>
                             </thead>
                             <tbody>
