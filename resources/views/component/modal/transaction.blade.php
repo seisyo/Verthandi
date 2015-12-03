@@ -3,7 +3,7 @@
         <div class="col-md-12">
 
             <div class="form-group" id="sandbox-container">
-                <label>日期</label>
+                <label>交易日期</label>
                 <input type="text" class="form-control"> 
                 <script>
                 $('#sandbox-container input').datepicker({});
@@ -12,6 +12,11 @@
             
             <div class="form-group">
                 <label>交易內容</label>
+                <input type="text" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label>經手人</label>
                 <input type="text" class="form-control">
             </div>
             
