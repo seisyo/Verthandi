@@ -21,10 +21,7 @@
     <a href="{{url('/')}}">首頁</a>
 </li>
 <li>
-    <a href="{{url('/account')}}">活動帳簿管理</a>
-</li>
-<li>
-    <a href="{{url('/account')}}">管理帳簿</a>
+    <a href="{{url('/event_manage')}}">活動帳簿管理</a>
 </li>
 
 @endsection

@@ -30,7 +30,7 @@
                 <a href="/event_diary"><span class="nav-label"><i class="fa fa-th-large"></i>日記簿</span> </a>
             </li>
             <li class="">
-                <a href="/event"><span class="nav-label"><i class="fa fa-th-large"></i>分類帳</span> </a>
+                <a href="/event_ledger"><span class="nav-label"><i class="fa fa-th-large"></i>分類帳</span> </a>
             </li>
         </ul>
     </div>  

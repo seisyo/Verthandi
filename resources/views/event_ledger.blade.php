@@ -28,6 +28,9 @@
 <li>
     <a href="{{url('/event')}}">SITCON 2016</a>
 </li>
+<li>
+    <a href="{{url('/event_ledger')}}">分類帳</a>
+</li>
 @endsection
 
 {{-- Content section --}}

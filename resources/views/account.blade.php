@@ -32,7 +32,7 @@
 <div class="row">
     <div class="col-md-12">
         <div class="ibox float-e-margins">
-            <div class="ibox-content">
+            <div class="ibox-title">
                 <div class="row">
                     <div class="col-md-1">
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#adduser">
@@ -75,7 +75,9 @@
                             <option value="費損">費損</option>
                         </select>
                     </div>
-                </div>
+                </div>          
+            </div>
+            <div class="ibox-content">
                 <div class="row">
                     <div class="col-md-12">
                         <table class="table table-bordered">
