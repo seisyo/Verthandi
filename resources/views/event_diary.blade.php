@@ -27,7 +27,7 @@ $(document).ready(function() {
 {{-- Breadcrumb section --}}
 @section('breadcrumb')
 <h2>
-    SITCON 2016
+    SITCON 2016 日記簿
 </h2>
 <li>
     <a href="{{url('/')}}">首頁</a>

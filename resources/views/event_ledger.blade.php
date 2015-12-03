@@ -17,7 +17,7 @@
 {{-- Breadcrumb section --}}
 @section('breadcrumb')
 <h2>
-    SITCON 2016
+    SITCON 2016 分類帳
 </h2>
 <li>
     <a href="{{url('/')}}">首頁</a>
@@ -99,17 +99,21 @@
                                     <td>---</td>
                                     <td>
                                         
-                                        <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#edituser">編輯</button>
+                                        <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#edituser">
+                                            編輯
+                                        </button>
                                         
                                         <div class="modal fade" id="edituser">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                        <h4 class="modal-title" id="myModalLabel">編輯會計科目</h4>
+                                                        <h4 class="modal-title" id="myModalLabel">編輯交易分錄</h4>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <!-- @include("component.modal.account") -->
+                                                        <div class="row">
+                                                            @include("component.modal.transaction")
+                                                        </div>
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
