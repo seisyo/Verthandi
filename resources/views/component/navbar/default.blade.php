@@ -10,7 +10,7 @@
                     <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">Seisyo Hsu</strong>
                      </span> <span class="text-muted text-xs block">財務組系統開發者 <b class="caret"></b></span> </span> </a>
                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                        <li><a href="#">登出</a></li>
+                        <li><a href="/login">登出</a></li>
                     </ul>
                 </div>
                 <div class="logo-element">

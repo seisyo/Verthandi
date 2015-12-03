@@ -2,11 +2,12 @@
 
 {{-- Custom css section --}}
 @section('custom_css')
+<link rel="stylesheet" href="{{url('assets/css/bootstrap-datepicker3.css')}}">
 @endsection
 
 {{-- Custom js section --}}
 @section('custom_js')
-
+<script src="{{url('assets/js/bootstrap-datepicker.js')}}"></script>
 @endsection
 
 {{-- Sidebar default/event --}}
@@ -82,7 +83,8 @@
                                 <tr>
                                     <th class="col-md-1">序號</th>
                                     <th class="">活動名稱</th>
-                                    <th class="col-md-2">創建日</th>
+                                    <th class="col-md-2">創建日期</th>
+                                    <th class="col-md-2">活動日期</th>
                                     <th class="col-md-2">操作</th>
                                 </tr>
                             </thead>
@@ -92,6 +94,7 @@
                                     <td>{{$i+1}}</td>
                                     <td>SITCON2016</td>
                                     <td>2015-11-29</td>
+                                    <td>2016-2-27</td>
                                     <td>
                                         <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#edituser">編輯</button>
 
