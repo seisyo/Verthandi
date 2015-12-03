@@ -10,7 +10,9 @@
         </div>
         <ul class="nav navbar-top-links navbar-right">
             <li>
-                <a href="/">首頁</a>
+                <a href="/">
+                    <i class="fa fa-home"></i>首頁
+                </a>
             </li>
             <li class="dropdown">
                     
