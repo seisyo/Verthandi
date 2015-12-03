@@ -19,10 +19,10 @@
 @section('breadcrumb')
 <h2>使用者管理</h2>
 <li>
-    <a href="{{url('/')}}">/首頁</a>
+    <a href="{{url('/')}}">首頁</a>
 </li>
 <li>
-    <a href="{{url('/account')}}">/使用者管理</a>
+    <a href="{{url('/account')}}">使用者管理</a>
 </li>
 
 @endsection

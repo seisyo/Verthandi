@@ -2,14 +2,14 @@
 
 {{-- Custom css section --}}
 @section('custom_css')
-<link rel="stylesheet" href="{{url('assets/css/bootstrap-datepicker3.css')}}">
+<link href="{{url('assets/css/plugins/datapicker/datepicker3.css')}}" rel="stylesheet">
 <link href="{{url('assets/css/plugins/footable/footable.core.css')}}" rel="stylesheet">
 
 @endsection
 
 {{-- Custom js section --}}
 @section('custom_js')
-<script src="{{url('assets/js/bootstrap-datepicker.js')}}"></script>
+<script src="{{url('assets/js/plugins/datapicker/bootstrap-datepicker.js')}}"></script>
 <script src="{{url('assets/js/plugins/footable/footable.all.min.js')}}"></script>
 
 <script>

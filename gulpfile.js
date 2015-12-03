@@ -36,7 +36,4 @@ elixir(function(mix) {
     mix.copy("resources/assets/css/plugins", "public/assets/css/plugins");
     
     mix.copy("resources/assets/js/plugins", "public/assets/js/plugins");
-    // mix datetimepicker
-    mix.copy("resources/assets/js/bootstrap-datepicker.js", "public/assets/js/bootstrap-datepicker.js");
-    mix.copy("resources/assets/css/bootstrap-datepicker3.css", "public/assets/css/bootstrap-datepicker3.css");
 });
