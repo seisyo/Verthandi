@@ -12,7 +12,7 @@
 
 {{-- Sidebar default/event --}}
 @section('sidebar')
-@include('component.navbar.default')
+    @include('component.navbar.default')
 @endsection
 
 {{-- Breadcrumb section --}}
@@ -24,7 +24,6 @@
 <li>
     <a href="{{url('/account')}}">會計科目管理</a>
 </li>
-
 @endsection
 
 {{-- Content section --}}
@@ -32,8 +31,11 @@
 <div class="row">
     <div class="col-md-12">
         <div class="ibox float-e-margins">
+            
             <div class="ibox-title">
+                
                 <div class="row">
+                    
                     <div class="col-md-1">
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#adduser">
                             ＋新增會計科目
@@ -58,6 +60,7 @@
                         </div>
                         <!-- modal end -->
                     </div>
+
                     <div class="col-md-3 pull-right">
                         <div class="input-group">
                             <input type="text" placeholder="搜尋" class="input-sm form-control">
@@ -66,6 +69,7 @@
                             </span>
                         </div>
                     </div>
+
                     <div class="col-md-3 pull-right">
                         <select class="form-control">
                             <option value="資產">資產</option>
@@ -75,17 +79,22 @@
                             <option value="費損">費損</option>
                         </select>
                     </div>
+                
                 </div>          
+            
             </div>
+            
             <div class="ibox-content">
+                
                 <div class="row">
+                    
                     <div class="col-md-12">
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th class="col-md-1">會計科目編號</th>
                                     <th class="col-md-2">會計要素</th>
-                                    <th class="col-md-2">科目名稱</th>
+                                    <th class="">科目名稱</th>
                                     <th class="col-md-1">方向</th>
                                     <th class="col-md-2">備註</th>
                                     <th class="col-md-2">操作</th>
@@ -99,7 +108,9 @@
                                     <td>借</td>
                                     <td>---</td>
                                     <td>
+                                        
                                         <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#edituser">編輯</button>
+                                        
                                         <div class="modal fade" id="edituser">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
@@ -117,6 +128,7 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <!-- modal end -->
                                         <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteuser">刪除</button>
 
                                         <div class="modal fade" id="deleteuser">

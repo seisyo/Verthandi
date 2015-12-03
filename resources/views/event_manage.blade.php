@@ -29,11 +29,14 @@
 {{-- Content section --}}
 @section('content')
 <div class="row">
-    <div class="col-lg-12">
+    <div class="col-md-12">
         <div class="ibox float-e-margins">
-            <div class="ibox-content">
+            
+            <div class="ibox-title">
                 <div class="row">
-                    <div class="col-sm-1">
+                    
+                    <div class="col-md-1">
+                        
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#adduser">
                             ＋新增活動帳簿
                         </button>
@@ -57,6 +60,7 @@
                         </div>
                         <!-- modal end -->
                     </div>
+                    
                     <div class="col-md-3 pull-right">
                         <div class="input-group">
                             <input type="text" placeholder="搜尋" class="input-sm form-control">
@@ -65,16 +69,21 @@
                             </span>
                         </div>
                     </div>
+
                 </div>
+            </div>
+
+            <div class="ibox-content">
                 <div class="row">
                     <div class="col-md-12">
+                        
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th class="col-sm-1">序號</th>
-                                    <th class="col-sm-2">活動名稱</th>
-                                    <th class="col-sm-1">創建日</th>
-                                    <th class="col-sm-2">操作</th>
+                                    <th class="col-md-1">序號</th>
+                                    <th class="">活動名稱</th>
+                                    <th class="col-md-2">創建日</th>
+                                    <th class="col-md-2">操作</th>
                                 </tr>
                             </thead>
                             @for($i = 0; $i < 3; $i++)
@@ -85,7 +94,7 @@
                                     <td>2015-11-29</td>
                                     <td>
                                         <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#edituser">編輯</button>
-                                        <!-- modal start -->
+
                                         <div class="modal fade" id="edituser">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
@@ -105,7 +114,7 @@
                                         </div>
                                         <!-- modal end -->
                                         <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteuser">刪除</button>
-                                        <!-- modal start -->
+
                                         <div class="modal fade" id="deleteuser">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
@@ -129,9 +138,11 @@
                             </tbody>
                             @endfor
                         </table>
+
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 </div>

@@ -49,9 +49,11 @@ $(document).ready(function() {
 <div class="row">
     <div class="col-md-12">
         <div class="ibox float-e-margins">
+            
             <div class="ibox-title">
                 <div class="row">
                     <div class="col-md-12">
+                        
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#adduser">
                             ＋新增交易分錄
                         </button>
@@ -79,22 +81,25 @@ $(document).ready(function() {
                     </div>
                 </div>
             </div>
+
             <div class="ibox-content">
                 <div class="row">
                     <div class="col-md-12">
+                        
                         <div class="row">
                             <div class="col-md-12">
+                                
                                 <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="8">
                                     <thead>
                                         <tr>
                                             <th data-toggle="true">交易日期</th>
                                             <th>記帳日</th>
                                             <th>交易內容</th>
-                                            <th>經手人</th>
-                                            <th>記帳人</th>   
+                                            <th class="col-md-1">經手人</th>
+                                            <th class="col-md-1">記帳人</th>   
                                             <th data-hide="all">分錄</th>
-                                            <th>備註</th>
-                                            <th>操作</th>
+                                            <th class="col-md-2">備註</th>
+                                            <th class="col-md-2">操作</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -145,7 +150,6 @@ $(document).ready(function() {
 
                                                 <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#edittrans">編輯</button>
 
-                                                <!-- modal start -->
                                                 <div class="modal fade" id="edittrans">
                                                     <div class="modal-dialog" role="document">
                                                         <div class="modal-content">
@@ -167,7 +171,6 @@ $(document).ready(function() {
 
                                                 <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deletetrans">刪除</button>
 
-                                                <!-- modal start -->
                                                 <div class="modal fade" id="deletetrans">
                                                     <div class="modal-dialog" role="document">
                                                         <div class="modal-content">
@@ -193,18 +196,20 @@ $(document).ready(function() {
                                 </tbody>    
                                 <tfoot>
                                     <tr>
-                                        <td colspan="5">
+                                        <td colspan="7">
                                             <ul class="pagination pull-right"></ul>
                                         </td>
                                     </tr>
                                 </tfoot>
                             </table>
+
                         </div>
                     </div>
+                
                 </div>
             </div> 
+        
         </div>
-
     </div>
 </div>
 </div>

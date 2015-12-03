@@ -38,8 +38,10 @@
 <div class="row">
     <div class="col-md-12">
         <div class="ibox flot-e-margins">
+            
             <div class="ibox-title">
                 <div class="row">
+                    
                     <div class="col-md-3">
                         <select class="form-control">
                             <option value="資產">資產</option>
@@ -68,9 +70,11 @@
                     </div>
                 </div>
             </div>
+            
             <div class="ibox-content">
                 <div class="row">
                     <div class="col-md-12">
+                        
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
@@ -120,9 +124,11 @@
                                 </tr>
                             </tbody>
                         </table>
+
                     </div>
                 </div>
             </div>
+            
         </div>
     </div>
 </div>
