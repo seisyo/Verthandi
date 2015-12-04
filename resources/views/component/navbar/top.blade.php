@@ -55,7 +55,7 @@
                         <li>
                             <div class="text-center link-block">
                                 <a href="{{url('/event_manage')}}">
-                                    <i class="fa fa-paper-plane"></i> <strong>新增活動帳簿</strong>
+                                    <strong>新增活動帳簿</strong>
                                 </a>
                             </div>
                         </li>

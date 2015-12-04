@@ -49,11 +49,11 @@ $(document).ready(function() {
 <div class="row">
     <div class="col-md-12">
         <div class="ibox float-e-margins">
-            
+
             <div class="ibox-title">
                 <div class="row">
                     <div class="col-md-12">
-                        
+
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#adduser">
                             ＋新增交易分錄
                         </button>
@@ -85,10 +85,10 @@ $(document).ready(function() {
             <div class="ibox-content">
                 <div class="row">
                     <div class="col-md-12">
-                        
+
                         <div class="row">
                             <div class="col-md-12">
-                                
+
                                 <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="8">
                                     <thead>
                                         <tr>
@@ -110,6 +110,37 @@ $(document).ready(function() {
                                             <td>影子</td>
                                             <td>遇雨</td>
                                             <td>
+                                                <!-- <div class="col-md-12">
+                                                    <div class="row">
+                                                        <table>
+                                                            <thead>
+                                                                <th>借方</th>
+                                                                <th>金額</th>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>文具用品</td>
+                                                                    <td>1000</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="row">
+                                                        <table>
+                                                            <thead>
+                                                                <th>貸方</th>
+                                                                <th>金額</th>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>文具用品</td>
+                                                                    <td>1000</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div> -->
+                                                
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <div class="col-md-6">
@@ -205,10 +236,10 @@ $(document).ready(function() {
 
                         </div>
                     </div>
-                
+
                 </div>
             </div> 
-        
+
         </div>
     </div>
 </div>

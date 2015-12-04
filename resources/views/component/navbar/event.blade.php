@@ -3,9 +3,6 @@
         <ul class="nav metismenu" id="side-menu">
             <li class="nav-header">
                 <div class="dropdown profile-element">
-                    <span>
-                        {{-- <img alt="image" class="img-circle" src="img/profile_small.jpg"> --}}
-                    </span>
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                         <span class="clear">
                             <span class="block m-t-xs">
@@ -24,13 +21,22 @@
                 </div>
             </li>
             <li class="active">
-                <a href="/event"><span class="nav-label">SITCON 2016</span></a>
-            </li>
-            <li class="">
-                <a href="/event_diary"><span class="nav-label"><i class="fa fa-book"></i>日記簿</span> </a>
-            </li>
-            <li class="">
-                <a href="/event_ledger"><span class="nav-label"><i class="fa fa-bookmark"></i>分類帳</span> </a>
+                <a href="/event">
+                    <i class="fa fa-paper-plane"></i>
+                    <span class="nav-label">
+                        <!-- <i class="fa fa-paper-plane"></i> -->
+                        SITCON 2016
+                    </span>
+                    <span class="fa arrow"></span>
+                </a>
+                <ul class="nav nav-second-level collapse">
+                    <li class="">
+                        <a href="/event_diary"><span class="nav-label"><i class="fa fa-book"></i>日記簿</span> </a>
+                    </li>
+                    <li class="">
+                        <a href="/event_ledger"><span class="nav-label"><i class="fa fa-bookmark"></i>分類帳</span> </a>
+                    </li>
+                </ul>
             </li>
         </ul>
     </div>  

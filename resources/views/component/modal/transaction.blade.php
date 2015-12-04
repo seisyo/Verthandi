@@ -42,13 +42,13 @@
                 </div>
             </div>
             <div class="row" id="debit_account1">
-                <div class="form-group col-md-6">
+                <div class="col-md-6">
                     <input type="text" class="form-control" placeholder="會計科目">
                 </div>
-                <div class="form-group col-md-4">
+                <div class="col-md-4">
                     <input type="text" class="form-control" placeholder="金額">
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-1">
                     <button type="button" class="btn btn-outline btn-danger" id="debit_delbtn1">
                         -
                     </button>
