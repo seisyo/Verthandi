@@ -80,6 +80,7 @@
                                     <th class="col-md-2">帳號</th>
                                     <th class="">名稱</th>
                                     <th class="col-md-1">權限</th>
+                                    <th class="col-md-1">狀態</th>
                                     <th class="col-md-2">操作</th>
                                 </tr>
                             </thead>
@@ -90,6 +91,7 @@
                                     <td>seisyo{{$i+1}}</td>
                                     <td>seisyo-{{$i+1}}號</td>
                                     <td>1</td>
+                                    <td>已啟用</td>   
                                     <td>
                                         <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#edituser">編輯</button>
                                         <div class="modal fade" id="edituser">

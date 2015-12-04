@@ -13,17 +13,37 @@
     </div>
 
     <div class="hr-line-dashed"></div>
-
+    
     <div class="form-group">
-        <label class="col-md-2 control-label">密碼</label>
-        <div class="col-md-10"><input type="password" class="form-control" name="password"></div>
+        <label class="col-md-2 control-label">真實姓名</label>
+        <div class="col-md-5"><input type="text" class="form-control" placeholder="姓"></div>
+        <div class="col-md-5"><input type="text" class="form-control" placeholder="名"></div>
     </div>
 
     <div class="hr-line-dashed"></div>
 
     <div class="form-group">
-        <label class="col-md-2 control-label">重新輸入一次密碼</label>
-        <div class="col-sm-10"><input type="password" class="form-control" name="password"></div>
+        <label class="col-md-2 control-label">電話號碼</label>
+        <div class="col-md-10"><input type="text" class="form-control"></div>
     </div>
     
+    <div class="hr-line-dashed"></div>
+
+    <div class="form-group">
+        <label class="col-md-2 control-label">信箱</label>
+        <div class="col-md-10"><input type="text" class="form-control"></div>
+    </div>
+
+    <div class="hr-line-dashed"></div>
+    
+    <div class="form-group">
+        <label class="col-md-2 control-label">權限</label>
+        <div class="col-md-10">
+            <select class="input-md form-control">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+            </select>
+        </div>
+    </div>
 </form>
