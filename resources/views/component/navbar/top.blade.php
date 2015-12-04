@@ -22,42 +22,41 @@
                     </a>
                     
                     <ul class="dropdown-menu dropdown-messages">
+                        
                         <li>
-                            <div class="dropdown-messages-box link-block">
-                                <div class="media-body text-center">
-                                    <a href="{{url('/event')}}">
-                                        <strong>SITCON 2016</strong>
-                                    </a>
+                            <a href="{{url('/event')}}">
+                                <div class="text-center link-block">
+                                    <strong>SITCON 2016</strong>
                                 </div>
-                            </div>
+                            </a>
+                        </li>
+
+                        <li class="divider"></li>
+                        
+                        <li>
+                            <a href="{{url('/event')}}">
+                                <div class="text-center link-block">
+                                    <strong>hackgen 2015</strong>
+                                </div>
+                            </a>
+                        </li>
+
+                        <li class="divider"></li>
+
+                        <li>
+                            <a href="{{url('/event')}}">
+                                <div class="text-center link-block">
+                                    <strong>SITCON 2015</strong>
+                                </div>
+                            </a>
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <div class="dropdown-messages-box link-block">
-                                <div class="media-body text-center">
-                                    <a href="{{url('/event')}}">
-                                        <strong>hackgen 2015</strong>
-                                    </a>
+                            <a href="{{url('/event_manage')}}">
+                                <div class="text-center link-block">
+                                    <strong>新增活動帳簿</strong> 
                                 </div>
-                            </div>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <div class="dropdown-messages-box link-block">
-                                <div class="media-body text-center">
-                                    <a href="{{url('/event')}}">
-                                        <strong>SITCON 2015</strong>
-                                    </a>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <div class="text-center link-block">
-                                <a href="{{url('/event_manage')}}">
-                                    <strong>新增活動帳簿</strong>
-                                </a>
-                            </div>
+                            </a>
                         </li>
                     </ul>
                 </li>
