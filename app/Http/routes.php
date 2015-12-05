@@ -15,43 +15,51 @@ Route::get('/login', function () {
 });
 Route::post('/login', 'LoginController@login');
 
+Route::group(['middleware' => 'login_check'], function(){
 
+    Route::get('/', function(){
+        return view('index');
+    });
 
+    //event
+    Route::get('/event', function(){
+        return view('event');
+    });
+    Route::get('/event_diary', function(){
+        return view('event_diary');
+    });
+    Route::get('/event_ledger', function(){
+        return view('event_ledger');
+    });
+    Route::get('/event_manage', function(){
+        return view('event_manage');
+    });
 
+    //account
+    Route::get('/account', function(){
+        return view('account');
+    });
 
+    //user
+    Route::get('/users_overview', function(){
+        return view('users_overview');
+    });
 
-
-
-
-
-
-Route::get('/', function () {
-    return view('index');
+    //logout
+    Route::get('/logout', 'LoginController@logout');
 });
 
-//event
-Route::get('/event', function () {
-    return view('event');
-});
-Route::get('/event_diary', function () {
-    return view('event_diary');
-});
-Route::get('/event_ledger', function () {
-    return view('event_ledger');
-});
-Route::get('/event_manage', function () {
-    return view('event_manage');
-});
 
-//account
-Route::get('/account', function () {
-    return view('account');
-});
 
-//user
-Route::get('/users_overview', function () {
-    return view('users_overview');
-});
+
+
+
+
+
+
+
+
+
 
 
 

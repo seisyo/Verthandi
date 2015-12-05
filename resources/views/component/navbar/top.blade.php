@@ -61,7 +61,7 @@
                     </ul>
                 </li>
             <li>
-                <a href="/login">
+                <a href="/logout">
                     <i class="fa fa-sign-out"></i> 登出
                 </a>
             </li>

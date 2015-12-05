@@ -11,8 +11,15 @@
                 
                 @if(Session::has('errors')) 
                     @foreach(Session::get('errors')->all() as $error)
-                        <div class="alert alert-danger">{{$error}}</div>
+                        <div class="alert alert-danger">
+                            {{$error}}
+                        </div>
                     @endforeach
+                @endif
+                @if(Session::has('message'))
+                    <div class="alert alert-danger">
+                        <strong>{{Session::get('message')}}</strong>
+                    </div>
                 @endif
 
                 <form class="m-t" role="form" method="post" action="{{url('/login')}}">

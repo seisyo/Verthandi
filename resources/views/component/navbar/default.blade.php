@@ -15,7 +15,7 @@
                         </span>
                     </a>
                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                        <li><a href="/login">登出</a></li>
+                        <li><a href="/logout">登出</a></li>
                     </ul>
                 </div>
                 <div class="logo-element">

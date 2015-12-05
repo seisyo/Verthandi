@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Users;
 
 use Validator;
+use Hash;
+use Session;
 
 class LoginController extends Controller{
 
@@ -17,6 +19,25 @@ class LoginController extends Controller{
             'password' => 'required|min:8|max:100'
         ]);
 
+        $password = Users::where('username', '=', $request->get('username'))->first()->password;
+
+        if(Hash::check($request->get('password'), $password)){
+            
+            Session::put('check', true);
+            return redirect('/');
+
+        }else{
+            
+            Session::flash('message', '密碼錯誤');
+            return redirect('/login');
+
+        }
+    }
+
+    public function logout(){
+
+        Session::flush();
+        return redirect('/login');
         
     }
 }
