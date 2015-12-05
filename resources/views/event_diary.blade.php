@@ -11,8 +11,8 @@
 @section('custom_js')
 <script src="{{url('assets/js/plugins/datapicker/bootstrap-datepicker.js')}}"></script>
 <script src="{{url('assets/js/plugins/footable/footable.all.min.js')}}"></script>
-<script src="{{url('assets/js/add_transaction.js')}}"></script>
-<script src="{{url('assets/js/delete_transaction.js')}}"></script>
+<script src="{{url('assets/js/custom/add_transaction.js')}}"></script>
+<script src="{{url('assets/js/custom/delete_transaction.js')}}"></script>
 <script>
 $(document).ready(function() {
     $(".footable").footable();
