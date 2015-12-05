@@ -6,5 +6,6 @@ class Users_detail extends Model{
     
     protected $table = 'users_detail';
     protected $primaryKey  = 'user_id';
+    public $timestamps = false;
 
 }

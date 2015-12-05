@@ -13,6 +13,18 @@
 Route::get('/login', function () {
     return view('login');
 });
+Route::post('/login', 'LoginController@login');
+
+
+
+
+
+
+
+
+
+
+
 Route::get('/', function () {
     return view('index');
 });
