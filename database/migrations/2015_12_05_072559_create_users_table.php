@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('username', 100)->unique('username');
             $table->string('password', 100);
             $table->string('nickname', 100);
-            $table->enum('permission' [1, 2, 3, 4]);
+            $table->enum('permission', [1, 2, 3, 4]);
             $table->enum('status', ['unverified','enable', 'disable']);
             $table->timestamps();
         });

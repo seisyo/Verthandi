@@ -20,7 +20,7 @@ class CreateUsersDetailTable extends Migration
             $table->string('last_name', 20);
             $table->string('email', 100);
             $table->string('phone', 20);
-        })
+        });
     }
 
     /**
