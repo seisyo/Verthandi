@@ -38,9 +38,9 @@
             "preventDuplicates": false,
             "positionClass": "toast-top-full-width",
             "onclick": null,
-            "showDuration": "40000",
+            "showDuration": "4000",
             "hideDuration": "1000",
-            "timeOut": "7000",
+            "timeOut": "15000",
             "extendedTimeOut": "1000",
             "showEasing": "linear",
             "hideEasing": "linear",
@@ -49,7 +49,7 @@
         };
         
         // var $toast = toastr["info"]("{{Session::get('message')}}");
-        $toastlast = toastr["success"]("{{Session::get('message')}}");
+        toastr.success("{{Session::get('message')}}");
     </script>
 @endif
 <div class="row">
