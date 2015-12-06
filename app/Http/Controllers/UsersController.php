@@ -8,6 +8,7 @@ use App\Users_detail;
 
 use Hash;
 use Session;
+use Mail;
 
 class UsersController extends Controller{
 
@@ -48,9 +49,13 @@ class UsersController extends Controller{
         ]);
 
         //將密碼寄信給使用者
+        $mail = $request->mail;
+        Mail::send('component.confirm_mail', ['password' => $default_password], function($message) use ($mail){
+            $message->from('postmaster@sandbox47fc1f7d853f4fcfbfddf91e281fa6d1.mailgun.org', 'RakudaPack');
+            $message->to($mail)->subject('RakudaPack Member Confirm');
+        });
 
-        
-
+        return redirect('/users_overview');
         
     }
 

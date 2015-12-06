@@ -47,5 +47,6 @@
     },
     "config": {
         "preferred-install": "dist"
-    }
+    },
+    "guzzlehttp/guzzle": "~5.3|~6.0"
 }
