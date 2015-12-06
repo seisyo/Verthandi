@@ -8,29 +8,6 @@
 {{-- Custom js section --}}
 @section('custom_js')
     <script src="assets/js/plugins/toastr/toastr.min.js"></script>
-    @if(Session::has('message'))
-        <script>
-            toastr.options = {
-                "closeButton": true,
-                "debug": true,
-                "progressBar": true,
-                "preventDuplicates": false,
-                "positionClass": "toast-top-full-width",
-                "onclick": null,
-                "showDuration": "40000",
-                "hideDuration": "1000",
-                "timeOut": "7000",
-                "extendedTimeOut": "1000",
-                "showEasing": "linear",
-                "hideEasing": "linear",
-                "showMethod": "fadeIn",
-                "hideMethod": "fadeOut"
-            };
-            
-            // var $toast = toastr["info"]("{{Session::get('message')}}");
-            $toastlast = toastr["success"]("{{Session::get('message')}}");
-        </script>
-    @endif
 @endsection
 
 {{-- Sidebar default/event --}}
@@ -52,6 +29,29 @@
 
 {{-- Content section --}}
 @section('content')
+@if(Session::has('message'))
+    <script>
+        toastr.options = {
+            "closeButton": true,
+            "debug": true,
+            "progressBar": true,
+            "preventDuplicates": false,
+            "positionClass": "toast-top-full-width",
+            "onclick": null,
+            "showDuration": "40000",
+            "hideDuration": "1000",
+            "timeOut": "7000",
+            "extendedTimeOut": "1000",
+            "showEasing": "linear",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+        
+        // var $toast = toastr["info"]("{{Session::get('message')}}");
+        $toastlast = toastr["success"]("{{Session::get('message')}}");
+    </script>
+@endif
 <div class="row">
     <div class="col-md-12">
         <div class="ibox float-e-margins">
