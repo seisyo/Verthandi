@@ -20,11 +20,6 @@
                                             <table cellpadding="0" cellspacing="0">
                                                 <tbody>
                                                     <tr>
-                                                        <td>
-                                                            <img class="img-responsive" src="img/header.jpg">
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
                                                         <td class="content-block">
                                                             <h3>歡迎使用SITCON財務系統</h3>
                                                         </td>

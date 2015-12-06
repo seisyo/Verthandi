@@ -49,10 +49,10 @@ class UsersController extends Controller{
         ]);
 
         //將密碼寄信給使用者
-        $mail = $request->mail;
+        $mail = $request->get('email');
         Mail::send('component.confirm_mail', ['password' => $default_password], function($message) use ($mail){
-            $message->from('postmaster@sandbox47fc1f7d853f4fcfbfddf91e281fa6d1.mailgun.org', 'RakudaPack');
-            $message->to($mail)->subject('RakudaPack Member Confirm');
+            $message->from('postmaster@sandbox47fc1f7d853f4fcfbfddf91e281fa6d1.mailgun.org', 'SITCON財務組');
+            $message->to($mail)->subject('SITCON財務系統認證信');
         });
 
         return redirect('/users_overview');
