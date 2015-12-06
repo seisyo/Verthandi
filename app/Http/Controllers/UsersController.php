@@ -55,6 +55,7 @@ class UsersController extends Controller{
             $message->to($mail)->subject('SITCON財務系統認證信');
         });
 
+        Session::flash('message', '已將密碼認證信寄送至'.$request->get('email'));
         return redirect('/users_overview');
         
     }

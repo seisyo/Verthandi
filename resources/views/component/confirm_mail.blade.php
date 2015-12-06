@@ -4,7 +4,7 @@
         <meta name="viewport" content="width=device-width">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>SITCON財務系統認證信</title>
-        <link href="styles.css" media="all" rel="stylesheet" type="text/css">
+        <link href="{{url('assets/css/all.css')}}" media="all" rel="stylesheet" type="text/css">
     </head>
 
     <body>

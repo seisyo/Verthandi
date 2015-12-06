@@ -2,12 +2,35 @@
 
 {{-- Custom css section --}}
 @section('custom_css')
-@parent
+    <link rel="stylesheet" href="assets/css/plugins/toastr/toastr.min.css">
 @endsection
 
 {{-- Custom js section --}}
 @section('custom_js')
-@parent
+    <script src="assets/js/plugins/toastr/toastr.min.js"></script>
+    @if(Session::has('message'))
+        <script>
+            toastr.options = {
+                "closeButton": true,
+                "debug": true,
+                "progressBar": true,
+                "preventDuplicates": false,
+                "positionClass": "toast-top-full-width",
+                "onclick": null,
+                "showDuration": "40000",
+                "hideDuration": "1000",
+                "timeOut": "7000",
+                "extendedTimeOut": "1000",
+                "showEasing": "linear",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            };
+            
+            // var $toast = toastr["info"]("{{Session::get('message')}}");
+            $toastlast = toastr["success"]("{{Session::get('message')}}");
+        </script>
+    @endif
 @endsection
 
 {{-- Sidebar default/event --}}
@@ -63,11 +86,6 @@
                                                         });
                                                     </script>
                                                 @endforeach
-                                            @endif
-                                            @if(Session::has('message'))
-                                                <div class="alert alert-danger">
-                                                    <strong>{{Session::get('message')}}</strong>
-                                                </div>
                                             @endif
                                             @include("component.modal.user")
                                         </div>
