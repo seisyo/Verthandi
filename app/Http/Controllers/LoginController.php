@@ -5,7 +5,6 @@ use Illuminate\Http\Request;
 
 use App\Users;
 
-use Validator;
 use Hash;
 use Session;
 
@@ -38,6 +37,6 @@ class LoginController extends Controller{
 
         Session::flush();
         return redirect('/login');
-        
+
     }
 }

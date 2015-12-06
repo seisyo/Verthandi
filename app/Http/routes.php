@@ -44,6 +44,9 @@ Route::group(['middleware' => 'login_check'], function(){
     Route::get('/users_overview', function(){
         return view('users_overview');
     });
+    Route::get('/adduser', 'UsersController@adduser');
+    Route::post('users_overview', 'UsersController@edituser');
+    Route::post('users_overview', 'UsersController@deleteuser');
 
     //logout
     Route::get('/logout', 'LoginController@logout');
