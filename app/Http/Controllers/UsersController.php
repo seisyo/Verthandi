@@ -10,9 +10,9 @@ use Hash;
 use Session;
 use Mail;
 
-class UsersController extends Controller{
+class UsersController extends Controller {
 
-    public function adduser(Request $request){
+    public function adduser(Request $request) {
 
         $this->validate($request,
         [
@@ -50,21 +50,23 @@ class UsersController extends Controller{
 
         //將密碼寄信給使用者
         $mail = $request->get('email');
+
         Mail::send('component.confirm_mail', ['password' => $default_password], function($message) use ($mail){
             $message->from('postmaster@sandbox47fc1f7d853f4fcfbfddf91e281fa6d1.mailgun.org', 'SITCON財務組');
             $message->to($mail)->subject('SITCON財務系統認證信');
         });
 
         Session::flash('message', '已將密碼認證信寄送至'.$request->get('email'));
+
         return redirect('/users_overview');
         
     }
 
-    public function edituser(Request $request){
+    public function edituser(Request $request) {
 
     }
 
-    public function deleteuser(Request $request){
+    public function deleteuser(Request $request) {
 
     }
 }
