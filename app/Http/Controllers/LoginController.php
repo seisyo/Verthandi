@@ -19,7 +19,6 @@ class LoginController extends Controller
         }
     }
 
-
     public function login(Request $request)
     { 
         $this->validate($request,[
@@ -28,6 +27,7 @@ class LoginController extends Controller
         ]);
 
         $password = Users::where('username', '=', $request->get('username'))->first()->password;
+
 
         if (Hash::check($request->get('password'), $password)) {
             Session::put('check', true);
@@ -38,6 +38,7 @@ class LoginController extends Controller
             return redirect('/login');
         }
     }
+
 
     public function logout()
     {

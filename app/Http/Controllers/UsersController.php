@@ -10,6 +10,7 @@ use Hash;
 use Session;
 use Mail;
 
+
 class UsersController extends Controller
 {
     public function show()
@@ -52,6 +53,7 @@ class UsersController extends Controller
 
         //將密碼寄信給使用者
         $mail = $request->get('email');
+
         Mail::send('component.confirm_mail', ['password' => $default_password], function($message) use ($mail){
             $message->from(env('MAIL_USERNAME'), 'SITCON財務組');
             $message->to($mail)->subject('SITCON財務系統認證信');
@@ -69,6 +71,7 @@ class UsersController extends Controller
 
     public function deleteUser(Request $request)
     {
+
 
     }
 }
