@@ -43,12 +43,15 @@
         <label class="col-md-2 control-label">權限</label>
         <div class="col-md-10">
             <select class="input-md form-control" name="permission">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
+                <option id="{{$user->nickname.'1'}}" value="1">1</option>
+                <option id="{{$user->nickname.'2'}}" value="2">2</option>
+                <option id="{{$user->nickname.'3'}}" value="3">3</option>
+                <option id="{{$user->nickname.'4'}}" value="4">4</option>
             </select>
         </div>
+        <script>
+            $("{{'#'.$user->nickname.$user->permission}}").attr("selected", "selected");
+        </script>
     </div>
     
 </div>
