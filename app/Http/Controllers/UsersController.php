@@ -66,12 +66,43 @@ class UsersController extends Controller
 
     public function editUser(Request $request)
     {
-        echo('hello!');
+        $this->validate($request, [
+            'username' => 'required|exists:users',
+            'nickname' => 'required|max:100',
+            'last_name' => 'required|max:15',
+            'first_name' => 'required|max:15',
+            'phone' => 'required|max:15',
+            'email' => 'required|e-mail',
+            'permission' => 'required|numeric|max:4|min:1'
+        ]);
+
+        Users::where('username', '=', $request->get('username'))->first()->update([
+            'nickname' => $request->get('nickname'),
+            'permission' => $request->get('permission')
+        ]);
+
+        Users_detail::where('user_id', '=', Users::where('username', '=', $request->get('username'))->first()->id)->update([
+            'last_name' => $request->get('last_name'),
+            'first_name' => $request->get('first_name'),
+            'phone' => $request->get('phone'),
+            'email' => $request->get('email'),            
+        ]);
+
+        Session::flash('message', '已更新'.$request->get('username').'的資料');
+        return redirect('/user');
     }
 
     public function deleteUser(Request $request)
     {
+        $this->validate($request, [
+            'username' => 'required|exists:users'
+        ]);
 
+        Users::where('username', '=', $request->get('username'))->first()->update([
+            'status' => 'disable'
+        ]);
 
+        Session::flash('message', '已刪除'.$request->get('username'));
+        return redirect('/user');
     }
 }

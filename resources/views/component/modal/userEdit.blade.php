@@ -1,5 +1,5 @@
 <div class="col-md-12">
-    
+
     <div class="form-group">
         <label class="col-md-2 control-label">暱稱</label>
         <div class="col-md-10">
@@ -49,10 +49,12 @@
                 <option id="{{$user->nickname.'4'}}" value="4">4</option>
             </select>
         </div>
+        <!-- use this js to be selected the user's permission-->
         <script>
             $("{{'#'.$user->nickname.$user->permission}}").attr("selected", "selected");
         </script>
     </div>
+    <input type="hidden" name="username" value="{{$user->username}}">
     
 </div>
 

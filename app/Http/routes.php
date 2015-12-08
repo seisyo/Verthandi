@@ -10,6 +10,7 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+
 Route::get('/login', 'LoginController@check');
 Route::post('/login', 'LoginController@login');
 
@@ -42,7 +43,7 @@ Route::group(['middleware' => 'login_check'], function(){
     Route::get('/user', 'UsersController@show');
     Route::get('/user/add', 'UsersController@addUser');
     Route::get('/user/edit', 'UsersController@editUser');
-    Route::post('/user/delete', 'UsersController@deleteUser');
+    Route::get('/user/delete', 'UsersController@deleteUser');
 
     //logout
     Route::get('/logout', 'LoginController@logout');
