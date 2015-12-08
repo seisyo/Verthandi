@@ -9,6 +9,6 @@ class Users extends Model{
 
     public function users_detail(){
 
-        return $this->hasOne('App\Users_detail', 'id', 'user_id');
+        return $this->hasOne('App\Users_detail', 'user_id', 'id');
     }
 }

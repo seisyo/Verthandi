@@ -16,7 +16,7 @@ class UsersTableSeeder extends Seeder
         DB::table('users')->delete();
 
         Users::create([
-            'username' => 'seisyo1234',
+            'username' => 'admin',
             'password' => Hash::make('12345678'),
             'nickname' => 'seisyo',
             'permission' => 1,

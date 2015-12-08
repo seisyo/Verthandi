@@ -21,7 +21,6 @@
                         <strong>{{Session::get('message')}}</strong>
                     </div>
                 @endif
-
                 <form class="m-t" role="form" method="post" action="{{url('/login')}}">
                     <div class="form-group">
                         <input type="" class="form-control" placeholder="帳號" name="username">
