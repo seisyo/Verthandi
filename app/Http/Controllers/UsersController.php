@@ -51,7 +51,7 @@ class UsersController extends Controller
             'phone' => $request->get('phone')
         ]);
 
-        //將密碼寄信給使用者
+        //send password to user
         $mail = $request->get('email');
 
         Mail::send('component.confirm_mail', ['password' => $default_password], function($message) use ($mail){

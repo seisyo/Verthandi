@@ -49,8 +49,7 @@
         "showMethod": "fadeIn",
         "hideMethod": "fadeOut"
     };
-
-    // var $toast = toastr["info"]("{{Session::get('message')}}");
+    
     toastr.success("{{Session::get('message')}}");
     </script>
 @endif
