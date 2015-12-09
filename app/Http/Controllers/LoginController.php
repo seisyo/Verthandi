@@ -31,6 +31,7 @@ class LoginController extends Controller
 
         if (Hash::check($request->get('password'), $password)) {
             Session::put('check', true);
+            Session::put('user', $request->get('username'));
             return redirect('/');
 
         } else {

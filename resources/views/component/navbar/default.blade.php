@@ -6,7 +6,7 @@
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                         <span class="clear">
                             <span class="block m-t-xs">
-                                <strong class="font-bold">Seisyo Hsu</strong>
+                                <strong class="font-bold">{{Session::get('user')}}</strong>
                             </span>
                             <span class="text-muted text-xs block">
                                 財務組系統開發者
@@ -15,6 +15,7 @@
                         </span>
                     </a>
                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                        <li><a href="">更改密碼</a></li>
                         <li><a href="/logout">登出</a></li>
                     </ul>
                 </div>

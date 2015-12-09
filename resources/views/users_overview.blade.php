@@ -49,7 +49,7 @@
         "showMethod": "fadeIn",
         "hideMethod": "fadeOut"
     };
-    
+
     toastr.success("{{Session::get('message')}}");
     </script>
 @endif
@@ -155,8 +155,9 @@
                                                         
                                                         <form class="form-horizontal" method="get" action="{{url('/user/edit')}}">
                                                             <div class="modal-body">
-                                                                @if(Session::has('errors')) 
-                                                                    @foreach(Session::get('errors')->all() as $error)
+                                                                <!-- 'errors'.$user->id -->
+                                                                @if(Session::has(('errors'.$user->id)))
+                                                                    @foreach(Session::get('errors'.$user->id)->all() as $error)
                                                                         <div class="alert alert-danger">
                                                                             {{$error}}
                                                                         </div>

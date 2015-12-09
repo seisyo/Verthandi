@@ -9,13 +9,14 @@ use App\Users_detail;
 use Hash;
 use Session;
 use Mail;
+use Validator;
 
 
 class UsersController extends Controller
 {
     public function show()
     {
-        return view('/users_overview')->with('userList', Users::all());
+        return view('users_overview')->with('userList', Users::all());
     }
 
     public function addUser(Request $request)
@@ -66,7 +67,17 @@ class UsersController extends Controller
 
     public function editUser(Request $request)
     {
-        $this->validate($request, [
+        $validator = Validator::make(
+        [
+            'username' => $request->get('username'),
+            'nickname' => $request->get('nickname'),
+            'last_name' => $request->get('last_name'),
+            'first_name' => $request->get('first_name'),
+            'phone' => $request->get('phone'),
+            'email' => $request->get('email'),
+            'permission' => $request->get('permission')
+        ],
+        [
             'username' => 'required|exists:users',
             'nickname' => 'required|max:100',
             'last_name' => 'required|max:15',
@@ -76,20 +87,37 @@ class UsersController extends Controller
             'permission' => 'required|numeric|max:4|min:1'
         ]);
 
-        Users::where('username', '=', $request->get('username'))->first()->update([
-            'nickname' => $request->get('nickname'),
-            'permission' => $request->get('permission')
-        ]);
+        if ($validator->fails()) {
+            $errorname = 'errors'.Users::where('username', '=', $request->get('username'))->first()->id;
+            return redirect('/user')->with($errorname, $validator->messages());
+        }else{
+            echo('success!');
+        }
 
-        Users_detail::where('user_id', '=', Users::where('username', '=', $request->get('username'))->first()->id)->update([
-            'last_name' => $request->get('last_name'),
-            'first_name' => $request->get('first_name'),
-            'phone' => $request->get('phone'),
-            'email' => $request->get('email'),            
-        ]);
+        // $this->validate($request, [
+        //     'username' => 'required|exists:users',
+        //     'nickname' => 'required|max:100',
+        //     'last_name' => 'required|max:15',
+        //     'first_name' => 'required|max:15',
+        //     'phone' => 'required|max:15',
+        //     'email' => 'required|e-mail',
+        //     'permission' => 'required|numeric|max:4|min:1'
+        // ]);
+        
+        // Users::where('username', '=', $request->get('username'))->first()->update([
+        //     'nickname' => $request->get('nickname'),
+        //     'permission' => $request->get('permission')
+        // ]);
 
-        Session::flash('message', '已更新'.$request->get('username').'的資料');
-        return redirect('/user');
+        // Users_detail::where('user_id', '=', Users::where('username', '=', $request->get('username'))->first()->id)->update([
+        //     'last_name' => $request->get('last_name'),
+        //     'first_name' => $request->get('first_name'),
+        //     'phone' => $request->get('phone'),
+        //     'email' => $request->get('email'),            
+        // ]);
+
+        // Session::flash('message', '已更新'.$request->get('username').'的資料');
+        // return redirect('/user');
     }
 
     public function deleteUser(Request $request)
