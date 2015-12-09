@@ -38,6 +38,6 @@ elixir(function(mix) {
     mix.copy("resources/assets/js/plugins", "public/assets/js/plugins");
 
     //custom js
-    mix.copy("resources/assets/js/custom/add_transaction.js", "public/assets/js/custom/add_transaction.js");
-    mix.copy("resources/assets/js/custom/delete_transaction.js", "public/assets/js/custom/delete_transaction.js");
+    mix.copy("resources/assets/js/custom", "public/assets/js/custom");
+
 });

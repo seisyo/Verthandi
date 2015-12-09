@@ -8,6 +8,8 @@
 {{-- Custom js section --}}
 @section('custom_js')
 <script src="assets/js/plugins/toastr/toastr.min.js"></script>
+<script src="assets/js/custom/modal_autoopen.js"></script>
+<script src="assets/js/custom/modal_reset.js"></script>
 @endsection
 
 {{-- Sidebar default/event --}}
@@ -30,27 +32,27 @@
 {{-- Content section --}}
 @section('content')
 @if(Session::has('message'))
-<script>
-toastr.options = {
-    "closeButton": true,
-    "debug": true,
-    "progressBar": true,
-    "preventDuplicates": false,
-    "positionClass": "toast-top-full-width",
-    "onclick": null,
-    "showDuration": "4000",
-    "hideDuration": "1000",
-    "timeOut": "15000",
-    "extendedTimeOut": "1000",
-    "showEasing": "linear",
-    "hideEasing": "linear",
-    "showMethod": "fadeIn",
-    "hideMethod": "fadeOut"
-};
+    <script>
+    toastr.options = {
+        "closeButton": true,
+        "debug": true,
+        "progressBar": true,
+        "preventDuplicates": false,
+        "positionClass": "toast-top-full-width",
+        "onclick": null,
+        "showDuration": "4000",
+        "hideDuration": "1000",
+        "timeOut": "15000",
+        "extendedTimeOut": "1000",
+        "showEasing": "linear",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    };
 
-// var $toast = toastr["info"]("{{Session::get('message')}}");
-toastr.success("{{Session::get('message')}}");
-</script>
+    // var $toast = toastr["info"]("{{Session::get('message')}}");
+    toastr.success("{{Session::get('message')}}");
+    </script>
 @endif
 <div class="row">
 <div class="col-md-12">
@@ -83,10 +85,8 @@ toastr.success("{{Session::get('message')}}");
                                                     {{$error}}
                                                 </div>
                                                 <!-- when it has error, reload the page will auto open the modal -->
-                                                <script type="text/javascript">
-                                                $(window).load(function(){
-                                                    $('#adduser').modal('show');
-                                                });
+                                                <script>
+                                                    modal_autoopen("#adduser");
                                                 </script>
                                             @endforeach
                                         @endif
@@ -100,12 +100,7 @@ toastr.success("{{Session::get('message')}}");
                                             <button type="submit" class="btn btn-primary">新增</button>
                                         </a>
                                     </div>
-                                    <!-- cancel the modal will auto clean the inputed data  -->g f
-                                    <script>
-                                        $('.modal').on('hidden.bs.modal', function(){
-                                            $(this).find('form')[0].reset();
-                                        });
-                                    </script>
+                                    <!-- cancel the modal will auto clean the inputed data  -->
                                 </form>
 
                             </div>
@@ -167,10 +162,8 @@ toastr.success("{{Session::get('message')}}");
                                                                             {{$error}}
                                                                         </div>
                                                                         <!-- when it has error, reload the page will auto open the modal -->
-                                                                        <script type="text/javascript">
-                                                                            $(window).load(function(){
-                                                                                $("{{'#edituser'.$user->id}}").modal('show');
-                                                                            });
+                                                                        <script>
+                                                                            modal_autoopen("{{'#edituser'.$user->id}}");
                                                                         </script>
                                                                     @endforeach
                                                                 @endif
@@ -186,11 +179,6 @@ toastr.success("{{Session::get('message')}}");
                                                                 </a>
                                                             </div>
                                                             <!-- cancel the modal will auto clean the inputed data  -->
-                                                            <script>
-                                                                $('.modal').on('hidden.bs.modal', function(){
-                                                                    $(this).find('form')[0].reset();
-                                                                });
-                                                            </script>
                                                         </form>
 
                                                     </div>
@@ -236,4 +224,7 @@ toastr.success("{{Session::get('message')}}");
         </div>
     </div>
 </div>
+<script>
+    modal_reset(".modal");
+</script>
 @endsection
