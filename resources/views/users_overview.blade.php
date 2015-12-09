@@ -21,10 +21,10 @@
 @section('breadcrumb')
 <h2>使用者管理</h2>
 <li>
-    <a href="{{url('/')}}">首頁</a>
+    <a href="{{route('index')}}">首頁</a>
 </li>
 <li>
-    <a href="{{url('/user')}}">使用者管理</a>
+    <a href="{{route('user::main')}}">使用者管理</a>
 </li>
 
 @endsection
@@ -76,7 +76,7 @@
                                     <h4 class="modal-title" id="myModalLabel">新增使用者</h4>
                                 </div>
                                 
-                                <form class="form-horizontal" method="get" action="{{url('/user/add')}}">
+                                <form class="form-horizontal" method="get" action="{{route('user::add')}}">
                                     <div class="modal-body">
                                         @if(Session::has('errors')) 
                                             @foreach(Session::get('errors')->all() as $error)
@@ -153,7 +153,7 @@
                                                             <h4 class="modal-title" id="myModalLabel">預覽＆編輯使用者</h4>
                                                         </div>
                                                         
-                                                        <form class="form-horizontal" method="get" action="{{url('/user/edit')}}">
+                                                        <form class="form-horizontal" method="get" action="{{route('user::edit')}}">
                                                             <div class="modal-body">
                                                                 <!-- 'errors'.$user->id -->
                                                                 @if(Session::has(('errors'.$user->id)))
@@ -199,7 +199,7 @@
                                                             確定要刪除使用者「{{$user->username}}」嗎？
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <form method="get" action="{{url('/user/delete')}}">
+                                                            <form method="get" action="{{route('user::delete')}}">
                                                                 <input type="hidden" name="username" value="{{$user->username}}">
                                                                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
                                                                 <button type="submit" class="btn btn-danger">確定刪除</button>

@@ -10,7 +10,7 @@
         </div>
         <ul class="nav navbar-top-links navbar-right">
             <li>
-                <a href="/">
+                <a href="{{route('index')}}">
                     <i class="fa fa-home"></i>首頁
                 </a>
             </li>
@@ -24,7 +24,7 @@
                     <ul class="dropdown-menu dropdown-messages">
                         
                         <li>
-                            <a href="{{url('/event')}}">
+                            <a href="{{route('event::main')}}">
                                 <div class="text-center link-block">
                                     <strong>SITCON 2016</strong>
                                 </div>
@@ -34,7 +34,7 @@
                         <li class="divider"></li>
                         
                         <li>
-                            <a href="{{url('/event')}}">
+                            <a href="{{route('event::main')}}">
                                 <div class="text-center link-block">
                                     <strong>hackgen 2015</strong>
                                 </div>
@@ -44,7 +44,7 @@
                         <li class="divider"></li>
 
                         <li>
-                            <a href="{{url('/event')}}">
+                            <a href="{{route('event::main')}}">
                                 <div class="text-center link-block">
                                     <strong>SITCON 2015</strong>
                                 </div>
@@ -52,7 +52,7 @@
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a href="{{url('/event_manage')}}">
+                            <a href="{{route('event::manage')}}">
                                 <div class="text-center link-block">
                                     <strong>新增活動帳簿</strong> 
                                 </div>
@@ -61,7 +61,7 @@
                     </ul>
                 </li>
             <li>
-                <a href="/logout">
+                <a href="{{route('logout')}}">
                     <i class="fa fa-sign-out"></i> 登出
                 </a>
             </li>

@@ -31,16 +31,16 @@ $(document).ready(function() {
     SITCON 2016 日記簿
 </h2>
 <li>
-    <a href="{{url('/')}}">首頁</a>
+    <a href="{{route('index')}}">首頁</a>
 </li>
 <li>
-    <a href="{{url('/event_manage')}}">活動帳簿管理</a>
+    <a href="{{route('event::manage')}}">活動帳簿管理</a>
 </li>
 <li>
-    <a href="{{url('/event')}}">SITCON 2016</a>
+    <a href="{{route('event::main')}}">SITCON 2016</a>
 </li>
 <li>
-    <a href="{{url('/event_diary')}}">日記簿</a>
+    <a href="{{route('event::diary')}}">日記簿</a>
 </li>
 @endsection
 

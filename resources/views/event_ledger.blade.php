@@ -20,16 +20,16 @@
     SITCON 2016 分類帳
 </h2>
 <li>
-    <a href="{{url('/')}}">首頁</a>
+    <a href="{{route('index')}}">首頁</a>
 </li>
 <li>
-    <a href="{{url('/event_manage')}}">活動帳簿管理</a>
+    <a href="{{route('event::manage')}}">活動帳簿管理</a>
 </li>
 <li>
-    <a href="{{url('/event')}}">SITCON 2016</a>
+    <a href="{{route('event::main')}}">SITCON 2016</a>
 </li>
 <li>
-    <a href="{{url('/event_ledger')}}">分類帳</a>
+    <a href="{{route('event::ledger')}}">分類帳</a>
 </li>
 @endsection
 

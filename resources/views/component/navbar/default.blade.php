@@ -16,7 +16,7 @@
                     </a>
                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
                         <li><a href="">更改密碼</a></li>
-                        <li><a href="/logout">登出</a></li>
+                        <li><a href="{{route('logout')}}">登出</a></li>
                     </ul>
                 </div>
                 <div class="logo-element">
@@ -24,16 +24,16 @@
                 </div>
             </li>
             <li class="">
-                <a href="/event_manage"><i class="fa fa-futbol-o"></i> <span class="nav-label">活動帳簿管理</span> </a>
+                <a href="{{route('event::manage')}}"><i class="fa fa-futbol-o"></i> <span class="nav-label">活動帳簿管理</span> </a>
             </li>
             <li class="">
-                <a href="/"><i class="fa fa-area-chart"></i> <span class="nav-label">報表輸出</span> </a>
+                <a href="{{route('index')}}"><i class="fa fa-area-chart"></i> <span class="nav-label">報表輸出</span> </a>
             </li>
             <li class="">
-                <a href="{{url('/account')}}"><i class="fa fa-database"></i> <span class="nav-label">會計科目管理</span> </a>
+                <a href="{{route('account::main')}}"><i class="fa fa-database"></i> <span class="nav-label">會計科目管理</span> </a>
             </li>
             <li class="">
-                <a href="{{url('/user')}}"><i class="fa fa-child"></i> <span class="nav-label">使用者管理</span> </a>
+                <a href="{{route('user::main')}}"><i class="fa fa-child"></i> <span class="nav-label">使用者管理</span> </a>
             </li>
         </ul>
     </div>  

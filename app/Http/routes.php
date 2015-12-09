@@ -11,42 +11,66 @@
 |
 */
 
-Route::get('/login', 'LoginController@check');
-Route::post('/login', 'LoginController@login');
+Route::group(['as' => 'login::'], function(){
+    Route::get('/login', [
+        'as' => 'view', 'uses' => 'LoginController@check'
+    ]);
+    Route::post('/login', [
+        'as' => 'action', 'uses' => 'LoginController@login'
+    ]);
+});
 
 Route::group(['middleware' => 'login_check'], function(){
 
-    Route::get('/', function(){
+    Route::get('/', ['as' => 'index',function(){
         return view('index');
-    });
+    }]);
 
     //event
-    Route::get('/event', function(){
-        return view('event');
-    });
-    Route::get('/event_diary', function(){
-        return view('event_diary');
-    });
-    Route::get('/event_ledger', function(){
-        return view('event_ledger');
-    });
-    Route::get('/event_manage', function(){
-        return view('event_manage');
+    Route::group(['as' => 'event::'], function(){
+        Route::get('/event', ['as' => 'main', function(){
+            return view('event');
+        }]);
+        Route::get('/event/diary', ['as' => 'diary', function(){
+            return view('event_diary');
+        }]);
+        Route::get('/event/ledger', ['as' => 'ledger', function(){
+            return view('event_ledger');
+        }]);
+        Route::get('/event/manage', ['as' => 'manage', function(){
+            return view('event_manage');
+        }]);
     });
 
     //account
-    Route::get('/account', function(){
-        return view('account');
+    Route::group(['as' => 'account::'], function(){
+        Route::get('/account', ['as' => 'main', function(){
+            return view('account');
+        }]);
     });
 
     //user
-    Route::get('/user', 'UsersController@show');
-    Route::get('/user/add', 'UsersController@addUser');
-    Route::get('/user/edit', 'UsersController@editUser');
-    Route::get('/user/delete', 'UsersController@deleteUser');
+    Route::group(['as' => 'user::'], function(){
+        Route::get('/user', [
+            'as' => 'main', 'uses' => 'UserController@show'
+        ]);
+        Route::get('/user/add', [
+            'as' => 'add', 'uses' => 'UserController@addUser'
+        ]);
+        Route::get('/user/edit', [
+            'as' => 'edit', 'uses' => 'UserController@editUser'
+        ]);
+        Route::get('/user/delete', [
+            'as' => 'delete', 'uses' => 'UserController@deleteUser'
+        ]);
+    });
+
+    
 
     //logout
-    Route::get('/logout', 'LoginController@logout');
+    Route::get('/logout', [
+        'as' => 'logout', 'uses' => 'LoginController@logout'
+    ]);
 });
 
 
