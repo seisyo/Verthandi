@@ -31,110 +31,110 @@
 
 {{-- Content section --}}
 @section('content')
-@if(Session::has('message'))
+@if(Session::has('toast_message'))
     <script>
-    toastr.options = {
-        "closeButton": true,
-        "debug": true,
-        "progressBar": true,
-        "preventDuplicates": false,
-        "positionClass": "toast-top-full-width",
-        "onclick": null,
-        "showDuration": "4000",
-        "hideDuration": "1000",
-        "timeOut": "15000",
-        "extendedTimeOut": "1000",
-        "showEasing": "linear",
-        "hideEasing": "linear",
-        "showMethod": "fadeIn",
-        "hideMethod": "fadeOut"
-    };
+        toastr.options = {
+            "closeButton": true,
+            "debug": true,
+            "progressBar": true,
+            "preventDuplicates": false,
+            "positionClass": "toast-top-full-width",
+            "onclick": null,
+            "showDuration": "4000",
+            "hideDuration": "1000",
+            "timeOut": "15000",
+            "extendedTimeOut": "1000",
+            "showEasing": "linear",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
 
-    toastr.success("{{Session::get('message')}}");
+        toastr.success("{{Session::get('toast_message')}}");
     </script>
 @endif
 <div class="row">
-<div class="col-md-12">
-    <div class="ibox float-e-margins">
+    <div class="col-md-12">
+        <div class="ibox float-e-margins">
 
-        <div class="ibox-title"> 
-            <div class="row">
+            <div class="ibox-title"> 
+                <div class="row">
 
-                <div class="col-md-2">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#adduser">
-                        ＋新增使用者
-                    </button>
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#adduser">
+                            ＋新增使用者
+                        </button>
 
-                    <div class="modal fade" id="adduser">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                    <h4 class="modal-title" id="myModalLabel">新增使用者</h4>
-                                </div>
-                                
-                                <form class="form-horizontal" method="get" action="{{route('user::add')}}">
-                                    <div class="modal-body">
-                                        @if(Session::has('errors')) 
+                        <div class="modal fade" id="adduser">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <h4 class="modal-title" id="myModalLabel">新增使用者</h4>
+                                    </div>
+                                    
+                                    <form class="form-horizontal" method="get" action="{{route('user::add')}}">
+                                        <div class="modal-body">
+                                            @if(Session::has('errors')) 
                                             @foreach(Session::get('errors')->all() as $error)
-                                                <div class="alert alert-danger">
-                                                    {{$error}}
-                                                </div>
-                                                <!-- when it has error, reload the page will auto open the modal -->
-                                                <script>
-                                                    modal_autoopen("#adduser");
-                                                </script>
+                                            <div class="alert alert-danger">
+                                                {{$error}}
+                                            </div>
+                                            <!-- when it has error, reload the page will auto open the modal -->
+                                            <script>
+                                            modal_autoopen("#adduser");
+                                            </script>
                                             @endforeach
-                                        @endif
-                                        <div class="row">
-                                            @include("component.modal.userAdd")
+                                            @endif
+                                            <div class="row">
+                                                @include("component.modal.userAdd")
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                                        <a href="">
-                                            <button type="submit" class="btn btn-primary">新增</button>
-                                        </a>
-                                    </div>
-                                    <!-- cancel the modal will auto clean the inputed data  -->
-                                </form>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                            <a href="">
+                                                <button type="submit" class="btn btn-primary">新增</button>
+                                            </a>
+                                        </div>
+                                        <!-- cancel the modal will auto clean the inputed data  -->
+                                    </form>
 
+                                </div>
                             </div>
                         </div>
+                        <!-- modal end -->
                     </div>
-                    <!-- modal end -->
+
+                    <div class="col-md-3 pull-right">
+                        <div class="input-group"><input type="text" placeholder="搜尋" class="input-sm form-control"> <span class="input-group-btn">
+                            <button type="button" class="btn btn-sm btn-primary"> 搜尋</button> </span></div>
+                        </div>
+
+                    </div> 
                 </div>
 
-                <div class="col-md-3 pull-right">
-                    <div class="input-group"><input type="text" placeholder="搜尋" class="input-sm form-control"> <span class="input-group-btn">
-                        <button type="button" class="btn btn-sm btn-primary"> 搜尋</button> </span></div>
-                    </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-md-12">
 
-                </div> 
-            </div>
+                            <table class="table table-bordered">
 
-            <div class="ibox-content">
-                <div class="row">
-                    <div class="col-md-12">
+                                <thead>
+                                    <tr>
+                                        <th class="col-md-1">序號</th>
+                                        <th class="col-md-2">帳號</th>
+                                        <th class="">名稱</th>
+                                        <th class="col-md-1">權限</th>
+                                        <th class="col-md-1">狀態</th>
+                                        <th class="col-md-2">操作</th>
+                                    </tr>
+                                </thead>
 
-                        <table class="table table-bordered">
-
-                            <thead>
-                                <tr>
-                                    <th class="col-md-1">序號</th>
-                                    <th class="col-md-2">帳號</th>
-                                    <th class="">名稱</th>
-                                    <th class="col-md-1">權限</th>
-                                    <th class="col-md-1">狀態</th>
-                                    <th class="col-md-2">操作</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                @foreach ($userList as $user)
+                                <tbody>
+                                    @foreach ($userList as $user)
                                     @if($user->status !== 'disable')
                                     <tr>
                                         <td>{{$user->id}}</td>
@@ -157,15 +157,15 @@
                                                             <div class="modal-body">
                                                                 <!-- 'errors'.$user->id -->
                                                                 @if(Session::has(('errors'.$user->id)))
-                                                                    @foreach(Session::get('errors'.$user->id)->all() as $error)
-                                                                        <div class="alert alert-danger">
-                                                                            {{$error}}
-                                                                        </div>
-                                                                        <!-- when it has error, reload the page will auto open the modal -->
-                                                                        <script>
-                                                                            modal_autoopen("{{'#edituser'.$user->id}}");
-                                                                        </script>
-                                                                    @endforeach
+                                                                @foreach(Session::get('errors'.$user->id)->all() as $error)
+                                                                <div class="alert alert-danger">
+                                                                    {{$error}}
+                                                                </div>
+                                                                <!-- when it has error, reload the page will auto open the modal -->
+                                                                <script>
+                                                                modal_autoopen("{{'#edituser'.$user->id}}");
+                                                                </script>
+                                                                @endforeach
                                                                 @endif
                                                                 <div class="row">
                                                                     @include("component.modal.userEdit")
@@ -185,8 +185,8 @@
                                                 </div>
                                             </div>
                                             <!-- modal end -->
-                                    
-                                           <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="{{'#deleteuser'.$user->id}}">刪除</button>
+                                            
+                                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="{{'#deleteuser'.$user->id}}">刪除</button>
 
                                             <div class="modal fade" id="{{'deleteuser'.$user->id}}">
                                                 <div class="modal-dialog" role="document">
@@ -213,18 +213,18 @@
                                         </td>
                                     </tr>
                                     @endif
-                                @endforeach
-                            </tbody>
-                        </table>
+                                    @endforeach
+                                </tbody>
+                            </table>
 
+                        </div>
                     </div>
                 </div>
-            </div>
 
+            </div>
         </div>
     </div>
-</div>
-<script>
+    <script>
     modal_reset(".modal");
-</script>
-@endsection
+    </script>
+    @endsection

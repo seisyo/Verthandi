@@ -60,7 +60,7 @@ class UserController extends Controller
             $message->to($mail)->subject('SITCON財務系統認證信');
         });
 
-        Session::flash('message', '已將密碼認證信寄送至'.$request->get('email'));
+        Session::flash('toast_message', '已將密碼認證信寄送至'.$request->get('email'));
         return redirect('/user');
         
     }
@@ -106,21 +106,21 @@ class UserController extends Controller
             'email' => $request->get('email'),            
         ]);
 
-        Session::flash('message', '已更新'.$request->get('username').'的資料');
+        Session::flash('toast_message', '已更新'.$request->get('username').'的資料');
         return redirect('/user');
     }
 
     public function deleteUser(Request $request)
     {
         $this->validate($request, [
-            'username' => 'required|exists:users'
+            'username' => 'required|exists:user'
         ]);
 
         User::where('username', '=', $request->get('username'))->first()->update([
             'status' => 'disable'
         ]);
 
-        Session::flash('message', '已刪除'.$request->get('username'));
+        Session::flash('toast_message', '已刪除'.$request->get('username'));
         return redirect('/user');
     }
 }

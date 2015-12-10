@@ -13,7 +13,7 @@
                         </span> 
                     </a>
                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                        <li><a href="">更改密碼</a></li>
+                        <li><a href="{{route('password::main')}}">修改密碼</a></li>
                         <li><a href="{{route('logout')}}">登出</a></li>
                     </ul>
                 </div>

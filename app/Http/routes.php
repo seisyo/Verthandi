@@ -20,7 +20,7 @@ Route::group(['as' => 'login::'], function(){
     ]);
 });
 
-Route::group(['middleware' => 'login_check'], function(){
+Route::group(['middleware' => 'LoginCheck'], function(){
 
     Route::get('/', ['as' => 'index',function(){
         return view('index');
@@ -64,6 +64,17 @@ Route::group(['middleware' => 'login_check'], function(){
             'as' => 'delete', 'uses' => 'UserController@deleteUser'
         ]);
     });
+
+    //password
+    Route::group(['as' => 'password::'], function(){
+        Route::get('/password',[
+            'as' => 'main', 'uses' => 'PasswordController@show'
+        ]);
+        Route::get('/password/edit',[
+            'as' => 'edit', 'uses' => 'PasswordController@edit'
+        ]);
+    });
+    
 
     //logout
     Route::get('/logout', [

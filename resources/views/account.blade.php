@@ -123,7 +123,7 @@
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                                                        <button type="button" class="btn btn-success">確定修改</button>
+                                                        <button type="button" class="btn btn-primary">確定修改</button>
                                                     </div>
                                                 </div>
                                             </div>
