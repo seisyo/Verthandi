@@ -3,7 +3,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Users;
+use App\User;
 
 use Hash;
 use Session;
@@ -22,11 +22,11 @@ class LoginController extends Controller
     public function login(Request $request)
     { 
         $this->validate($request,[
-            'username' => 'required|max:100|exists:users,username',
+            'username' => 'required|max:100|exists:user,username',
             'password' => 'required|min:8|max:100'
         ]);
 
-        $password = Users::where('username', '=', $request->get('username'))->first()->password;
+        $password = User::where('username', '=', $request->get('username'))->first()->password;
 
 
         if (Hash::check($request->get('password'), $password)) {

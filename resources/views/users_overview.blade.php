@@ -135,7 +135,7 @@
 
                             <tbody>
                                 @foreach ($userList as $user)
-                                    @if($user->status === 'enable')
+                                    @if($user->status !== 'disable')
                                     <tr>
                                         <td>{{$user->id}}</td>
                                         <td>{{$user->username}}</td>

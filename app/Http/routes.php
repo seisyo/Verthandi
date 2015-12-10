@@ -65,8 +65,6 @@ Route::group(['middleware' => 'login_check'], function(){
         ]);
     });
 
-    
-
     //logout
     Route::get('/logout', [
         'as' => 'logout', 'uses' => 'LoginController@logout'

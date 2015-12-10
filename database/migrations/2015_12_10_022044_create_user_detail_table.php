@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsersDetailTable extends Migration
+class CreateUserDetailTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,10 +12,10 @@ class CreateUsersDetailTable extends Migration
      */
     public function up()
     {
-        Schema::create('users_detail', function($table){
+        Schema::create('user_detail', function($table){
             
             $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('user');
             $table->string('first_name', 20);
             $table->string('last_name', 20);
             $table->string('email', 100);
@@ -30,6 +30,6 @@ class CreateUsersDetailTable extends Migration
      */
     public function down()
     {
-        Schema::drop('users_detail');
+        Schema::drop('user_detail');
     }
 }

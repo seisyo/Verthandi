@@ -2,9 +2,9 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
-use App\Users;
+use App\User;
 
-class UsersTableSeeder extends Seeder
+class UserTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,14 +13,14 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->delete();
+        DB::table('user')->delete();
 
-        Users::create([
+        User::create([
             'username' => 'admin',
             'password' => Hash::make('12345678'),
             'nickname' => 'seisyo',
             'permission' => 1,
-            'status' => 'enable'
+            'status' => 'admin'
         ]);
     }
 }

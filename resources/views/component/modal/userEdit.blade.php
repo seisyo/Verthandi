@@ -12,10 +12,10 @@
     <div class="form-group">
         <label class="col-md-2 control-label">真實姓名</label>
         <div class="col-md-5">
-            <input type="text" class="form-control" placeholder="姓" name="last_name" value="{{$user->users_detail->last_name}}">
+            <input type="text" class="form-control" placeholder="姓" name="last_name" value="{{$user->userDetail->last_name}}">
         </div>
         <div class="col-md-5">
-            <input type="text" class="form-control" placeholder="名" name="first_name" value="{{$user->users_detail->first_name}}">
+            <input type="text" class="form-control" placeholder="名" name="first_name" value="{{$user->userDetail->first_name}}">
         </div>
     </div>
 
@@ -24,7 +24,7 @@
     <div class="form-group">
         <label class="col-md-2 control-label">電話號碼</label>
         <div class="col-md-10">
-            <input type="text" class="form-control" name="phone" value="{{$user->users_detail->phone}}">
+            <input type="text" class="form-control" name="phone" value="{{$user->userDetail->phone}}">
         </div>
     </div>
 
@@ -33,7 +33,7 @@
     <div class="form-group">
         <label class="col-md-2 control-label">信箱</label>
         <div class="col-md-10">
-            <input type="text" class="form-control" name="email" value="{{$user->users_detail->email}}">
+            <input type="text" class="form-control" name="email" value="{{$user->userDetail->email}}">
         </div>
     </div>
 
