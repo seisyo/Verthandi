@@ -13,7 +13,7 @@
 
 Route::group(['as' => 'login::'], function(){
     Route::get('/login', [
-        'as' => 'view', 'uses' => 'LoginController@check'
+        'as' => 'main', 'uses' => 'LoginController@check'
     ]);
     Route::post('/login', [
         'as' => 'action', 'uses' => 'LoginController@login'
@@ -29,23 +29,23 @@ Route::group(['middleware' => 'LoginCheck'], function(){
     //event
     Route::group(['as' => 'event::'], function(){
         Route::get('/event', ['as' => 'main', function(){
-            return view('event');
+            return view('event.main');
         }]);
         Route::get('/event/diary', ['as' => 'diary', function(){
-            return view('event_diary');
+            return view('event.diary');
         }]);
         Route::get('/event/ledger', ['as' => 'ledger', function(){
-            return view('event_ledger');
+            return view('event.ledger');
         }]);
         Route::get('/event/manage', ['as' => 'manage', function(){
-            return view('event_manage');
+            return view('event.manage');
         }]);
     });
 
     //account
     Route::group(['as' => 'account::'], function(){
         Route::get('/account', ['as' => 'main', function(){
-            return view('account');
+            return view('account.main');
         }]);
     });
 
