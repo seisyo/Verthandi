@@ -13,7 +13,7 @@
                         </span> 
                     </a>
                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                        <li><a href="{{route('index')}}">編輯使用者</a></li>
+                        <li><a href="{{route('index')}}">編輯帳號</a></li>
                         <li><a href="{{route('password::main')}}">修改密碼</a></li>
                         <li><a href="{{route('logout')}}">登出</a></li>
                     </ul>

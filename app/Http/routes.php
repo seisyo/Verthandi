@@ -54,6 +54,9 @@ Route::group(['middleware' => 'LoginCheck'], function(){
         Route::get('/user', [
             'as' => 'main', 'uses' => 'UserController@show'
         ]);
+        // Route::get('/user/own/edit', [
+        //     'as' => 'user.edit', 'uses' => 'UserController@show'
+        // ]);
         Route::get('/user/add', [
             'as' => 'add', 'uses' => 'UserController@addUser'
         ]);
@@ -74,7 +77,6 @@ Route::group(['middleware' => 'LoginCheck'], function(){
             'as' => 'edit', 'uses' => 'PasswordController@edit'
         ]);
     });
-    
 
     //logout
     Route::get('/logout', [
