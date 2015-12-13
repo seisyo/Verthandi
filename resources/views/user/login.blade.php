@@ -8,7 +8,6 @@
         <div class="middle-box text-center loginscreen animated fadeInDown">
             <div>
                 <h2>SITCON財務系統</h2>
-                
                 @if(Session::has('errors')) 
                     @foreach(Session::get('errors')->all() as $error)
                         <div class="alert alert-danger">
