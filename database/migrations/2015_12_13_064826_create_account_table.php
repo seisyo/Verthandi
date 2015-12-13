@@ -16,10 +16,10 @@ class CreateAccountTable extends Migration
 
             $table->integer('id')->unique();
             $table->primary('id');
-            $table->string('name', 50)->unique();
+            $table->string('name', 50);
             $table->enum('group',  ['資產', '負債', '餘絀', '收益', '費損']);
             $table->enum('direction', ['借', '貸']);
-            $table->string('comment');
+            $table->string('comment')->nullable();
         });
     }
 
