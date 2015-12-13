@@ -44,9 +44,8 @@ Route::group(['middleware' => 'LoginCheck'], function(){
 
     //account
     Route::group(['as' => 'account::'], function(){
-        Route::get('/account', ['as' => 'main', function(){
-            return view('account.main');
-        }]);
+        Route::get('/account', [
+            'as' => 'main', 'uses' => 'AccountController@show']);
     });
 
     //user

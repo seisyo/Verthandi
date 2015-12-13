@@ -33,7 +33,6 @@
         <div class="ibox float-e-margins">
             
             <div class="ibox-title">
-                
                 <div class="row">
                     
                     <div class="col-md-1">
@@ -85,11 +84,11 @@
             </div>
             
             <div class="ibox-content">
-                
                 <div class="row">
-                    
                     <div class="col-md-12">
+                        
                         <table class="table table-bordered">
+                            
                             <thead>
                                 <tr>
                                     <th class="col-md-1">會計科目編號</th>
@@ -100,57 +99,60 @@
                                     <th class="col-md-2">操作</th>
                                 </tr>
                             </thead>
+                            
                             <tbody>
-                                <tr>
-                                    <td>1001</td>
-                                    <td>資產</td>
-                                    <td>現金</td>
-                                    <td>借</td>
-                                    <td>---</td>
-                                    <td>
-                                        
-                                        <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#edituser">編輯</button>
-                                        
-                                        <div class="modal fade" id="edituser">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                        <h4 class="modal-title" id="myModalLabel">編輯會計科目</h4>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        @include("component.modal.account")
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                                                        <button type="button" class="btn btn-primary">確定修改</button>
+                                @foreach ($accountList as $account)
+                                    <tr>
+                                        <td>{{$account->id}}</td>
+                                        <td>{{$account->group}}</td>
+                                        <td>{{$account->name}}</td>
+                                        <td>{{$account->direction}}</td>
+                                        <td>{{$account->comment}}</td>
+                                        <td>
+                                            
+                                            <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#edituser">編輯</button>
+                                            
+                                            <div class="modal fade" id="edituser">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                            <h4 class="modal-title" id="myModalLabel">編輯會計科目</h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            @include("component.modal.account")
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                                            <button type="button" class="btn btn-primary">確定修改</button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <!-- modal end -->
-                                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteuser">刪除</button>
+                                            <!-- modal end -->
+                                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteuser">刪除</button>
 
-                                        <div class="modal fade" id="deleteuser">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                        <h4 class="modal-title" id="myModalLabel">刪除會計科目</h4>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        確定要刪除此會計科目嗎？
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                                                        <button type="button" class="btn btn-danger">確定刪除</button>
+                                            <div class="modal fade" id="deleteuser">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                            <h4 class="modal-title" id="myModalLabel">刪除會計科目</h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            確定要刪除此會計科目嗎？
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                                            <button type="button" class="btn btn-danger">確定刪除</button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <!-- modal end -->
-                                    </td>
-                                </tr>
+                                            <!-- modal end -->
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

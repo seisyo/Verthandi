@@ -135,84 +135,84 @@
 
                                 <tbody>
                                     @foreach ($userList as $user)
-                                    @if($user->status !== 'disable')
-                                    <tr>
-                                        <td>{{$user->id}}</td>
-                                        <td>{{$user->username}}</td>
-                                        <td>{{$user->nickname}}</td>
-                                        <td>{{$user->permission}}</td>
-                                        <td>{{$user->status}}</td>
-                                        <td>
-                                            <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="{{'#edituser'.$user->id}}">預覽＆編輯</button>
-                                            <div class="modal fade" id="{{'edituser'.$user->id}}">
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-                                                        
-                                                        <div class="modal-header">
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                            <h4 class="modal-title" id="myModalLabel">預覽＆編輯使用者</h4>
+                                        @if($user->status !== 'disable')
+                                        <tr>
+                                            <td>{{$user->id}}</td>
+                                            <td>{{$user->username}}</td>
+                                            <td>{{$user->nickname}}</td>
+                                            <td>{{$user->permission}}</td>
+                                            <td>{{$user->status}}</td>
+                                            <td>
+                                                <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="{{'#edituser'.$user->id}}">預覽＆編輯</button>
+                                                <div class="modal fade" id="{{'edituser'.$user->id}}">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                <h4 class="modal-title" id="myModalLabel">預覽＆編輯使用者</h4>
+                                                            </div>
+                                                            
+                                                            <form class="form-horizontal" method="get" action="{{route('user::edit')}}">
+                                                                <div class="modal-body">
+                                                                    <!-- 'errors'.$user->id -->
+                                                                    @if(Session::has(('errors'.$user->id)))
+                                                                    @foreach(Session::get('errors'.$user->id)->all() as $error)
+                                                                    <div class="alert alert-danger">
+                                                                        {{$error}}
+                                                                    </div>
+                                                                    <!-- when it has error, reload the page will auto open the modal -->
+                                                                    <script>
+                                                                    modal_autoopen("{{'#edituser'.$user->id}}");
+                                                                    </script>
+                                                                    @endforeach
+                                                                    @endif
+                                                                    <div class="row">
+                                                                        @include("component.modal.userEdit")
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    
+                                                                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                                                    <a href="">
+                                                                        <button type="submit" class="btn btn-primary">確定修改</button>
+                                                                    </a>
+                                                                </div>
+                                                                <!-- cancel the modal will auto clean the inputed data  -->
+                                                            </form>
+
                                                         </div>
-                                                        
-                                                        <form class="form-horizontal" method="get" action="{{route('user::edit')}}">
+                                                    </div>
+                                                </div>
+                                                <!-- modal end -->
+                                                
+                                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="{{'#deleteuser'.$user->id}}">刪除</button>
+
+                                                <div class="modal fade" id="{{'deleteuser'.$user->id}}">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                <h4 class="modal-title" id="myModalLabel">刪除使用者</h4>
+                                                            </div>
                                                             <div class="modal-body">
-                                                                <!-- 'errors'.$user->id -->
-                                                                @if(Session::has(('errors'.$user->id)))
-                                                                @foreach(Session::get('errors'.$user->id)->all() as $error)
-                                                                <div class="alert alert-danger">
-                                                                    {{$error}}
-                                                                </div>
-                                                                <!-- when it has error, reload the page will auto open the modal -->
-                                                                <script>
-                                                                modal_autoopen("{{'#edituser'.$user->id}}");
-                                                                </script>
-                                                                @endforeach
-                                                                @endif
-                                                                <div class="row">
-                                                                    @include("component.modal.userEdit")
-                                                                </div>
+                                                                確定要刪除使用者「{{$user->username}}」嗎？
                                                             </div>
                                                             <div class="modal-footer">
-                                                                
-                                                                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                                                                <a href="">
-                                                                    <button type="submit" class="btn btn-primary">確定修改</button>
-                                                                </a>
+                                                                <form method="get" action="{{route('user::delete')}}">
+                                                                    <input type="hidden" name="username" value="{{$user->username}}">
+                                                                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                                                    <button type="submit" class="btn btn-danger">確定刪除</button>
+                                                                </form>
                                                             </div>
-                                                            <!-- cancel the modal will auto clean the inputed data  -->
-                                                        </form>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- modal end -->
-                                            
-                                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="{{'#deleteuser'.$user->id}}">刪除</button>
-
-                                            <div class="modal fade" id="{{'deleteuser'.$user->id}}">
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                            <h4 class="modal-title" id="myModalLabel">刪除使用者</h4>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            確定要刪除使用者「{{$user->username}}」嗎？
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <form method="get" action="{{route('user::delete')}}">
-                                                                <input type="hidden" name="username" value="{{$user->username}}">
-                                                                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                                                                <button type="submit" class="btn btn-danger">確定刪除</button>
-                                                            </form>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <!-- modal end -->
+                                                <!-- modal end -->
 
-                                        </td>
-                                    </tr>
-                                    @endif
+                                            </td>
+                                        </tr>
+                                        @endif
                                     @endforeach
                                 </tbody>
                             </table>
