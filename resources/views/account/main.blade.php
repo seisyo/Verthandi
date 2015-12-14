@@ -52,7 +52,7 @@
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
-                                            <h4 class="modal-title" id="myModalLabel">新增會計科目</h4>
+                                            <h4 class="modal-title">新增會計科目</h4>
                                         </div>
                                         
                                         <form class="form-horizontal" method="get" action="{{route('account::add')}}">
@@ -69,7 +69,7 @@
                                                     @endforeach
                                                 @endif
                                                 <div class="row">
-                                                    @include('component.modal.account')
+                                                    @include('component.modal.accountAdd')
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
@@ -135,41 +135,73 @@
                                                 <td>{{$account->comment}}</td>
                                                 <td>
                                                     
-                                                    <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#edituser">編輯</button>
+                                                    <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="{{'#edit-account'.$account->id}}">
+                                                        編輯
+                                                    </button>
                                                     
-                                                    <div class="modal fade" id="edituser">
+                                                    <div class="modal fade" id="{{'edit-account'.$account->id}}">
                                                         <div class="modal-dialog" role="document">
                                                             <div class="modal-content">
+                                                                
                                                                 <div class="modal-header">
-                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                                    <h4 class="modal-title" id="myModalLabel">編輯會計科目</h4>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                    <h4 class="modal-title">編輯會計科目</h4>
                                                                 </div>
-                                                                <div class="modal-body">
-                                                                    @include("component.modal.account")
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                                                                    <button type="button" class="btn btn-primary">確定修改</button>
-                                                                </div>
+                                                                
+                                                                <form class="form-horizontal" method="get" action="{{route('account::edit')}}">
+                                                                    <div class="modal-body">
+                                                                        @if(Session::has(('errors'.$account->id)))
+                                                                            @foreach(Session::get('errors'.$account->id)->all() as $error)
+                                                                                <div class="alert alert-danger">
+                                                                                    {{$error}}
+                                                                                </div>
+                                                                                <script>
+                                                                                    modal_autoopen("{{'#edit-account'.$account->id}}");
+                                                                                </script>
+                                                                            @endforeach
+                                                                        @endif
+                                                                        <div class="row">
+                                                                            @include("component.modal.accountEdit")
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        
+                                                                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                                                        <a href="">
+                                                                            <button type="submit" class="btn btn-primary">確定修改</button>
+                                                                        </a>
+                                                                    </div>
+                                                                </form>
+
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <!-- modal end -->
-                                                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteuser">刪除</button>
+                                                    
+                                                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="{{'#delete-account'.$account->id}}">
+                                                        刪除
+                                                    </button>
 
-                                                    <div class="modal fade" id="deleteuser">
+                                                    <div class="modal fade" id="{{'delete-account'.$account->id}}">
                                                         <div class="modal-dialog" role="document">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
-                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                                    <h4 class="modal-title" id="myModalLabel">刪除會計科目</h4>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                    <h4 class="modal-title">刪除會計科目</h4>
                                                                 </div>
                                                                 <div class="modal-body">
-                                                                    確定要刪除此會計科目嗎？
+                                                                    確定要刪除會計科目「{{$account->name}}」嗎？
                                                                 </div>
                                                                 <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                                                                    <button type="button" class="btn btn-danger">確定刪除</button>
+                                                                    <form method="get" action="{{route('account::delete')}}">
+                                                                        <input type="hidden" name="name" value="{{$account->name}}">
+                                                                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                                                        <button type="submit" class="btn btn-danger">確定刪除</button>
+                                                                    </form>
                                                                 </div>
                                                             </div>
                                                         </div>

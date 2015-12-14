@@ -52,7 +52,7 @@
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
-                                            <h4 class="modal-title" id="myModalLabel">新增使用者</h4>
+                                            <h4 class="modal-title">新增使用者</h4>
                                         </div>
                                         
                                         <form class="form-horizontal" method="get" action="{{route('user::add')}}">
@@ -62,7 +62,6 @@
                                                         <div class="alert alert-danger">
                                                             {{$error}}
                                                         </div>
-                                                        <!-- when it has error, reload the page will auto open the modal -->
                                                         <script>
                                                             modal_autoopen("#add-user");
                                                         </script>
@@ -121,14 +120,18 @@
                                                 <td>{{$user->permission}}</td>
                                                 <td>{{$user->status}}</td>
                                                 <td>
-                                                    <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="{{'#edit-user'.$user->id}}">預覽＆編輯</button>
+                                                    <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="{{'#edit-user'.$user->id}}">
+                                                        預覽＆編輯
+                                                    </button>
                                                     <div class="modal fade" id="{{'edit-user'.$user->id}}">
                                                         <div class="modal-dialog" role="document">
                                                             <div class="modal-content">
                                                                 
                                                                 <div class="modal-header">
-                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                                    <h4 class="modal-title" id="myModalLabel">預覽＆編輯使用者</h4>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                    <h4 class="modal-title">預覽＆編輯使用者</h4>
                                                                 </div>
                                                                 
                                                                 <form class="form-horizontal" method="get" action="{{route('user::edit')}}">
@@ -138,7 +141,6 @@
                                                                                 <div class="alert alert-danger">
                                                                                     {{$error}}
                                                                                 </div>
-                                                                            <!-- when it has error, reload the page will auto open the modal -->
                                                                                 <script>
                                                                                     modal_autoopen("{{'#edit-user'.$user->id}}");
                                                                                 </script>
@@ -168,8 +170,10 @@
                                                         <div class="modal-dialog" role="document">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
-                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                                    <h4 class="modal-title" id="myModalLabel">刪除使用者</h4>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                    <h4 class="modal-title">刪除使用者</h4>
                                                                 </div>
                                                                 <div class="modal-body">
                                                                     確定要刪除使用者「{{$user->username}}」嗎？
@@ -185,7 +189,6 @@
                                                         </div>
                                                     </div>
                                                     <!-- modal end -->
-
                                                 </td>
                                             </tr>
                                             @endif

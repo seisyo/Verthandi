@@ -50,6 +50,12 @@ Route::group(['middleware' => 'LoginCheck'], function(){
         Route::get('/account/add', [
             'as' => 'add', 'uses' => 'AccountController@add'
         ]);
+        Route::get('/account/edit', [
+            'as' => 'edit', 'uses' => 'AccountController@edit'
+        ]);
+        Route::get('/account/delete', [
+            'as' => 'delete', 'uses' => 'AccountController@delete'
+        ]);
     });
 
     //user
