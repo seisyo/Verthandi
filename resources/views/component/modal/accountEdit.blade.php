@@ -1,6 +1,6 @@
 <div class="col-md-12">
 
-    <div class="form-group">
+    <!-- <div class="form-group">
         <label class="col-md-2 control-label">會計要素</label>
         <div class="col-md-10">
             <select class="input-sm form-control input-s-sm inline" name="group">  
@@ -16,16 +16,16 @@
         </div>
     </div>
 
-    <div class="hr-line-dashed"></div>
-
+    <div class="hr-line-dashed"></div> -->
+<!-- 
     <div class="form-group">
         <label class="col-md-2 control-label">會計科目編號</label>
         <div class="col-sm-10">
             <input type="text" class="form-control" name="id" value="{{$account->id}}">
         </div>
-    </div>
+    </div> -->
 
-    <div class="hr-line-dashed"></div>
+    <!-- <div class="hr-line-dashed"></div> -->
 
     <div class="form-group">
         <label class="col-md-2 control-label">科目名稱</label>
@@ -34,9 +34,9 @@
         </div>
     </div>
 
-    <div class="hr-line-dashed"></div>
+    <!-- <div class="hr-line-dashed"></div> -->
 
-    <div class="form-group">
+    <!-- <div class="form-group">
         <label class="col-md-2 control-label">會計方向</label>
         <div class="col-md-10">
             <select class="input-sm form-control input-s-sm inline" name="direction">  
@@ -47,7 +47,7 @@
                 $("{{'#'.$account->id.$account->direction}}").attr("selected", "selected");
             </script>
         </div>
-    </div>
+    </div> -->
 
     <div class="hr-line-dashed"></div>
 
@@ -57,4 +57,7 @@
             <textarea class="form-control" name="comment">{{$account->comment}}</textarea>
         </div>
     </div>
+
+    <input type="hidden" class="form-control" name="id" value="{{$account->id}}">
+
 </div>

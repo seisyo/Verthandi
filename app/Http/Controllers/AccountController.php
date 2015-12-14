@@ -39,18 +39,12 @@ class AccountController extends Controller
     public function edit(Request $request)
     {
         $this->validate($request, [
-            'id' => 'required|numeric|max:99999|min:10000',
-            'group' => 'required|in:資產, 負債, 餘絀, 收益, 費損',
             'name' => 'required|max:45',
-            'direction' => 'required|in:借, 貸',
             'comment' => 'string'
         ]);
 
         Account::where('id', '=', $request->get('id'))->first()->update([
-            'id' => $request->get('id'),
-            'group' => $request->get('group'),
             'name' => $request->get('name'),
-            'direction' => $request->get('direction'),
             'comment' => $request->get('comment')
         ]);
 
@@ -60,7 +54,15 @@ class AccountController extends Controller
 
     public function delete(Request $request)
     {
+        $this->validate($request, [
+            'id' => 'required|exists:account,id'
+        ]);
 
+        $deleteAccountName = Account::where('id', '=', $request->get('id'))->first()->name;
+        Account::where('id', '=', $request->get('id'))->first()->delete();
+
+        Session::flash('toast_message', '成功刪除會計科目「'. $deleteAccountName .'」');
+        return redirect(route('account::main'));
 
     }
 }

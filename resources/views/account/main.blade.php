@@ -198,7 +198,8 @@
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <form method="get" action="{{route('account::delete')}}">
-                                                                        <input type="hidden" name="name" value="{{$account->name}}">
+                                                                        <!-- <p>{{$account->id}}</p> -->
+                                                                        <input type="hidden" name="id" value="{{$account->id}}">
                                                                         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
                                                                         <button type="submit" class="btn btn-danger">確定刪除</button>
                                                                     </form>
