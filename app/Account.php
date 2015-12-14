@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Account extends Model
 {
     protected $table = 'account';
-    protected $guarded = ['id'];
+    protected $fillable = ['id', 'name'];
     public $timestamps = false;
 }

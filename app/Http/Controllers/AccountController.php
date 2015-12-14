@@ -24,10 +24,10 @@ class AccountController extends Controller
             'comment' => 'string'
         ]);
 
-        //dd($request->get('id'));
+        //dd(intval($request->get('id')));
 
         Account::create([
-            'id' => $request->get('id'),
+            'id' => intval($request->get('id')),
             'group' => $request->get('group'),
             'name' => $request->get('name'),
             'direction' => $request->get('direction'),
