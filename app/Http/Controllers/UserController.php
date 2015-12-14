@@ -67,30 +67,53 @@ class UserController extends Controller
 
     public function editUser(Request $request)
     {
-        $validator = Validator::make(
-        [
-            'username' => $request->get('username'),
-            'nickname' => $request->get('nickname'),
-            'last_name' => $request->get('last_name'),
-            'first_name' => $request->get('first_name'),
-            'phone' => $request->get('phone'),
-            'email' => $request->get('email'),
-            'permission' => $request->get('permission')
-        ],
-        [
-            'username' => 'required|exists:user,username',
-            'nickname' => 'required|max:100',
-            'last_name' => 'required|max:15',
-            'first_name' => 'required|max:15',
-            'phone' => 'required|max:15',
-            'email' => 'required|e-mail',
-            'permission' => 'required|numeric|max:4|min:1'
-        ]);
+        if ($request->get('email') === UserDetail::where('user_id', '=', User::where('username', '=', $request->get('username'))->first()->id)->first()->email) {
+            $validator = Validator::make(
+            [
+                'username' => $request->get('username'),
+                'nickname' => $request->get('nickname'),
+                'last_name' => $request->get('last_name'),
+                'first_name' => $request->get('first_name'),
+                'phone' => $request->get('phone'),
+                'email' => $request->get('email'),
+                'permission' => $request->get('permission')
+            ],
+            [
+                'username' => 'required|exists:user,username',
+                'nickname' => 'required|max:100',
+                'last_name' => 'required|max:15',
+                'first_name' => 'required|max:15',
+                'phone' => 'required|max:15',
+                'email' => 'required|e-mail',
+                'permission' => 'required|numeric|max:4|min:1'
+            ]);
+        } else {
+            $validator = Validator::make(
+            [
+                'username' => $request->get('username'),
+                'nickname' => $request->get('nickname'),
+                'last_name' => $request->get('last_name'),
+                'first_name' => $request->get('first_name'),
+                'phone' => $request->get('phone'),
+                'email' => $request->get('email'),
+                'permission' => $request->get('permission')
+            ],
+            [
+                'username' => 'required|exists:user,username',
+                'nickname' => 'required|max:100',
+                'last_name' => 'required|max:15',
+                'first_name' => 'required|max:15',
+                'phone' => 'required|max:15',
+                'email' => 'required|e-mail|unique:user_detail,email',
+                'permission' => 'required|numeric|max:4|min:1'
+            ]);
+        }
 
         if ($validator->fails()) {
             $errorname = 'errors'.User::where('username', '=', $request->get('username'))->first()->id;
             return redirect(route('user::main'))->with($errorname, $validator->messages());
         }else{
+
             User::where('username', '=', $request->get('username'))->first()->update([
                 'nickname' => $request->get('nickname'),
                 'permission' => $request->get('permission')

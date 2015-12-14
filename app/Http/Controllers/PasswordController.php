@@ -12,7 +12,7 @@ class PasswordController extends Controller
 {
     public function show()
     {
-        return view('password');
+        return view('user.password');
     }
 
     public function edit(Request $request)

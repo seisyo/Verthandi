@@ -17,10 +17,10 @@
 
 {{-- Breadcrumb section --}}
 @section('breadcrumb')
-<h2>首頁</h2>
-<li>
-    <a href="{{route('index')}}">首頁</a>
-</li>
+    <h2>首頁</h2>
+    <li>
+        <a href="{{route('index')}}">首頁</a>
+    </li>
 @endsection
 
 {{-- Content section --}}
