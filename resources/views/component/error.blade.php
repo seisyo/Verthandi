@@ -1,8 +1,8 @@
 {{dd(isset($errors))}}
 @if(session($errors)) 
     @foreach(Session::get('$errors')->all() as $error)
-        <div class="alert alert-danger">
-            {{$error}}
+        <div class="alert {{Session::has('message')['status']}}">
+            {{Session::has('message')['message']}}
         </div>
         <!-- when it has error, reload the page will auto open the modal -->
         <script>
