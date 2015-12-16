@@ -12,6 +12,9 @@ Project Verthandi 為台灣學生所聚集而成的研討會 "SITCON 學生計�
 
 第二階段為開放各組組長可至此系統之ISSUE管理部分，可以將每一筆支出以一個個ISSUE的方式做管理和追蹤。
 
+## 注意事項
+請每次pull下來後都refresh migration再重新migrate!!
+
 ## 安裝步驟
 
 1. 安裝 apache2
