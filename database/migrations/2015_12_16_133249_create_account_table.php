@@ -12,13 +12,15 @@ class CreateAccountTable extends Migration
      */
     public function up()
     {
-         Schema::create('account', function($table){
+        Schema::create('account', function($table){
 
-            $table->integer('id')->unique();
+            $table->integer('id')->unique()->unsigned();
             $table->primary('id');
             $table->string('name', 50);
-            $table->integer('parent_id')->nullable();
-            $table->enum('direction', [1, 0]);
+            $table->integer('parent_id')->nullable()->unsigned();
+            $table->foreign('parent_id')->references('id')->on('account');
+            $table->boolean('direction');
+            //debit is true, credit is false
             $table->string('comment')->nullable();
 
         });
