@@ -13,7 +13,7 @@ class LoginController extends Controller
     public function check()
     {
         if (Session::get('check')) {    
-            return redirect(route('index', ['username' => Session::get('user')]));
+            return redirect()->route('index', ['username' => Session::get('user')]);
         } else {
             return view('user.login');
         }
@@ -33,11 +33,11 @@ class LoginController extends Controller
             Session::put('check', true);
             Session::put('user', $request->get('username'));
             
-            return redirect(route('index', ['username' => Session::get('user')]));
+            return redirect()->route('index', ['username' => Session::get('user')]);
         } else {
             Session::flash('message', '密碼錯誤');
             
-            return redirect(route('login::main'));
+            return redirect()->route('login::main');
         }
     }
 
@@ -45,6 +45,6 @@ class LoginController extends Controller
     public function logout()
     {
         Session::flush();
-        return redirect(route('login::main'));
+        return redirect()->route('login::main');
     }
 }

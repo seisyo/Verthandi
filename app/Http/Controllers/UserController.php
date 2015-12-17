@@ -61,7 +61,7 @@ class UserController extends Controller
         });
 
         Session::flash('toast_message', '已將密碼認證信寄送至「'.$request->get('email').'」');
-        return redirect(route('user::main'));
+        return redirect()->route('user::main');
         
     }
 
@@ -111,7 +111,7 @@ class UserController extends Controller
 
         if ($validator->fails()) {
             $errorname = 'errors'.User::where('username', '=', $request->get('username'))->first()->id;
-            return redirect(route('user::main'))->with($errorname, $validator->messages());
+            return redirect()->route('user::main')->with($errorname, $validator->messages());
         }else{
 
             User::where('username', '=', $request->get('username'))->first()->update([
@@ -127,7 +127,7 @@ class UserController extends Controller
                 ]);
 
             Session::flash('toast_message', '成功更新「'.$request->get('username').'」的資料');
-            return redirect(route('user::main'));
+            return redirect()->route('user::main');
         }
         
     }
@@ -143,6 +143,6 @@ class UserController extends Controller
         ]);
 
         Session::flash('toast_message', '成功刪除使用者「'.$request->get('username').'」');
-        return redirect(route('user::main'));
+        return redirect()->route('user::main');
     }
 }

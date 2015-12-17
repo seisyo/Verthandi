@@ -87,169 +87,138 @@
                         <!-- modal end -->
                     </div>
 
-                    <!-- <div class="col-md-3 pull-right">
-                        <div class="input-group">
-                            <input type="text" placeholder="搜尋" class="input-sm form-control">
-                            <span class="input-group-btn">
-                                <button type="button" class="btn btn-sm btn-primary"> 搜尋</button> 
-                            </span>
-                        </div>
-                    </div> -->
-
                     <div class="col-md-3 pull-right">
-                        
                         <select class="select2_demo_3 form-control">
                             <option></option>
                             @foreach ($accountList as $account)
-                            
-
-
-                            <option value="{{$account->name}}">{{$account->name}}</option>
+                            <option value="{{$account->id}}">{{$account->id .'  '. $account->name}}</option>
                             @endforeach
-                            <!-- <option value="Bahamas">Bahamas</option>
-                            <option value="Bahrain">Bahrain</option>
-                            <option value="Bangladesh">Bangladesh</option>
-                            <option value="Barbados">Barbados</option>
-                            <option value="Belarus">Belarus</option>
-                            <option value="Belgium">Belgium</option>
-                            <option value="Belize">Belize</option>
-                            <option value="Benin">Benin</option> -->
                         </select>
                         
                         <script>
-                            $(".select2_demo_3").select2({
-                                placeholder: "搜尋",
-                                allowClear: true
-                            });
+                        $(".select2_demo_3").select2({
+                            placeholder: "搜尋",
+                            allowClear: true
+                        });
                         </script>
                     </div>
 
+                </div>          
+            </div>
 
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="col-md-12">
 
-                        <!-- <div class="col-md-3 pull-right">
-                            <select class="form-control">
-                                <option value="資產">資產</option>
-                                <option value="負債">負債</option>
-                                <option value="餘絀">餘絀</option>
-                                <option value="收益">收益</option>
-                                <option value="費損">費損</option>
-                            </select>
-                        </div> -->
+                        <table class="table table-bordered">
 
-                    </div>          
-                </div>
-                
-                <div class="ibox-content">
-                    <div class="row">
-                        <div class="col-md-12">
+                            <thead>
+                                <tr>
+                                    <th class="col-md-1">科目編號</th>
+                                    <th class="">科目名稱</th>
+                                    <th class="col-md-1">方向</th>
+                                    <th class="col-md-1">父科目</th>
+                                    <th class="col-md-2">備註</th>
+                                    <th class="col-md-2">操作</th>
+                                </tr>
+                            </thead>
 
-                            <table class="table table-bordered">
+                            <tbody>
+                                @foreach ($accountList as $account)
+                                <tr>
+                                    <td>{{$account->id}}</td>
+                                    <td>{{$account->name}}</td>
+                                    @if ($account->direction)
+                                    <td>借</td>
+                                    @else
+                                    <td>貸</td>
+                                    @endif
+                                    <td>{{$account->parent_id}}</td>   
+                                    <td>{{$account->comment}}</td>
+                                    <td>
 
-                                <thead>
-                                    <tr>
-                                        <th class="col-md-1">會計科目編號</th>
-                                        <th class="col-md-2">會計要素</th>
-                                        <th class="">科目名稱</th>
-                                        <th class="col-md-1">方向</th>
-                                        <th class="col-md-2">備註</th>
-                                        <th class="col-md-2">操作</th>
-                                    </tr>
-                                </thead>
-                                
-                                <tbody>
-                                    @foreach ($accountList as $account)
-                                    @if ($account->id % 100 > 0)
-                                    <tr>
-                                        <td>{{$account->id}}</td>
-                                        <td>{{$account->group}}</td>
-                                        <td>{{$account->name}}</td>
-                                        <td>{{$account->direction}}</td>
-                                        <td>{{$account->comment}}</td>
-                                        <td>
+                                        <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="{{'#edit-account'.$account->id}}">
+                                            編輯
+                                        </button>
 
-                                            <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="{{'#edit-account'.$account->id}}">
-                                                編輯
-                                            </button>
+                                        <div class="modal fade" id="{{'edit-account'.$account->id}}">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
 
-                                            <div class="modal fade" id="{{'edit-account'.$account->id}}">
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-
-                                                        <div class="modal-header">
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                            <h4 class="modal-title">編輯會計科目</h4>
-                                                        </div>
-
-                                                        <form class="form-horizontal" method="get" action="{{route('account::edit')}}">
-                                                            <div class="modal-body">
-                                                                @if(Session::has(('errors'.$account->id)))
-                                                                @foreach(Session::get('errors'.$account->id)->all() as $error)
-                                                                <div class="alert alert-danger">
-                                                                    {{$error}}
-                                                                </div>
-                                                                <script>
-                                                                modal_autoopen("{{'#edit-account'.$account->id}}");
-                                                                </script>
-                                                                @endforeach
-                                                                @endif
-                                                                <div class="row">
-                                                                    @include("component.modal.accountEdit")
-                                                                </div>
-                                                            </div>
-                                                            <div class="modal-footer">
-
-                                                                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                                                                <a href="">
-                                                                    <button type="submit" class="btn btn-primary">確定修改</button>
-                                                                </a>
-                                                            </div>
-                                                        </form>
-
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                        <h4 class="modal-title">編輯會計科目</h4>
                                                     </div>
-                                                </div>
-                                            </div>
-                                            <!-- modal end -->
 
-                                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="{{'#delete-account'.$account->id}}">
-                                                刪除
-                                            </button>
-
-                                            <div class="modal fade" id="{{'delete-account'.$account->id}}">
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                            <h4 class="modal-title">刪除會計科目</h4>
-                                                        </div>
+                                                    <form class="form-horizontal" method="get" action="{{route('account::edit')}}">
                                                         <div class="modal-body">
-                                                            確定要刪除會計科目「{{$account->name}}」嗎？
+                                                            @if(Session::has(('errors'.$account->id)))
+                                                            @foreach(Session::get('errors'.$account->id)->all() as $error)
+                                                            <div class="alert alert-danger">
+                                                                {{$error}}
+                                                            </div>
+                                                            <script>
+                                                            modal_autoopen("{{'#edit-account'.$account->id}}");
+                                                            </script>
+                                                            @endforeach
+                                                            @endif
+                                                            <div class="row">
+                                                                @include("component.modal.accountEdit")
+                                                            </div>
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <form method="get" action="{{route('account::delete')}}">
-                                                                <!-- <p>{{$account->id}}</p> -->
-                                                                <input type="hidden" name="id" value="{{$account->id}}">
-                                                                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                                                                <button type="submit" class="btn btn-danger">確定刪除</button>
-                                                            </form>
+
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                                            <a href="">
+                                                                <button type="submit" class="btn btn-primary">確定修改</button>
+                                                            </a>
                                                         </div>
+                                                    </form>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- modal end -->
+
+                                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="{{'#delete-account'.$account->id}}">
+                                            刪除
+                                        </button>
+
+                                        <div class="modal fade" id="{{'delete-account'.$account->id}}">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                        <h4 class="modal-title">刪除會計科目</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        確定要刪除會計科目「{{$account->name}}」嗎？
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <form method="get" action="{{route('account::delete')}}">
+                                                            <!-- <p>{{$account->id}}</p> -->
+                                                            <input type="hidden" name="id" value="{{$account->id}}">
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                                            <button type="submit" class="btn btn-danger">確定刪除</button>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- modal end -->
-                                        </td>
-                                    </tr>
-                                    @endif
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
+                                        </div>
+                                        <!-- modal end -->
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    @endsection
+</div>
+@endsection

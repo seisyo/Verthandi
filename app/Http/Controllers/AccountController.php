@@ -33,7 +33,7 @@ class AccountController extends Controller
         ]);
 
         Session::flash('toast_message', '成功新增會計科目「'.$request->get('name').'」');
-        return redirect(route('account::main'));
+        return redirect()->route('account::main');
     }
 
     public function edit(Request $request)
@@ -49,7 +49,7 @@ class AccountController extends Controller
         ]);
 
         Session::flash('toast_message', '成功編輯會計科目「'.$request->get('name').'」');
-        return redirect(route('account::main'));
+        return redirect()->route('account::main');
     }
 
     public function delete(Request $request)
@@ -62,7 +62,14 @@ class AccountController extends Controller
         Account::where('id', '=', $request->get('id'))->first()->delete();
 
         Session::flash('toast_message', '成功刪除會計科目「'. $deleteAccountName .'」');
-        return redirect(route('account::main'));
+        return redirect()->route('account::main');
 
+    }
+
+    public function search(Request $request)
+    {
+        $this->validate([
+            
+        ]);
     }
 }

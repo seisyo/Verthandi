@@ -30,11 +30,11 @@ class PasswordController extends Controller
                 'password' => Hash::make($request->get('new_password'))
             ]);
             Session::flash('toast_message', '成功更新密碼');
-            return redirect(route('password::main'));
+            return redirect()->route('password::main');
 
         } else {
             Session::flash('message', '舊密碼輸入錯誤');
-            return redirect(route('password::main'));
+            return redirect()->route('password::main');
         }
     }
 }
