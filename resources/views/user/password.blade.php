@@ -21,7 +21,7 @@
         修改密碼
     </h2>
     <li>
-        <a href="{{route('index')}}">首頁</a>
+        <a href="{{route('index', ['username' => 'admin'])}}">首頁</a>
     </li>
     <li>
         <a href="{{route('password::main')}}">修改密碼</a>

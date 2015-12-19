@@ -34,23 +34,25 @@ class UserController extends Controller
         //generate default password
         $default_password = str_random(12);
         
-        //add new user to users table
-        User::create([
-            'username' => $request->get('username'),
-            'password' => Hash::make($default_password),
-            'nickname' => $request->get('nickname'),
-            'status' => 'enable',
-            'permission' => $request->get('permission')
-        ]);
-        
-        //add user detail info to users_detail table
-        UserDetail::create([
-            'user_id' => User::where('username', '=', $request->get('username'))->first()->id,
-            'first_name' => $request->get('first_name'),
-            'last_name' => $request->get('last_name'),
-            'email' => $request->get('email'),
-            'phone' => $request->get('phone')
-        ]);
+        DB::transaction(function () {
+            //add new user to users table
+            User::create([
+                    'username' => $request->get('username'),
+                    'password' => Hash::make($default_password),
+                    'nickname' => $request->get('nickname'),
+                    'status' => 'enable',
+                    'permission' => $request->get('permission')
+                ]);
+
+            //add user detail info to users_detail table
+            UserDetail::create([
+                    'user_id' => User::where('username', '=', $request->get('username'))->first()->id,
+                    'first_name' => $request->get('first_name'),
+                    'last_name' => $request->get('last_name'),
+                    'email' => $request->get('email'),
+                    'phone' => $request->get('phone')
+                ]);
+        });
 
         //send password to user
         $mail = $request->get('email');
@@ -110,21 +112,24 @@ class UserController extends Controller
         }
 
         if ($validator->fails()) {
-            $errorname = 'errors'.User::where('username', '=', $request->get('username'))->first()->id;
+            $errorname = 'errors' . User::where('username', '=', $request->get('username'))->first()->id;
             return redirect()->route('user::main')->with($errorname, $validator->messages());
         }else{
 
-            User::where('username', '=', $request->get('username'))->first()->update([
-                'nickname' => $request->get('nickname'),
-                'permission' => $request->get('permission')
-                ]);
+            DB::transaction(function () {
+                
+                User::where('username', '=', $request->get('username'))->first()->update([
+                    'nickname' => $request->get('nickname'),
+                    'permission' => $request->get('permission')
+                    ]);
 
-            UserDetail::where('user_id', '=', User::where('username', '=', $request->get('username'))->first()->id)->update([
-                'last_name' => $request->get('last_name'),
-                'first_name' => $request->get('first_name'),
-                'phone' => $request->get('phone'),
-                'email' => $request->get('email'),            
-                ]);
+                UserDetail::where('user_id', '=', User::where('username', '=', $request->get('username'))->first()->id)->update([
+                    'last_name' => $request->get('last_name'),
+                    'first_name' => $request->get('first_name'),
+                    'phone' => $request->get('phone'),
+                    'email' => $request->get('email'),            
+                    ]);
+            });
 
             Session::flash('toast_message', '成功更新「'.$request->get('username').'」的資料');
             return redirect()->route('user::main');

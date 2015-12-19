@@ -6,7 +6,7 @@
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                         <span class="clear">
                             <span class="block m-t-xs">
-                                <strong class="font-bold">{{Session::get('user')}}</strong>
+                                <strong class="font-bold">{{Session::get('user')->username}}</strong>
                             </span>
                             <span class="text-muted text-xs block">財務組系統開發者<b class="caret"></b>
                             </span> 
