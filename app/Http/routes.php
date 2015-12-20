@@ -27,62 +27,62 @@ Route::group(['middleware' => 'LoginCheck'], function(){
     }]);
 
     //event
-    Route::group(['as' => 'event::'], function(){
-        Route::get('/event', ['as' => 'main', function(){
+    Route::group(['as' => 'event::', 'prefix' => 'event'], function(){
+        Route::get('/', ['as' => 'main', function(){
             return view('event.main');
         }]);
-        Route::get('/event/diary', ['as' => 'diary', function(){
+        Route::get('diary', ['as' => 'diary', function(){
             return view('event.diary');
         }]);
-        Route::get('/event/ledger', ['as' => 'ledger', function(){
+        Route::get('ledger', ['as' => 'ledger', function(){
             return view('event.ledger');
         }]);
-        Route::get('/event/manage', ['as' => 'manage', function(){
+        Route::get('manage', ['as' => 'manage', function(){
             return view('event.manage');
         }]);
     });
 
     //account
-    Route::group(['as' => 'account::'], function(){
-        Route::get('/account', [
+    Route::group(['as' => 'account::', 'prefix' => 'account'], function(){
+        Route::get('/', [
             'as' => 'main', 'uses' => 'AccountController@show'
         ]);
-        Route::get('/account/add', [
+        Route::get('add', [
             'as' => 'add', 'uses' => 'AccountController@add'
         ]);
-        Route::get('/account/edit', [
+        Route::get('edit', [
             'as' => 'edit', 'uses' => 'AccountController@edit'
         ]);
-        Route::get('/account/delete', [
+        Route::get('delete', [
             'as' => 'delete', 'uses' => 'AccountController@delete'
         ]);
     });
 
     //user
-    Route::group(['as' => 'user::'], function(){
-        Route::get('/user', [
+    Route::group(['as' => 'user::', 'prefix' => 'user'], function(){
+        Route::get('/', [
             'as' => 'main', 'uses' => 'UserController@show'
         ]);
         // Route::get('/user/own/edit', [
         //     'as' => 'user.edit', 'uses' => 'UserController@show'
         // ]);
-        Route::get('/user/add', [
+        Route::get('add', [
             'as' => 'add', 'uses' => 'UserController@addUser'
         ]);
-        Route::get('/user/edit', [
+        Route::get('edit', [
             'as' => 'edit', 'uses' => 'UserController@editUser'
         ]);
-        Route::get('/user/delete', [
+        Route::get('delete', [
             'as' => 'delete', 'uses' => 'UserController@deleteUser'
         ]);
     });
 
     //password
-    Route::group(['as' => 'password::'], function(){
-        Route::get('/password',[
+    Route::group(['as' => 'password::', 'prefix' => 'password'], function(){
+        Route::get('/',[
             'as' => 'main', 'uses' => 'PasswordController@show'
         ]);
-        Route::get('/password/edit',[
+        Route::get('edit',[
             'as' => 'edit', 'uses' => 'PasswordController@edit'
         ]);
     });
