@@ -12,14 +12,11 @@ class LoginController extends Controller
 {
     public function check()
     {
-        if (Session::get('check')) {
-            dd(1);
-            return redirect()->route('index', ['username' => 'admin']);
+        if (Session::get('check')) {    
+            return redirect()->route('index', ['username' => Session::get('user')]);
         } else {
-            dd(2);
             return view('user.login');
         }
-        
     }
 
     public function login(Request $request)
@@ -29,15 +26,14 @@ class LoginController extends Controller
             'password' => 'required|min:8|max:100'
         ]);
 
-        // put all login user's data to the Session 'user'
-        $user = User::where('username', '=', $request->get('username'))->first();
-        $password = $user->password;
+        $password = User::where('username', '=', $request->get('username'))->first()->password;
 
 
         if (Hash::check($request->get('password'), $password)) {
-            Session::put('user', $user);
+            Session::put('check', true);
+            Session::put('user', $request->get('username'));
             
-            return redirect()->route('index', ['username' => 'admin']);
+            return redirect()->route('index', ['username' => Session::get('user')]);
         } else {
             Session::flash('message', '密碼錯誤');
             

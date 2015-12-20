@@ -18,16 +18,16 @@ class AccountController extends Controller
     {
         $this->validate($request, [
             'id' => 'required|unique:account,id|numeric|max:99999|min:10000',
+            'group' => 'required|in:資產, 負債, 餘絀, 收益, 費損',
             'name' => 'required|max:45',
-            'parent_id' => 'required|exits:account,id',
-            'direction' => 'required|boolean',
+            'direction' => 'required|in:借, 貸',
             'comment' => 'string'
         ]);
 
         Account::create([
             'id' => $request->get('id'),
+            'group' => $request->get('group'),
             'name' => $request->get('name'),
-            'parent_id' => $request->get('parent_id'),
             'direction' => $request->get('direction'),
             'comment' => $request->get('comment')
         ]);
@@ -66,18 +66,10 @@ class AccountController extends Controller
 
     }
 
-    // API structure controller
-    public function searchAll(Request $request)
+    public function search(Request $request)
     {
-        return response()->json($ans);
-    }
-
-    public function searchById(Request $request)
-    {
-        $this->validate($request, [
-            'id' => 'required|exits:account,id'
+        $this->validate([
+            
         ]);
-
-        
     }
 }
