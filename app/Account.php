@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Account extends Model
 {
     protected $table = 'account';
-    protected $fillable = ['id', 'name', 'comment'];
+    protected $fillable = ['id', 'name', 'comment', 'parent_id', 'direction'];
     public $timestamps = false;
 
     public function account()
