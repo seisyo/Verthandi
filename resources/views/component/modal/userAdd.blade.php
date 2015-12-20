@@ -52,10 +52,10 @@
         <label class="col-md-2 control-label">權限</label>
         <div class="col-md-10">
             <select class="input-md form-control" name="permission">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
+                <option value="1">系統管理員</option>
+                <option value="2">會計人員</option>
+                <option value="3">出納人員</option>
+                <option value="4">一般使用者</option>
             </select>
         </div>
     </div>

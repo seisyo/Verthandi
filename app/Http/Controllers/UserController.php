@@ -110,7 +110,7 @@ class UserController extends Controller
         }
 
         if ($validator->fails()) {
-            $errorname = 'errors'.User::where('username', '=', $request->get('username'))->first()->id;
+            $errorname = 'errors' . User::where('username', '=', $request->get('username'))->first()->id;
             return redirect()->route('user::main')->with($errorname, $validator->messages());
         }else{
 

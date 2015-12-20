@@ -47,13 +47,13 @@ Route::group(['middleware' => 'LoginCheck'], function(){
         Route::get('/', [
             'as' => 'main', 'uses' => 'AccountController@show'
         ]);
-        Route::get('add', [
+        Route::post('add', [
             'as' => 'add', 'uses' => 'AccountController@add'
         ]);
-        Route::get('edit', [
+        Route::post('edit', [
             'as' => 'edit', 'uses' => 'AccountController@edit'
         ]);
-        Route::get('delete', [
+        Route::post('delete', [
             'as' => 'delete', 'uses' => 'AccountController@delete'
         ]);
     });
@@ -66,13 +66,13 @@ Route::group(['middleware' => 'LoginCheck'], function(){
         // Route::get('/user/own/edit', [
         //     'as' => 'user.edit', 'uses' => 'UserController@show'
         // ]);
-        Route::get('add', [
+        Route::post('add', [
             'as' => 'add', 'uses' => 'UserController@addUser'
         ]);
-        Route::get('edit', [
+        Route::post('edit', [
             'as' => 'edit', 'uses' => 'UserController@editUser'
         ]);
-        Route::get('delete', [
+        Route::post('delete', [
             'as' => 'delete', 'uses' => 'UserController@deleteUser'
         ]);
     });
@@ -82,7 +82,7 @@ Route::group(['middleware' => 'LoginCheck'], function(){
         Route::get('/',[
             'as' => 'main', 'uses' => 'PasswordController@show'
         ]);
-        Route::get('edit',[
+        Route::post('edit',[
             'as' => 'edit', 'uses' => 'PasswordController@edit'
         ]);
     });

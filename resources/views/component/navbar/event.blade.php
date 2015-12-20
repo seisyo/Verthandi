@@ -8,7 +8,9 @@
                             <span class="block m-t-xs">
                                 <strong class="font-bold">{{Session::get('user')->username}}</strong>
                             </span>
-                            <span class="text-muted text-xs block">財務組系統開發者<b class="caret"></b>
+                            <span class="text-muted">
+                                @include('component.permission', ['from' => Session::get('user')->permission])
+                                <b class="caret"></b>
                             </span> 
                         </span> 
                     </a>

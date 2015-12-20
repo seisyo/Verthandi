@@ -57,7 +57,7 @@
                                         <h4 class="modal-title">新增會計科目</h4>
                                     </div>
 
-                                    <form class="form-horizontal" method="get" action="{{route('account::add')}}">
+                                    <form class="form-horizontal" method="post" action="{{route('account::add')}}">
                                         <div class="modal-body">
                                             @if(Session::has(('errors')))
                                             @foreach(Session::get('errors')->all() as $error)
@@ -72,6 +72,7 @@
                                             @endif
                                             <div class="row">
                                                 @include('component.modal.accountAdd')
+                                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                             </div>
                                         </div>
                                         <div class="modal-footer">
@@ -152,7 +153,7 @@
                                                         <h4 class="modal-title">編輯會計科目</h4>
                                                     </div>
 
-                                                    <form class="form-horizontal" method="get" action="{{route('account::edit')}}">
+                                                    <form class="form-horizontal" method="post" action="{{route('account::edit')}}">
                                                         <div class="modal-body">
                                                             @if(Session::has(('errors'.$account->id)))
                                                             @foreach(Session::get('errors'.$account->id)->all() as $error)
@@ -166,6 +167,7 @@
                                                             @endif
                                                             <div class="row">
                                                                 @include("component.modal.accountEdit")
+                                                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer">
@@ -199,9 +201,9 @@
                                                         確定要刪除會計科目「{{$account->name}}」嗎？
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <form method="get" action="{{route('account::delete')}}">
-                                                            <!-- <p>{{$account->id}}</p> -->
+                                                        <form method="post" action="{{route('account::delete')}}">
                                                             <input type="hidden" name="id" value="{{$account->id}}">
+                                                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                                             <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
                                                             <button type="submit" class="btn btn-danger">確定刪除</button>
                                                         </form>

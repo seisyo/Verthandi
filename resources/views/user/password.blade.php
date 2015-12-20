@@ -55,7 +55,7 @@
                     </div>
                 </div>
                 
-                <form class="form-horizontal" method="get" action="{{route('password::edit')}}">
+                <form class="form-horizontal" method="post" action="{{route('password::edit')}}">
                     
                     <div class="ibox-content">
                         <div class="row">

@@ -55,7 +55,7 @@
                                             <h4 class="modal-title">新增使用者</h4>
                                         </div>
                                         
-                                        <form class="form-horizontal" method="get" action="{{route('user::add')}}">
+                                        <form class="form-horizontal" method="post" action="{{route('user::add')}}">
                                             <div class="modal-body">
                                                 @if(Session::has(('errors')))
                                                     @foreach(Session::get('errors')->all() as $error)
@@ -69,6 +69,7 @@
                                                 @endif
                                                 <div class="row">
                                                     @include('component.modal.userAdd')
+                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
@@ -101,7 +102,6 @@
 
                                     <thead>
                                         <tr>
-                                            <th class="col-md-1">序號</th>
                                             <th class="col-md-2">帳號</th>
                                             <th class="">名稱</th>
                                             <th class="col-md-1">權限</th>
@@ -112,12 +112,11 @@
 
                                     <tbody>
                                         @foreach ($userList as $user)
-                                            @if($user->status !== 'disable')
+                                            @if ($user->status !== 'disable')
                                             <tr>
-                                                <td>{{$user->id}}</td>
                                                 <td>{{$user->username}}</td>
                                                 <td>{{$user->nickname}}</td>
-                                                <td>{{$user->permission}}</td>
+                                                <td>@include('component.permission', ['from' => $user->permission])</td>
                                                 <td>{{$user->status}}</td>
                                                 <td>
                                                     <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="{{'#edit-user'.$user->id}}">
@@ -134,7 +133,7 @@
                                                                     <h4 class="modal-title">預覽＆編輯使用者</h4>
                                                                 </div>
                                                                 
-                                                                <form class="form-horizontal" method="get" action="{{route('user::edit')}}">
+                                                                <form class="form-horizontal" method="post" action="{{route('user::edit')}}">
                                                                     <div class="modal-body">
                                                                         @if(Session::has(('errors'.$user->id)))
                                                                             @foreach(Session::get('errors'.$user->id)->all() as $error)
@@ -148,6 +147,7 @@
                                                                         @endif
                                                                         <div class="row">
                                                                             @include("component.modal.userEdit")
+                                                                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                                                         </div>
                                                                     </div>
                                                                     <div class="modal-footer">
@@ -179,8 +179,9 @@
                                                                     確定要刪除使用者「{{$user->username}}」嗎？
                                                                 </div>
                                                                 <div class="modal-footer">
-                                                                    <form method="get" action="{{route('user::delete')}}">
+                                                                    <form method="post" action="{{route('user::delete')}}">
                                                                         <input type="hidden" name="username" value="{{$user->username}}">
+                                                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                                                         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
                                                                         <button type="submit" class="btn btn-danger">確定刪除</button>
                                                                     </form>
