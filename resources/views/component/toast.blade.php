@@ -17,6 +17,6 @@
             "hideMethod": "fadeOut"
         };
 
-        toastr.{{$type}}("{{Session::get('toast_message')}}");
+        toastr.{{Session::get('toast_message')['type']}}("{{Session::get('toast_message')['content']}}");
     </script>
 @endif

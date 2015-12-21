@@ -32,7 +32,7 @@
 
 {{-- Content section --}}
 @section('content')
-@include('component.toast', ['type' => 'success'])
+@include('component.toast')
 <div class="row">
     <div class="col-md-12">
         <div class="ibox float-e-margins">

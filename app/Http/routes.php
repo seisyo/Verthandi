@@ -58,7 +58,7 @@ Route::group(['middleware' => 'LoginCheck'], function(){
         ]);
     });
 
-    //user
+    //user 
     Route::group(['as' => 'user::', 'prefix' => 'user'], function(){
         Route::get('/', [
             'as' => 'main', 'uses' => 'UserController@show'

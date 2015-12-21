@@ -17,7 +17,7 @@
                 @endif
                 @if(Session::has('message'))
                     <div class="alert alert-danger">
-                        <strong>{{Session::get('message')}}</strong>
+                        <strong>{{Session::get('message')['content']}}</strong>
                     </div>
                 @endif
                 <form class="m-t" role="form" method="post" action="{{route('login::action')}}">

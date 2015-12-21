@@ -20,7 +20,7 @@ class LoginCheckMiddleware
             return $next($request);
 
         }else{
-            Session::flash('message', '請登入');
+            Session::flash('message', ['content' => '請登入']);
             return redirect('/login');
         }
         

@@ -30,7 +30,7 @@
 
 {{-- Content section --}}
 @section('content')
-    @include('component.toast', ['type' => 'success'])
+    @include('component.toast')
     <div class="row">
         <div class="col-md-12">
             <div class="ibox float-e-margins">
@@ -120,7 +120,7 @@
                                                 <td>{{$user->status}}</td>
                                                 <td>
                                                     <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="{{'#edit-user'.$user->id}}">
-                                                        預覽＆編輯
+                                                        編輯
                                                     </button>
                                                     <div class="modal fade" id="{{'edit-user'.$user->id}}">
                                                         <div class="modal-dialog" role="document">

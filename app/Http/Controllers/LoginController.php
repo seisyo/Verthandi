@@ -34,7 +34,7 @@ class LoginController extends Controller
             
             return redirect()->route('index');
         } else {
-            Session::flash('message', '密碼錯誤');
+            Session::flash('message', ['content' => '密碼錯誤']);
             
             return redirect()->route('login::main');
         }
@@ -44,6 +44,7 @@ class LoginController extends Controller
     public function logout()
     {
         Session::flush();
+        
         return redirect()->route('login::main');
     }
 }

@@ -32,7 +32,8 @@ class AccountController extends Controller
             'comment' => $request->get('comment')
         ]);
 
-        Session::flash('toast_message', '成功新增會計科目「'.$request->get('name').'」');
+        Session::flash('toast_message', ['type' => 'success', 'content' => '成功新增會計科目「'.$request->get('name').'」']);
+        
         return redirect()->route('account::main');
     }
 
@@ -48,7 +49,8 @@ class AccountController extends Controller
             'comment' => $request->get('comment')
         ]);
 
-        Session::flash('toast_message', '成功編輯會計科目「'.$request->get('name').'」');
+        Session::flash('toast_message', ['type' => 'success', 'content'=> '成功編輯會計科目「'.$request->get('name').'」']);
+        
         return redirect()->route('account::main');
     }
 
@@ -61,7 +63,8 @@ class AccountController extends Controller
         $deleteAccountName = Account::where('id', '=', $request->get('id'))->first()->name;
         Account::where('id', '=', $request->get('id'))->first()->delete();
 
-        Session::flash('toast_message', '成功刪除會計科目「'. $deleteAccountName .'」');
+        Session::flash('toast_message', ['type' => 'success', 'content' => '成功刪除會計科目「'. $deleteAccountName .'」']);
+        
         return redirect()->route('account::main');
 
     }

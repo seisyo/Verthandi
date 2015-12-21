@@ -23,17 +23,20 @@ class PasswordController extends Controller
             'new_password_confirmation' => 'required'
         ]);
 
-        $old_password = User::where('username', '=', Session::get('user'))->first()->password;
+        $old_password = User::where('id', '=', Session::get('user')->id)->first()->password;
         //check old password
         if (Hash::check($request->get('old_password'), $old_password)) {
-            User::where('username', '=', Session::get('user'))->first()->update([
+            User::where('id', '=', Session::get('user')->id)->first()->update([
                 'password' => Hash::make($request->get('new_password'))
             ]);
-            Session::flash('toast_message', '成功更新密碼');
+            
+            Session::flash('toast_message', ['type' => 'success' ,'content' => '成功更新密碼']);
+            
             return redirect()->route('password::main');
 
         } else {
-            Session::flash('message', '舊密碼輸入錯誤');
+            Session::flash('message', ['content' => '舊密碼輸入錯誤']);
+            
             return redirect()->route('password::main');
         }
     }
