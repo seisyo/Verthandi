@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Account;
 
 use Session;
+use Validator;
 
 class AccountController extends Controller
 {
@@ -32,7 +33,7 @@ class AccountController extends Controller
             'comment' => $request->get('comment')
         ]);
 
-        Session::flash('toast_message', ['type' => 'success', 'content' => '成功新增會計科目「'.$request->get('name').'」']);
+        Session::flash('toast_message', ['type' => 'success', 'content' => '成功新增會計科目「' . $request->get('name') . '」']);
         
         return redirect()->route('account::main');
     }
@@ -49,8 +50,8 @@ class AccountController extends Controller
             'comment' => $request->get('comment')
         ]);
 
-        Session::flash('toast_message', ['type' => 'success', 'content'=> '成功編輯會計科目「'.$request->get('name').'」']);
-        
+        Session::flash('toast_message', ['type' => 'success', 'content'=> '成功編輯會計科目「' . $request->get('name') . '」']);
+         
         return redirect()->route('account::main');
     }
 
@@ -63,16 +64,63 @@ class AccountController extends Controller
         $deleteAccountName = Account::where('id', '=', $request->get('id'))->first()->name;
         Account::where('id', '=', $request->get('id'))->first()->delete();
 
-        Session::flash('toast_message', ['type' => 'success', 'content' => '成功刪除會計科目「'. $deleteAccountName .'」']);
+        Session::flash('toast_message', ['type' => 'success', 'content' => '成功刪除會計科目「' . $deleteAccountName . '」']);
         
         return redirect()->route('account::main');
 
     }
 
-    public function search(Request $request)
+    public function searchAll()
     {
-        $this->validate([
-            
+        return response()->json(Account::all());
+    }
+
+    public function searchById(Request $request)
+    {
+        $validator = Validator::make(
+        [
+            'id' => $request->get('id')
+        ],
+        [
+            'id' => 'required|exists:account,id'
         ]);
+
+        if ($validator->fails()) {
+            
+            $result = ['message' => 'Failed', 'content' => $validator->messages()];
+            return response()->json($result);
+
+        } else {
+            if ($request->get('id') % 10000 === 0) {
+                
+                $gets = Account::where('id', '<' ,$request->get('id') + 10000)->where('id', '>=', $request->get('id'))->get();
+                return response()->json(['message' => 'Success', 'content' => $gets]);
+
+            } elseif ($request->get('id') % 1000 === 0) {
+
+                $gets = Account::where('id', '<' ,$request->get('id') + 1000)->where('id', '>=', $request->get('id'))->get();
+                return response()->json(['message' => 'Success', 'content' => $gets]);
+
+            } elseif ($request->get('id') % 100 === 0) {
+
+                $gets = Account::where('id', '<' ,$request->get('id') + 100)->where('id', '>=', $request->get('id'))->get();
+                return response()->json(['message' => 'Success', 'content' => $gets]);
+
+            } elseif ($request->get('id') % 10 === 0) {
+
+                $gets = Account::where('id', '<' ,$request->get('id') + 10)->where('id', '>=', $request->get('id'))->get();
+                return response()->json(['message' => 'Success', 'content' => $gets]);
+
+            } elseif ($request->get('id') % 1 === 0) {
+
+                $gets = Account::where('id', '<' ,$request->get('id') + 1)->where('id', '>=', $request->get('id'))->get();
+                return response()->json(['message' => 'Success', 'content' => $gets]);
+
+            } else {
+                
+                return response()->json(['message' => 'Failed', 'content' => 'Something wrong!']);
+                
+            }
+        }
     }
 }

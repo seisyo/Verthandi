@@ -10,7 +10,12 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+//API
+Route::get('/search/all', 'AccountController@searchAll');
+Route::get('/search/id', 'AccountController@searchById');
 
+
+//WEB
 Route::group(['as' => 'login::'], function(){
     Route::get('/login', [
         'as' => 'main', 'uses' => 'LoginController@check'
