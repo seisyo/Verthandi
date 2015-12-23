@@ -89,18 +89,54 @@
                     </div>
 
                     <div class="col-md-3 pull-right">
-                        <select class="select2_demo_3 form-control">
+                        <!-- <form action="{{url('/search/id')}}" method="get"> -->
+                        <select class="select2_demo_3 form-control" id="search-id">
                             <option></option>
                             @foreach ($accountList as $account)
                             <option value="{{$account->id}}">{{$account->id .'  '. $account->name}}</option>
                             @endforeach
                         </select>
+                        <!-- </form> -->
                         
                         <script>
                         $(".select2_demo_3").select2({
                             placeholder: "搜尋",
                             allowClear: true
                         });
+                        </script>
+                        <script type="text/javascript">
+                        $(document).ready(function(){
+                            
+                            var DoAjax = function(url, parametors, sHandler, eHandler, pageNotFoundHandler){
+                                $.ajax({
+                                    type: "GET",
+                                    url: url,
+                                    data: parametors,
+                                    success: sHandler,
+                                    error: eHandler,
+                                    statusCode:{
+                                        404: pageNotFoundHandler
+                                    }
+                                });
+                            };
+
+                            $("#search-id").change(function(){
+                                var url = "{{url('search/id')}}";
+                                //$(this).attr("disabled", true);
+                                setTimeout(function(){
+                                    DoAjax(url, {id: $("#search-id").val()},
+                                        function(data, textStatus, jqXHR){
+                                            var datas = data.content;
+                                            $("tbody > tr").hide();
+                                            $.each(datas, function(key, value){
+                                                $("#" + value.id).show();
+                                            })
+                                        });
+
+                                    //$(#search-id).attr("disabled", false);
+                                });
+                            }); 
+                        })
                         </script>
                     </div>
 
@@ -126,7 +162,7 @@
 
                             <tbody>
                                 @foreach ($accountList as $account)
-                                <tr>
+                                <tr id="{{$account->id}}">
                                     <td>{{$account->id}}</td>
                                     <td>{{$account->name}}</td>
                                     @if ($account->direction)

@@ -91,6 +91,7 @@ class AccountController extends Controller
             return response()->json($result);
 
         } else {
+            
             if ($request->get('id') % 10000 === 0) {
                 
                 $gets = Account::where('id', '<' ,$request->get('id') + 10000)->where('id', '>=', $request->get('id'))->get();
@@ -119,8 +120,20 @@ class AccountController extends Controller
             } else {
                 
                 return response()->json(['message' => 'Failed', 'content' => 'Something wrong!']);
-                
+
             }
+
+            // $arr = str_split(strval($request->get('id')));
+            // $length = count($arr);
+            // $count = 1;
+            
+            // foreach ($arr as $value) {
+            //     if ($value === '0') {
+                    
+            //     } else {
+            //         $count++;
+            //     }            
+            // }
         }
     }
 }
