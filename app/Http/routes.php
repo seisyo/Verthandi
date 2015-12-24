@@ -59,6 +59,14 @@ Route::group(['middleware' => 'LoginCheck'], function(){
         Route::post('delete', [
             'as' => 'delete', 'uses' => 'AccountController@delete'
         ]);
+
+        //API
+        Route::get('/search/all', [
+            'as' => 'searchAll', 'uses' => 'AccountController@searchAll'
+        ]);
+        Route::get('/search/id', [
+            'as' => 'searchById', 'uses' => 'AccountController@searchById'
+        ]);
     });
 
     //user 
@@ -81,6 +89,13 @@ Route::group(['middleware' => 'LoginCheck'], function(){
         Route::post('activate', [
             'as' => 'activate', 'uses' => 'UserController@activateUser'
         ]);
+        //API
+        Route::get('/search/all', [
+            'as' => 'searchAll', 'uses' => 'UserController@searchAll'
+        ]);
+        Route::get('/search/id', [
+            'as' => 'searchById', 'uses' => 'UserController@searchById'
+        ]);
     });
 
     //password
@@ -98,9 +113,6 @@ Route::group(['middleware' => 'LoginCheck'], function(){
         'as' => 'logout', 'uses' => 'LoginController@logout'
     ]);
 
-    //API
-    Route::get('/search/all', 'AccountController@searchAll');
-    Route::get('/search/id', 'AccountController@searchById');
 });
 
 

@@ -89,17 +89,16 @@
                     </div>
 
                     <div class="col-md-3 pull-right">
-                        <!-- <form action="{{url('/search/id')}}" method="get"> -->
-                        <select class="select2_demo_3 form-control" id="search-id">
+
+                        <select class="form-control" id="search-id">
                             <option></option>
                             @foreach ($accountList as $account)
                             <option value="{{$account->id}}">{{$account->id .'  '. $account->name}}</option>
                             @endforeach
                         </select>
-                        <!-- </form> -->
                         
                         <script>
-                        $(".select2_demo_3").select2({
+                        $("#search-id").select2({
                             placeholder: "搜尋",
                             allowClear: true
                         });
@@ -121,7 +120,7 @@
                             };
 
                             $("#search-id").change(function(){
-                                var url = "{{url('search/id')}}";
+                                var url = "{{route('account::searchById')}}";
 
                                 setTimeout(function(){
                                     DoAjax(url, {id: $("#search-id").val()},
@@ -132,7 +131,7 @@
                                             $.each(datas, function(key, value){
                                                 //show the selected tr
                                                 $("#" + value.id).show();
-                                            })
+                                            });
                                         });
                                 });
                             }); 

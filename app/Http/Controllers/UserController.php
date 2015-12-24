@@ -218,4 +218,31 @@ class UserController extends Controller
         Session::flash('toast_message', ['type' => 'success', 'content' => '成功啟用使用者「' . User::find($request->get('id'))->username . '」']);
         return redirect()->route('user::main');
     }
+
+    public function searchAll()
+    {
+        return response()->json(User::all());
+    }
+
+    public function searchById(Request $request)
+    {
+        $validator = Validator::make(
+        [
+            'id' => $request->get('id')
+        ],
+        [
+            'id' => 'required|exists:user,id'
+        ]);
+
+        if ($validator->fails()) {
+
+            $result = ['message' => 'Failed', 'content' => $validator->messages()];
+            return response()->json($result);
+
+        } else {
+
+            $gets = User::find($request->get('id'));
+            return response()->json(['message' => 'Success', 'content' => $gets]);
+        }
+    }
 }

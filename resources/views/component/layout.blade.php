@@ -30,7 +30,7 @@
                 @yield('content')    
             </div>
             
-            @include('component.footer')
+            <!-- @include('component.footer') -->
         </div>
     </body>
 

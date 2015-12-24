@@ -12,7 +12,14 @@ class AccountController extends Controller
 {
     public function show()
     {
-        return view('account.main')->with('accountList', Account::all());
+        //make a parent_id array to push to view
+        $parentIdList = Account::select('parent_id')->distinct()->get();
+        $parentIdArray =[];
+        foreach ($parentIdList as $parentId) {
+            array_push($parentIdArray, $parentId['parent_id']);
+        }
+
+        return view('account.main')->with(['accountList' => Account::all(), 'parentList' => $parentIdArray]);
     }
 
     public function add(Request $request)
