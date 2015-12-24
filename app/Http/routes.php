@@ -78,6 +78,9 @@ Route::group(['middleware' => 'LoginCheck'], function(){
         Route::post('delete', [
             'as' => 'delete', 'uses' => 'UserController@deleteUser'
         ]);
+        Route::post('activate', [
+            'as' => 'activate', 'uses' => 'UserController@activateUser'
+        ]);
     });
 
     //password

@@ -28,7 +28,7 @@ class UserController extends Controller
             'last_name' => 'required|max:15',
             'first_name' => 'required|max:15',
             'phone' => 'required|max:15',
-            'email' => 'required|e-mail',
+            'email' => 'required|e-mail|unique:user_detail,email',
             'permission' => 'required|numeric|max:4|min:1'
         ]);
 
@@ -98,11 +98,11 @@ class UserController extends Controller
     }
 
     public function editUser(Request $request)
-    {
-        if ($request->get('email') === UserDetail::where('user_id', '=', User::where('username', '=', $request->get('username'))->first()->id)->first()->email) {
+    {   
+        if ($request->get('email') === UserDetail::where('user_id', '=', User::find($request->get('id'))->id)->first()->email) {
             $validator = Validator::make(
             [
-                'username' => $request->get('username'),
+                'id' => $request->get('id'),
                 'nickname' => $request->get('nickname'),
                 'last_name' => $request->get('last_name'),
                 'first_name' => $request->get('first_name'),
@@ -111,7 +111,7 @@ class UserController extends Controller
                 'permission' => $request->get('permission')
             ],
             [
-                'username' => 'required|exists:user,username',
+                'id' => 'required|exists:user,id',
                 'nickname' => 'required|max:100',
                 'last_name' => 'required|max:15',
                 'first_name' => 'required|max:15',
@@ -122,7 +122,7 @@ class UserController extends Controller
         } else {
             $validator = Validator::make(
             [
-                'username' => $request->get('username'),
+                'id' => $request->get('id'),
                 'nickname' => $request->get('nickname'),
                 'last_name' => $request->get('last_name'),
                 'first_name' => $request->get('first_name'),
@@ -131,7 +131,7 @@ class UserController extends Controller
                 'permission' => $request->get('permission')
             ],
             [
-                'username' => 'required|exists:user,username',
+                'id' => 'required|exists:user,id',
                 'nickname' => 'required|max:100',
                 'last_name' => 'required|max:15',
                 'first_name' => 'required|max:15',
@@ -143,22 +143,22 @@ class UserController extends Controller
 
         if ($validator->fails()) {
             
-            $errorname = 'errors' . User::where('username', '=', $request->get('username'))->first()->id;
+            $errorname = 'errors' . $request->get('id');
             
             return redirect()->route('user::main')->with($errorname, $validator->messages());
         }else{
 
             DB::transaction(function() use ($request){
-                User::where('username', '=', $request->get('username'))->first()->update([
+                User::find($request->get('id'))->update([
                     'nickname' => $request->get('nickname'),
                     'permission' => $request->get('permission')
                 ]);
 
-                UserDetail::where('user_id', '=', User::where('username', '=', $request->get('username'))->first()->id)->update([
+                UserDetail::where('user_id', '=', User::find($request->get('id'))->id)->update([
                     'last_name' => $request->get('last_name'),
                     'first_name' => $request->get('first_name'),
                     'phone' => $request->get('phone'),
-                    'email' => $request->get('email'),            
+                    'email' => $request->get('email')            
                 ]);
             });
 
@@ -185,7 +185,7 @@ class UserController extends Controller
             // DB::commit();
             // //transaction end
            
-            Session::flash('toast_message', ['type' => 'success', 'content' => '成功更新「' . $request->get('username') . '」的資料']);
+            Session::flash('toast_message', ['type' => 'success', 'content' => '成功更新「' . User::find($request->get('id'))->username . '」的資料']);
             return redirect()->route('user::main');
         }
         
@@ -194,14 +194,28 @@ class UserController extends Controller
     public function deleteUser(Request $request)
     {
         $this->validate($request, [
-            'username' => 'required|exists:user'
+            'id' => 'required|exists:user,id'
         ]);
 
-        User::where('username', '=', $request->get('username'))->first()->update([
+        User::find($request->get('id'))->update([
             'status' => 'disable'
         ]);
 
-        Session::flash('toast_message', ['type' => 'success', 'content' => '成功刪除使用者「' . $request->get('username') . '」']);
+        Session::flash('toast_message', ['type' => 'success', 'content' => '成功刪除使用者「' . User::find($request->get('id'))->username . '」']);
+        return redirect()->route('user::main');
+    }
+
+    public function activateUser(Request $request)
+    {
+        $this->validate($request, [
+            'id' => 'required|exists:user,id'
+        ]);
+
+        User::find($request->get('id'))->update([
+            'status' => 'enable'
+        ]);
+
+        Session::flash('toast_message', ['type' => 'success', 'content' => '成功啟用使用者「' . User::find($request->get('id'))->username . '」']);
         return redirect()->route('user::main');
     }
 }

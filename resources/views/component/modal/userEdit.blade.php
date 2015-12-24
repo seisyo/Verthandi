@@ -54,7 +54,7 @@
             $("{{'#'.$user->nickname.$user->permission}}").attr("selected", "selected");
         </script>
     </div>
-    <input type="hidden" name="username" value="{{$user->username}}">
+    <input type="hidden" name="id" value="{{$user->id}}">
     
 </div>
 
