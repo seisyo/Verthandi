@@ -10,9 +10,7 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-//API
-Route::get('/search/all', 'AccountController@searchAll');
-Route::get('/search/id', 'AccountController@searchById');
+
 
 
 //WEB
@@ -96,6 +94,10 @@ Route::group(['middleware' => 'LoginCheck'], function(){
     Route::get('/logout', [
         'as' => 'logout', 'uses' => 'LoginController@logout'
     ]);
+
+    //API
+    Route::get('/search/all', 'AccountController@searchAll');
+    Route::get('/search/id', 'AccountController@searchById');
 });
 
 

@@ -122,18 +122,18 @@
 
                             $("#search-id").change(function(){
                                 var url = "{{url('search/id')}}";
-                                //$(this).attr("disabled", true);
+
                                 setTimeout(function(){
                                     DoAjax(url, {id: $("#search-id").val()},
                                         function(data, textStatus, jqXHR){
                                             var datas = data.content;
+                                            //hide all tr
                                             $("tbody > tr").hide();
                                             $.each(datas, function(key, value){
+                                                //show the selected tr
                                                 $("#" + value.id).show();
                                             })
                                         });
-
-                                    //$(#search-id).attr("disabled", false);
                                 });
                             }); 
                         })

@@ -30,9 +30,15 @@ class LoginController extends Controller
         $password = $userInfo->password;
 
         if (Hash::check($request->get('password'), $password)) {
-            Session::put('user', $userInfo);
+            if ($userInfo->status === 'enable' || $userInfo->status === 'admin') {
+                Session::put('user', $userInfo);
             
-            return redirect()->route('index');
+                return redirect()->route('index');
+            } else {
+                Session::flash('message', ['content' => '非合法使用者']);
+            
+                return redirect()->route('login::main');
+            }
         } else {
             Session::flash('message', ['content' => '密碼錯誤']);
             
