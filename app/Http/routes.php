@@ -83,11 +83,14 @@ Route::group(['middleware' => 'LoginCheck'], function(){
         Route::post('edit', [
             'as' => 'edit', 'uses' => 'UserController@editUser'
         ]);
-        Route::post('delete', [
-            'as' => 'delete', 'uses' => 'UserController@deleteUser'
+        Route::post('disable', [
+            'as' => 'disable', 'uses' => 'UserController@disableUser'
         ]);
         Route::post('activate', [
             'as' => 'activate', 'uses' => 'UserController@activateUser'
+        ]);
+        Route::post('delete', [
+            'as' => 'delete', 'uses' => 'UserController@deleteUser'
         ]);
         //API
         Route::get('/search/all', [

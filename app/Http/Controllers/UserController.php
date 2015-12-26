@@ -191,7 +191,7 @@ class UserController extends Controller
         
     }
 
-    public function deleteUser(Request $request)
+    public function disableUser(Request $request)
     {
         $this->validate($request, [
             'id' => 'required|exists:user,id'
@@ -201,7 +201,7 @@ class UserController extends Controller
             'status' => 'disable'
         ]);
 
-        Session::flash('toast_message', ['type' => 'success', 'content' => '成功刪除使用者「' . User::find($request->get('id'))->username . '」']);
+        Session::flash('toast_message', ['type' => 'success', 'content' => '成功停用使用者「' . User::find($request->get('id'))->username . '」']);
         return redirect()->route('user::main');
     }
 
@@ -216,6 +216,23 @@ class UserController extends Controller
         ]);
 
         Session::flash('toast_message', ['type' => 'success', 'content' => '成功啟用使用者「' . User::find($request->get('id'))->username . '」']);
+        return redirect()->route('user::main');
+    }
+
+    public function deleteUser(Request $request)
+    {
+        $this->validate($request, [
+            'id' => 'required|exists:user,id'
+        ]);
+
+        $deletename = User::find($request->get('id'))->username;
+
+        DB::transaction(function () use ($request){
+            UserDetail::find($request->get('id'))->delete();
+            User::find($request->get('id'))->delete();
+        });
+
+        Session::flash('toast_message', ['type' => 'success', 'content' => '成功刪除使用者「' . $deletename . '」']);
         return redirect()->route('user::main');
     }
 

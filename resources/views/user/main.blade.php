@@ -96,13 +96,7 @@
                             <option value="{{$user->id}}">{{$user->username}}</option>
                             @endforeach
                         </select>
-                        
-                        <script>
-                        $("#search-id").select2({
-                            placeholder: "搜尋",
-                            allowClear: true
-                        });
-                        </script>
+
                         <script type="text/javascript">
                         $(document).ready(function(){
                             
@@ -118,7 +112,11 @@
                                     }
                                 });
                             };
-
+                            $("#search-id").select2({
+                                placeholder: "搜尋",
+                                allowClear: true
+                            });
+                            
                             $("#search-id").change(function(){
                                 var url = "{{route('user::searchById')}}";
 
@@ -147,9 +145,9 @@
                                     <tr>
                                         <th class="col-md-2">帳號</th>
                                         <th class="">名稱</th>
-                                        <th class="col-md-1">權限</th>
+                                        <th class="col-md-2">權限</th>
                                         <th class="col-md-1">狀態</th>
-                                        <th class="col-md-2">操作</th>
+                                        <th class="col-md-3">操作</th>
                                     </tr>
                                 </thead>
 
@@ -207,22 +205,24 @@
                                                 </div>
                                                 <!-- modal end -->
                                                 
-                                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="{{'#delete-user'.$user->id}}">刪除</button>
+                                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="{{'#disable-user'.$user->id}}">
+                                                    停用
+                                                </button>
 
-                                                <div class="modal fade" id="{{'delete-user'.$user->id}}">
+                                                <div class="modal fade" id="{{'disable-user'.$user->id}}">
                                                     <div class="modal-dialog" role="document">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
                                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
-                                                                <h4 class="modal-title">刪除使用者</h4>
+                                                                <h4 class="modal-title">停用使用者</h4>
                                                             </div>
                                                             <div class="modal-body">
-                                                                確定要刪除使用者「{{$user->username}}」嗎？
+                                                                確定要停用使用者「{{$user->username}}」嗎？
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <form method="post" action="{{route('user::delete')}}">
+                                                                <form method="post" action="{{route('user::disable')}}">
                                                                     <input type="hidden" name="id" value="{{$user->id}}">
                                                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                                                     <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
@@ -246,9 +246,9 @@
                                     <tr>
                                         <th class="col-md-2">帳號</th>
                                         <th class="">名稱</th>
-                                        <th class="col-md-1">權限</th>
+                                        <th class="col-md-2">權限</th>
                                         <th class="col-md-1">狀態</th>
-                                        <th class="col-md-2">操作</th>
+                                        <th class="col-md-3">操作</th>
                                     </tr>
                                 </thead>
 
@@ -306,7 +306,9 @@
                                                 </div>
                                                 <!-- modal end -->
                                                 
-                                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="{{'#activate-user'.$user->id}}">啟用</button>
+                                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="{{'#activate-user'.$user->id}}">
+                                                    啟用
+                                                </button>
 
                                                 <div class="modal fade" id="{{'activate-user'.$user->id}}">
                                                     <div class="modal-dialog" role="document">
@@ -326,6 +328,34 @@
                                                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                                                     <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
                                                                     <button type="submit" class="btn btn-primary">確定啟用</button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- modal end -->
+                                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="{{'#delete-user'.$user->id}}">
+                                                    刪除
+                                                </button>
+
+                                                <div class="modal fade" id="{{'delete-user'.$user->id}}">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                                <h4 class="modal-title">刪除使用者</h4>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                確定要刪除使用者「{{$user->username}}」嗎？
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <form method="post" action="{{route('user::delete')}}">
+                                                                    <input type="hidden" name="id" value="{{$user->id}}">
+                                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                                                    <button type="submit" class="btn btn-danger">確定刪除</button>
                                                                 </form>
                                                             </div>
                                                         </div>

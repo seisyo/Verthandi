@@ -3,7 +3,7 @@
     <div class="form-group">
         <label class="col-md-3 control-label">父會計科目編號</label>
         <div class="col-md-9">
-            <select class="form-control aa" name="parent_id" id="parent_id">
+            <select class="form-control aa" name="parent_id" id="parent-id">
                 <option></option>
                 @foreach ($accountList as $account)
                     @if (in_array($account->id, $parentList))
@@ -12,10 +12,10 @@
                 @endforeach
             </select>
             <script>
-                $("#parent_id").select2({
-                    placeholder: "搜尋",
-                    allowClear: true
-                });
+                // $("#parent_id").select2({
+                //     placeholder: "搜尋",
+                //     allowClear: true
+                // });
             </script>
         </div>
     </div>
