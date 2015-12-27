@@ -21,6 +21,7 @@ class CreateUserTable extends Migration
             $table->enum('permission', [1, 2, 3, 4]);
             $table->enum('status', ['enable', 'disable', 'admin']);
             $table->timestamps();
+            
         });
     }
 

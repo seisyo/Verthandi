@@ -1,5 +1,6 @@
 <div class="col-md-12">
 
+    dd($user);
     <div class="form-group">
         <label class="col-md-2 control-label">暱稱</label>
         <div class="col-md-10">

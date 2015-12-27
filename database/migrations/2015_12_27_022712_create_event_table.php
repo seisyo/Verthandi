@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UserAddSoftDelete extends Migration
+class CreateEventTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,10 +12,14 @@ class UserAddSoftDelete extends Migration
      */
     public function up()
     {
-        Schema::table('user', function ($table) {
-            
+        Schema::create('event', function($table){
+
+            $table->increments('id');
+            $table->string('name', 50)->unique();
+            $table->date('event_at');
+            $table->timestamps();
             $table->softDeletes();
-        
+
         });
     }
 
@@ -26,10 +30,6 @@ class UserAddSoftDelete extends Migration
      */
     public function down()
     {
-        Schema::table('user', function ($table) {
-            
-            $table->dropSoftDeletes();
-            
-        });
+        Schema::drop('event');
     }
 }

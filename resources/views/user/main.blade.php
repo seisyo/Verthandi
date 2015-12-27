@@ -12,6 +12,44 @@
 <script src="assets/js/plugins/select2/select2.full.min.js"></script>
 <script src="assets/js/custom/modal_autoopen.js"></script>
 <script src="assets/js/custom/modal_reset.js"></script>
+<script type="text/javascript">
+
+$(document).ready(function(){
+    
+    var DoAjax = function(url, parametors, sHandler, eHandler, pageNotFoundHandler){
+        $.ajax({
+            type: "GET",
+            url: url,
+            data: parametors,
+            success: sHandler,
+            error: eHandler,
+            statusCode:{
+                404: pageNotFoundHandler
+            }
+        });
+    };
+    
+    $("#search-id").select2({
+        placeholder: "搜尋",
+        allowClear: true
+    });
+    
+    $("#search-id").change(function(){
+        var url = "{{route('user::searchById')}}";
+
+        setTimeout(function(){
+            DoAjax(url, {id: $("#search-id").val()},
+                function(data, textStatus, jqXHR){
+                    //hide all tr
+                    $("tbody > tr").hide();
+                    //show the selected tr
+                    $("#" + data.content.id).show();
+                });
+        });
+    }); 
+});
+
+</script>
 @endsection
 
 {{-- Sidebar default/event --}}
@@ -97,41 +135,6 @@
                             @endforeach
                         </select>
 
-                        <script type="text/javascript">
-                        $(document).ready(function(){
-                            
-                            var DoAjax = function(url, parametors, sHandler, eHandler, pageNotFoundHandler){
-                                $.ajax({
-                                    type: "GET",
-                                    url: url,
-                                    data: parametors,
-                                    success: sHandler,
-                                    error: eHandler,
-                                    statusCode:{
-                                        404: pageNotFoundHandler
-                                    }
-                                });
-                            };
-                            $("#search-id").select2({
-                                placeholder: "搜尋",
-                                allowClear: true
-                            });
-                            
-                            $("#search-id").change(function(){
-                                var url = "{{route('user::searchById')}}";
-
-                                setTimeout(function(){
-                                    DoAjax(url, {id: $("#search-id").val()},
-                                        function(data, textStatus, jqXHR){
-                                            //hide all tr
-                                            $("tbody > tr").hide();
-                                            //show the selected tr
-                                            $("#" + data.content.id).show();
-                                        });
-                                });
-                            }); 
-                        })
-                        </script>
                     </div>
                 </div>
 
@@ -226,7 +229,7 @@
                                                                     <input type="hidden" name="id" value="{{$user->id}}">
                                                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                                                     <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                                                                    <button type="submit" class="btn btn-danger">確定刪除</button>
+                                                                    <button type="submit" class="btn btn-danger">確定停用</button>
                                                                 </form>
                                                             </div>
                                                         </div>
