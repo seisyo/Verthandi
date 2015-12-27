@@ -10,11 +10,12 @@ use Validator;
 
 class AccountController extends Controller
 {
-    public function show()
+    public function showAccount()
     {
         //make a parent_id array to push to view
         $parentIdList = Account::select('parent_id')->distinct()->get();
         $parentIdArray =[];
+        
         foreach ($parentIdList as $parentId) {
             array_push($parentIdArray, $parentId['parent_id']);
         }
@@ -22,7 +23,7 @@ class AccountController extends Controller
         return view('account.main')->with(['accountList' => Account::all(), 'parentList' => $parentIdArray]);
     }
 
-    public function add(Request $request)
+    public function addAccount(Request $request)
     {
         $this->validate($request, [
             'id' => 'required|unique:account,id|numeric|max:99999|min:10000',
@@ -45,7 +46,7 @@ class AccountController extends Controller
         return redirect()->route('account::main');
     }
 
-    public function edit(Request $request)
+    public function editAccount(Request $request)
     {
         $this->validate($request, [
             'name' => 'required|max:45',
@@ -62,7 +63,7 @@ class AccountController extends Controller
         return redirect()->route('account::main');
     }
 
-    public function delete(Request $request)
+    public function deleteAccount(Request $request)
     {
         $this->validate($request, [
             'id' => 'required|exists:account,id'
@@ -77,12 +78,12 @@ class AccountController extends Controller
 
     }
 
-    public function searchAll()
+    public function searchAllAccount()
     {
         return response()->json(Account::all());
     }
 
-    public function searchById(Request $request)
+    public function searchByIdAccount(Request $request)
     {
         $validator = Validator::make(
         [

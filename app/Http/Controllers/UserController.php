@@ -15,7 +15,7 @@ use DB;
 
 class UserController extends Controller
 {
-    public function show()
+    public function showUser()
     {
         return view('user.main')->with('userList', User::all());
     }
@@ -146,6 +146,7 @@ class UserController extends Controller
             $errorname = 'errors' . $request->get('id');
             
             return redirect()->route('user::main')->with($errorname, $validator->messages());
+            
         }else{
 
             DB::transaction(function() use ($request){
@@ -185,7 +186,7 @@ class UserController extends Controller
             // DB::commit();
             // //transaction end
            
-            Session::flash('toast_message', ['type' => 'success', 'content' => '成功更新「' . User::find($request->get('id'))->username . '」的資料']);
+            Session::flash('toast_message', ['type' => 'success', 'content' => '成功更新使用者「' . User::find($request->get('id'))->username . '」']);
             return redirect()->route('user::main');
         }
         
@@ -225,23 +226,23 @@ class UserController extends Controller
             'id' => 'required|exists:user,id'
         ]);
 
-        $deletename = User::find($request->get('id'))->username;
+        $deleteName = User::find($request->get('id'))->username;
 
         DB::transaction(function () use ($request){
             UserDetail::find($request->get('id'))->delete();
             User::find($request->get('id'))->delete();
         });
 
-        Session::flash('toast_message', ['type' => 'success', 'content' => '成功刪除使用者「' . $deletename . '」']);
+        Session::flash('toast_message', ['type' => 'success', 'content' => '成功刪除使用者「' . $deleteName . '」']);
         return redirect()->route('user::main');
     }
 
-    public function searchAll()
+    public function searchAllUser()
     {
         return response()->json(User::all());
     }
 
-    public function searchById(Request $request)
+    public function searchByIdUser(Request $request)
     {
         $validator = Validator::make(
         [

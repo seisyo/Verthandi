@@ -2,16 +2,16 @@
 
 {{-- Custom css section --}}
 @section('custom_css')
-<link rel="stylesheet" href="assets/css/plugins/toastr/toastr.min.css">
-<link rel="stylesheet" href="assets/css/plugins/select2/select2.min.css">
+<link rel="stylesheet" href="{{url('assets/css/plugins/toastr/toastr.min.css')}}">
+<link rel="stylesheet" href="{{url('assets/css/plugins/select2/select2.min.css')}}">
 @endsection
 
 {{-- Custom js section --}}
 @section('custom_js')
-<script src="assets/js/plugins/toastr/toastr.min.js"></script>
-<script src="assets/js/plugins/select2/select2.full.min.js"></script>
-<script src="assets/js/custom/modal_autoopen.js"></script>
-<script src="assets/js/custom/modal_reset.js"></script>
+<script src="{{url('assets/js/plugins/toastr/toastr.min.js')}}"></script>
+<script src="{{url('assets/js/plugins/select2/select2.full.min.js')}}"></script>
+<script src="{{url('assets/js/custom/modal_autoopen.js')}}"></script>
+<script src="{{url('assets/js/custom/modal_reset.js')}}"></script>
 <script type="text/javascript">
 
 $(document).ready(function(){
@@ -178,6 +178,7 @@ $(document).ready(function(){
                                                             </div>
                                                             
                                                             <form class="form-horizontal" method="post" action="{{route('user::edit')}}">
+                                                                
                                                                 <div class="modal-body">
                                                                     @if(Session::has(('errors'.$user->id)))
                                                                         @foreach(Session::get('errors'.$user->id)->all() as $error)
@@ -194,6 +195,7 @@ $(document).ready(function(){
                                                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                                                     </div>
                                                                 </div>
+
                                                                 <div class="modal-footer">
                                                                     
                                                                     <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
@@ -201,6 +203,7 @@ $(document).ready(function(){
                                                                         <button type="submit" class="btn btn-primary">確定修改</button>
                                                                     </a>
                                                                 </div>
+
                                                             </form>
 
                                                         </div>
@@ -215,15 +218,18 @@ $(document).ready(function(){
                                                 <div class="modal fade" id="{{'disable-user'.$user->id}}">
                                                     <div class="modal-dialog" role="document">
                                                         <div class="modal-content">
+                                                            
                                                             <div class="modal-header">
                                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                                 <h4 class="modal-title">停用使用者</h4>
                                                             </div>
+
                                                             <div class="modal-body">
                                                                 確定要停用使用者「{{$user->username}}」嗎？
                                                             </div>
+
                                                             <div class="modal-footer">
                                                                 <form method="post" action="{{route('user::disable')}}">
                                                                     <input type="hidden" name="id" value="{{$user->id}}">
@@ -232,6 +238,7 @@ $(document).ready(function(){
                                                                     <button type="submit" class="btn btn-danger">確定停用</button>
                                                                 </form>
                                                             </div>
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -316,15 +323,18 @@ $(document).ready(function(){
                                                 <div class="modal fade" id="{{'activate-user'.$user->id}}">
                                                     <div class="modal-dialog" role="document">
                                                         <div class="modal-content">
+                                                            
                                                             <div class="modal-header">
                                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                                 <h4 class="modal-title">啟用使用者</h4>
                                                             </div>
+
                                                             <div class="modal-body">
                                                                 確定要啟用使用者「{{$user->username}}」嗎？
                                                             </div>
+
                                                             <div class="modal-footer">
                                                                 <form method="post" action="{{route('user::activate')}}">
                                                                     <input type="hidden" name="id" value="{{$user->id}}">
@@ -333,6 +343,7 @@ $(document).ready(function(){
                                                                     <button type="submit" class="btn btn-primary">確定啟用</button>
                                                                 </form>
                                                             </div>
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -344,15 +355,18 @@ $(document).ready(function(){
                                                 <div class="modal fade" id="{{'delete-user'.$user->id}}">
                                                     <div class="modal-dialog" role="document">
                                                         <div class="modal-content">
+                                                            
                                                             <div class="modal-header">
                                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                                 <h4 class="modal-title">刪除使用者</h4>
                                                             </div>
+
                                                             <div class="modal-body">
                                                                 確定要刪除使用者「{{$user->username}}」嗎？
                                                             </div>
+
                                                             <div class="modal-footer">
                                                                 <form method="post" action="{{route('user::delete')}}">
                                                                     <input type="hidden" name="id" value="{{$user->id}}">
@@ -361,6 +375,7 @@ $(document).ready(function(){
                                                                     <button type="submit" class="btn btn-danger">確定刪除</button>
                                                                 </form>
                                                             </div>
+                                                            
                                                         </div>
                                                     </div>
                                                 </div>

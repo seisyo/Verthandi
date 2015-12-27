@@ -31,48 +31,60 @@ Route::group(['middleware' => 'LoginCheck'], function(){
 
     //event
     Route::group(['as' => 'event::', 'prefix' => 'event'], function(){
-        Route::get('/', ['as' => 'main', function(){
-            return view('event.main');
-        }]);
+        Route::get('/', [
+            'as' => 'main', 'uses' => 'EventController@showEventMain'
+        ]);
         Route::get('diary', ['as' => 'diary', function(){
             return view('event.diary');
         }]);
         Route::get('ledger', ['as' => 'ledger', function(){
             return view('event.ledger');
         }]);
-        Route::get('manage', ['as' => 'manage', function(){
-            return view('event.manage');
-        }]);
+
+        Route::post('add',[
+            'as' => 'add', 'uses' => 'EventController@addEvent'
+        ]);
+        Route::post('edit',[
+            'as' => 'edit', 'uses' => 'EventController@editEvent'
+        ]);
+        Route::post('delete',[
+            'as' => 'delete', 'uses' => 'EventController@deleteEvent'
+        ]);
+        
     });
+    //event manage
+    Route::get('event/manage', [
+        'as' => 'event::manage', 'uses' => 'EventController@showEventManage'
+    ]);
 
     //account
     Route::group(['as' => 'account::', 'prefix' => 'account'], function(){
         Route::get('/', [
-            'as' => 'main', 'uses' => 'AccountController@show'
+            'as' => 'main', 'uses' => 'AccountController@showAccount'
         ]);
         Route::post('add', [
-            'as' => 'add', 'uses' => 'AccountController@add'
+            'as' => 'add', 'uses' => 'AccountController@addAccount'
         ]);
         Route::post('edit', [
-            'as' => 'edit', 'uses' => 'AccountController@edit'
+            'as' => 'edit', 'uses' => 'AccountController@editAccount'
         ]);
         Route::post('delete', [
-            'as' => 'delete', 'uses' => 'AccountController@delete'
+            'as' => 'delete', 'uses' => 'AccountController@deleteAccount'
         ]);
 
         //API
         Route::get('/search/all', [
-            'as' => 'searchAll', 'uses' => 'AccountController@searchAll'
+            'as' => 'searchAll', 'uses' => 'AccountController@searchAllAccount'
         ]);
         Route::get('/search/id', [
-            'as' => 'searchById', 'uses' => 'AccountController@searchById'
+            'as' => 'searchById', 'uses' => 'AccountController@searchByIdAccount'
         ]);
     });
 
     //user 
     Route::group(['as' => 'user::', 'prefix' => 'user'], function(){
         Route::get('/', [
-            'as' => 'main', 'uses' => 'UserController@show'
+            'as' => 'main', 'uses' => 'UserController@showUser'
         ]);
         // Route::get('/user/own/edit', [
         //     'as' => 'user.edit', 'uses' => 'UserController@show'
@@ -94,10 +106,10 @@ Route::group(['middleware' => 'LoginCheck'], function(){
         ]);
         //API
         Route::get('/search/all', [
-            'as' => 'searchAll', 'uses' => 'UserController@searchAll'
+            'as' => 'searchAll', 'uses' => 'UserController@searchAllUser'
         ]);
         Route::get('/search/id', [
-            'as' => 'searchById', 'uses' => 'UserController@searchById'
+            'as' => 'searchById', 'uses' => 'UserController@searchByIdUser'
         ]);
     });
 
