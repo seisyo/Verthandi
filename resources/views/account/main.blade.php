@@ -41,15 +41,15 @@
         //         allowClear: true
         //     });
         // });
-        var enforceModalFocusFn = $.fn.modal.Constructor.prototype.enforceFocus;
+        // var enforceModalFocusFn = $.fn.modal.Constructor.prototype.enforceFocus;
 
-        $.fn.modal.Constructor.prototype.enforceFocus = function() {};
+        // $.fn.modal.Constructor.prototype.enforceFocus = function() {};
 
-        $confModal.on('hidden', function() {
-            $.fn.modal.Constructor.prototype.enforceFocus = enforceModalFocusFn;
-        });
+        // $confModal.on('hidden', function() {
+        //     $.fn.modal.Constructor.prototype.enforceFocus = enforceModalFocusFn;
+        // });
 
-        $confModal.modal({ backdrop : false });
+        // $confModal.modal({ backdrop : false });
 
         $("#parent-id").select2({
             placeholder: "搜尋",

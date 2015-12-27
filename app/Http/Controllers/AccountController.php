@@ -48,10 +48,23 @@ class AccountController extends Controller
 
     public function editAccount(Request $request)
     {
-        $this->validate($request, [
+        $validator = Validator::make(
+        [   
+            'name' => $request->get('name'),
+            'comment' => $request->get('comment')
+        ],
+        [
             'name' => 'required|max:45',
             'comment' => 'string'
         ]);
+
+        if ($validator->fails()) {
+            
+            $errorname = 'errors' . $request->get('id');
+            
+            return redirect()->route('account::main')->with($errorname, $validator->messages());
+
+        }
 
         Account::where('id', '=', $request->get('id'))->first()->update([
             'name' => $request->get('name'),

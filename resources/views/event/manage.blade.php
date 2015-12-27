@@ -13,7 +13,47 @@
 <script src="{{url('assets/js/plugins/toastr/toastr.min.js')}}"></script>
 <script src="{{url('assets/js/plugins/select2/select2.full.min.js')}}"></script>
 <script src="{{url('assets/js/custom/modal_autoopen.js')}}"></script>
-<script src="{{url('assets/js/custom/modal_reset.js')}}"></script>   
+<script src="{{url('assets/js/custom/modal_reset.js')}}"></script>
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        
+        var DoAjax = function(url, parametors, sHandler, eHandler, pageNotFoundHandler){
+            $.ajax({
+                type: "GET",
+                url: url,
+                data: parametors,
+                success: sHandler,
+                error: eHandler,
+                statusCode:{
+                    404: pageNotFoundHandler
+                }
+            });
+        };
+
+        $("#search-id").select2({
+            placeholder: "搜尋",
+            allowClear: true
+        });
+
+        
+        $("#search-id").change(function(){
+            var url = "{{route('event::searchById')}}";
+
+            setTimeout(function(){
+                DoAjax(url, {id: $("#search-id").val()},
+                    function(data, textStatus, jqXHR){
+                        //hide all tr
+                        $("tbody > tr").hide();
+        
+                        //show the selected tr
+                        $("#" + data.content.id).show();
+                        
+                    });
+            });
+        }); 
+    })
+</script>   
 @endsection
 
 {{-- Sidebar default/event --}}
@@ -90,12 +130,14 @@
                     </div>
 
                     <div class="col-md-3 pull-right">
-                        <div class="input-group">
-                            <input type="text" placeholder="搜尋" class="input-sm form-control">
-                            <span class="input-group-btn">
-                                <button type="button" class="btn btn-sm btn-primary"> 搜尋</button> 
-                            </span>
-                        </div>
+
+                        <select class="form-control" id="search-id">
+                            <option></option>
+                            @foreach ($eventList as $event)
+                            <option value="{{$event->id}}">{{$event->name}}</option>
+                            @endforeach
+                        </select>
+                        
                     </div>
 
                 </div>
@@ -116,7 +158,7 @@
                             </thead>
                             @foreach($eventList as $event)
                             <tbody>
-                                <tr>
+                                <tr id="{{$event->id}}">
                                     <!-- connect to the event main page -->
                                     <td><a href="{{route('event::main')}}">{{$event->name}}</a></td>
                                     <td>{{date("Y-m-d", strtotime($event->created_at))}}</td>

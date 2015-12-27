@@ -82,4 +82,31 @@ class EventController extends Controller
         Session::flash('toast_message', ['type' => 'success', 'content' => '成功刪除活動「' . $deleteEvent . '」']);
         return redirect()->route('event::manage');
     }
+
+    public function searchAllEvent()
+    {
+        return response()->json(Event::all());
+    }
+
+    public function searchByIdEvent(Request $request)
+    {
+        $validator = Validator::make(
+        [
+            'id' => $request->get('id')
+        ],
+        [
+            'id' => 'required|exists:event,id'
+        ]);
+
+        if ($validator->fails()) {
+
+            $result = ['message' => 'Failed', 'content' => $validator->messages()];
+            return response()->json($result);
+
+        } else {
+
+            $gets = Event::find($request->get('id'));
+            return response()->json(['message' => 'Success', 'content' => $gets]);
+        }
+    }
 }

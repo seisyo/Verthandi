@@ -50,6 +50,14 @@ Route::group(['middleware' => 'LoginCheck'], function(){
         Route::post('delete',[
             'as' => 'delete', 'uses' => 'EventController@deleteEvent'
         ]);
+
+        //API
+        Route::get('/search/all', [
+            'as' => 'searchAll', 'uses' => 'EventController@searchAllEvent'
+        ]);
+        Route::get('/search/id', [
+            'as' => 'searchById', 'uses' => 'EventController@searchByIdEvent'
+        ]);
         
     });
     //event manage
