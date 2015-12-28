@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Account;
+use App\Event;
 
 use Session;
 use Validator;
@@ -20,7 +21,7 @@ class AccountController extends Controller
             array_push($parentIdArray, $parentId['parent_id']);
         }
 
-        return view('account.main')->with(['accountList' => Account::all(), 'parentList' => $parentIdArray]);
+        return view('account.main')->with(['accountList' => Account::all(), 'parentList' => $parentIdArray, 'eventList' => Event::all()]);
     }
 
     public function addAccount(Request $request)

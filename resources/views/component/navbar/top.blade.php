@@ -23,34 +23,18 @@
                     
                     <ul class="dropdown-menu dropdown-messages">
                         
+                        @foreach($eventList as $event)
                         <li>
-                            <a href="{{route('event::main')}}">
+                            <a href="{{url('event/' . $event->id . '/main')}}">
                                 <div class="text-center link-block">
-                                    <strong>SITCON 2016</strong>
+                                    <strong>{{$event->name}}</strong>
                                 </div>
                             </a>
                         </li>
 
                         <li class="divider"></li>
                         
-                        <li>
-                            <a href="{{route('event::main')}}">
-                                <div class="text-center link-block">
-                                    <strong>hackgen 2015</strong>
-                                </div>
-                            </a>
-                        </li>
-
-                        <li class="divider"></li>
-
-                        <li>
-                            <a href="{{route('event::main')}}">
-                                <div class="text-center link-block">
-                                    <strong>SITCON 2015</strong>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
+                        @endforeach
                         <li>
                             <a href="{{route('event::manage')}}">
                                 <div class="text-center link-block">

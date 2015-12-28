@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 
 use App\User;
 use App\UserDetail;
+use App\Event;
 
 use Hash;
 use Session;
@@ -17,7 +18,7 @@ class UserController extends Controller
 {
     public function showUser()
     {
-        return view('user.main')->with('userList', User::all());
+        return view('user.main')->with(['eventList' => Event::all(), 'userList' => User::all()]);;
     }
 
     public function addUser(Request $request)

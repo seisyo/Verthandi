@@ -11,7 +11,7 @@ class EventController extends Controller
 {
     public function showEventMain($id)
     {
-        return view('event.main')->with(['eventInfo' => Event::find($id)]);
+        return view('event.main')->with(['eventList' => Event::all(), 'eventInfo' => Event::find($id)]);
     }
 
     public function showEventManage()

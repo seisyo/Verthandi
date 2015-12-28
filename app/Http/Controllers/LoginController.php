@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\User;
+use App\Event;
 
 use Hash;
 use Session;
@@ -18,6 +19,11 @@ class LoginController extends Controller
             return view('user.login');
         }
     }
+
+    public function showIndex()
+    {
+        return view('index')->with(['eventList' => Event::all()]);
+    } 
 
     public function login(Request $request)
     { 

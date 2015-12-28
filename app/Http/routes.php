@@ -25,9 +25,9 @@ Route::group(['as' => 'login::'], function(){
 
 Route::group(['middleware' => 'LoginCheck'], function(){
 
-    Route::get('/', ['as' => 'index',function(){
-        return view('index');
-    }]);
+    Route::get('/', [
+        'as' => 'index', 'uses' => 'LoginController@showIndex'
+    ]);
 
     //event
     Route::group(['as' => 'event::', 'prefix' => 'event'], function(){

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\User;
+use App\Event;
 
 use Hash;
 use Session;
@@ -12,7 +13,7 @@ class PasswordController extends Controller
 {
     public function show()
     {
-        return view('user.password');
+        return view('user.password')->with(['eventList' => Event::all()]);;
     }
 
     public function edit(Request $request)
