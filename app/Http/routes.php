@@ -31,16 +31,18 @@ Route::group(['middleware' => 'LoginCheck'], function(){
 
     //event
     Route::group(['as' => 'event::', 'prefix' => 'event'], function(){
-        Route::get('/', [
+        //every event
+        Route::get('{id}/main', [
             'as' => 'main', 'uses' => 'EventController@showEventMain'
         ]);
-        Route::get('diary', ['as' => 'diary', function(){
+        Route::get('{id}/diary', ['as' => 'diary', function(){
             return view('event.diary');
         }]);
-        Route::get('ledger', ['as' => 'ledger', function(){
+        Route::get('{id}/ledger', ['as' => 'ledger', function(){
             return view('event.ledger');
         }]);
 
+        //manage
         Route::post('add',[
             'as' => 'add', 'uses' => 'EventController@addEvent'
         ]);

@@ -28,8 +28,7 @@
                 <a href="{{route('event::main')}}">
                     <i class="fa fa-paper-plane"></i>
                     <span class="nav-label">
-                        <!-- <i class="fa fa-paper-plane"></i> -->
-                        SITCON 2016
+                        {{$eventInfo->name}}
                     </span>
                     <span class="fa arrow"></span>
                 </a>

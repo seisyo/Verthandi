@@ -9,9 +9,9 @@ use Validator;
 
 class EventController extends Controller
 {
-    public function showEventMain()
+    public function showEventMain($id)
     {
-        return view('event.main');
+        return view('event.main')->with(['eventInfo' => Event::find($id)]);
     }
 
     public function showEventManage()

@@ -160,7 +160,7 @@
                             <tbody>
                                 <tr id="{{$event->id}}">
                                     <!-- connect to the event main page -->
-                                    <td><a href="{{route('event::main')}}">{{$event->name}}</a></td>
+                                    <td><a href="{{url('event/' . $event->id . '/main')}}">{{$event->name}}</a></td>
                                     <td>{{date("Y-m-d", strtotime($event->created_at))}}</td>
                                     <td>{{$event->event_at}}</td>
                                     <td>
