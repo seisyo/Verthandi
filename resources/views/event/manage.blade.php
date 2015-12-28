@@ -156,8 +156,9 @@
                                     <th class="col-md-2">操作</th>
                                 </tr>
                             </thead>
-                            @foreach($eventList as $event)
+                            
                             <tbody>
+                                @foreach($eventList as $event)
                                 <tr id="{{$event->id}}">
                                     <!-- connect to the event main page -->
                                     <td><a href="{{url('event/' . $event->id . '/main')}}">{{$event->name}}</a></td>
@@ -239,8 +240,9 @@
                                         <!-- modal end -->
                                     </td>
                                 </tr>
-                            </tbody>
                             @endforeach
+                            </tbody>
+                            
                         </table>
 
                     </div>

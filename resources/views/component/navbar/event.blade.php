@@ -34,10 +34,10 @@
                 </a>
                 <ul class="nav nav-second-level collapse">
                     <li class="">
-                        <a href="{{route('event::diary')}}"><span class="nav-label"><i class="fa fa-book"></i>日記簿</span> </a>
+                        <a href="{{url('event/' . $eventInfo->id . '/diary')}}"><span class="nav-label"><i class="fa fa-book"></i>日記簿</span> </a>
                     </li>
                     <li class="">
-                        <a href="{{route('event::ledger')}}"><span class="nav-label"><i class="fa fa-bookmark"></i>分類帳</span> </a>
+                        <a href="{{url('event/' . $eventInfo->id . '/ledger')}}"><span class="nav-label"><i class="fa fa-bookmark"></i>分類帳</span> </a>
                     </li>
                 </ul>
             </li>

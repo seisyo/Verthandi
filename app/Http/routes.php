@@ -35,12 +35,12 @@ Route::group(['middleware' => 'LoginCheck'], function(){
         Route::get('{id}/main', [
             'as' => 'main', 'uses' => 'EventController@showEventMain'
         ]);
-        Route::get('{id}/diary', ['as' => 'diary', function(){
-            return view('event.diary');
-        }]);
-        Route::get('{id}/ledger', ['as' => 'ledger', function(){
-            return view('event.ledger');
-        }]);
+        Route::get('{id}/diary',[
+            'as' => 'diary', 'uses' => 'EventController@showEventDiary'
+        ]);
+        Route::get('{id}/ledger', [
+            'as' => 'ledger', 'uses' => 'EventController@showEventLedger'
+        ]);
 
         //manage
         Route::post('add',[

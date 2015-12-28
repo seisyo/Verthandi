@@ -1,4 +1,4 @@
-@extends('component.layout', ['title' => 'SITCON 2016'])
+@extends('component.layout', ['title' => $eventInfo->name])
 
 {{-- Custom css section --}}
 @section('custom_css')
@@ -28,7 +28,7 @@
 {{-- Breadcrumb section --}}
 @section('breadcrumb')
     <h2>
-        SITCON 2016 日記簿
+        {{$eventInfo->name}} 日記簿
     </h2>
     <li>
         <a href="{{route('index')}}">首頁</a>
@@ -37,10 +37,10 @@
         <a href="{{route('event::manage')}}">活動帳簿管理</a>
     </li>
     <li>
-        <a href="{{route('event::main')}}">SITCON 2016</a>
+        <a href="{{url('event/' . $eventInfo->id . '/main')}}">{{$eventInfo->name}}</a>
     </li>
     <li>
-        <a href="{{route('event::diary')}}">日記簿</a>
+        <a href="{{url('event/' . $eventInfo->id . '/diary')}}">日記簿</a>
     </li>
 @endsection
 
