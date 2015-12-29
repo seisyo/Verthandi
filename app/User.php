@@ -16,5 +16,6 @@ class User extends Model
     public function userDetail(){
 
         return $this->hasOne('App\UserDetail', 'user_id', 'id');
+
     }
 }

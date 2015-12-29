@@ -7,7 +7,7 @@
                 <label>交易日期</label>
                 <input type="text" class="form-control"> 
                 <script>
-                $('#sandbox-container input').datepicker({});
+                    $('#sandbox-container input').datepicker({});
                 </script>
             </div> 
             

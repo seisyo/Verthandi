@@ -13,4 +13,5 @@ class Event extends Model
     protected $guarded = ['id'];
     protected $fillable = ['name', 'event_at'];
     protected $dates = ['deleted_at'];
+
 }
