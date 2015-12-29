@@ -5,17 +5,23 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Event extends Model
+class Diary extends Model
 {
     use SoftDeletes;
 
-    protected $table = 'event';
+    protected $table = 'diary';
     protected $guarded = ['id'];
-    protected $fillable = ['name', 'event_at'];
+    protected $fillable = ['direction', 'amount'];
     protected $dates = ['deleted_at'];
 
     public function trade()
     {
-        return $this->hasMany('App\Trade');
+        return $this->belongsTo('App\Trade');
     }
+
+    public function account()
+    {
+        return $this->belongsTo('App\Account');
+    }
+
 }

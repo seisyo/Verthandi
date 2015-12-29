@@ -14,4 +14,9 @@ class Account extends Model
     {
         return $this->hasOne('App\Account', 'parent_id', 'id');
     }
+
+    public function diary()
+    {
+        return $this->hasMany('App\Diary');
+    }
 }

@@ -13,9 +13,13 @@ class User extends Model
     protected $guarded = ['id'];
     protected $dates = ['deleted_at'];
 
-    public function userDetail(){
-
+    public function userDetail()
+    {
         return $this->hasOne('App\UserDetail', 'user_id', 'id');
+    }
 
+    public function trade()
+    {
+        return $this->hasMany('App\Trade');
     }
 }
