@@ -99,54 +99,59 @@ $(document).ready(function() {
                                             <th class="col-md-1">經手人</th>
                                             <th class="col-md-1">記帳人</th>   
                                             <th data-hide="all"></th>
-                                            <th class="col-md-2">備註</th>
+                                            <th>備註</th>
                                             <th class="col-md-2">操作</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>{{$trade->trade_at}}</td>
-                                            <td>{{$trade->created_at}}</td>
+                                            <td>{{date("Y-m-d", strtotime($trade->trade_at))}}</td>
+                                            <td>{{date("Y-m-d", strtotime($trade->created_at))}}</td>
                                             <td>{{$trade->name}}</td>
                                             <td>{{$trade->handler}}</td>
                                             <td>{{$trade->user->userDetail->last_name . $trade->user->userDetail->first_name}}</td>
                                             <td>
-                                                <div class="col-md-12">
-                                                    <div class="row">
-                                                        <table class="col-md-12">
-                                                            <thead>
-                                                                <th class="col-md-6">借方</th>
-                                                                <th class="col-md-6">金額</th>
-                                                            </thead>
-                                                            <tbody>
-                                                                @foreach($trade->diary as $diary)
-                                                                @if($diary->direction === 1)
-                                                                <tr>
-                                                                    <td class="col-md-6">{{$diary->account->name}}</td>
-                                                                    <td class="col-md-6">{{$diary->amount}}</td>
-                                                                </tr>
-                                                                @endif
-                                                                @endforeach
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                    <div class="row">
-                                                        <table class="col-md-12">
-                                                            <thead>
-                                                                <th class="col-md-6">貸方</th>
-                                                                <th class="col-md-6">金額</th>
-                                                            </thead>
-                                                            <tbody>
-                                                                @foreach($trade->diary as $diary)
-                                                                @if($diary->direction === 0)
-                                                                <tr>
-                                                                    <td class="col-md-6">{{$diary->account->name}}</td>
-                                                                    <td class="col-md-6">{{$diary->amount}}</td>
-                                                                </tr>
-                                                                @endif
-                                                                @endforeach
-                                                            </tbody>
-                                                        </table>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        
+                                                        <div class="col-md-4">
+                                                            <table class="table table-bordered">
+                                                                <thead>
+                                                                    <th class="">借方</th>
+                                                                    <th class="col-md-1">金額</th>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach($trade->diary as $diary)
+                                                                    @if($diary->direction === 1)
+                                                                    <tr>
+                                                                        <td>{{$diary->account->name}}</td>
+                                                                        <td>{{$diary->amount}}</td>
+                                                                    </tr>
+                                                                    @endif
+                                                                    @endforeach
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+
+                                                        <div class="col-md-4">
+                                                            <table class="table table-bordered">
+                                                                <thead>
+                                                                    <th class="">貸方</th>
+                                                                    <th class="col-md-1">金額</th>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach($trade->diary as $diary)
+                                                                    @if($diary->direction === 0)
+                                                                    <tr>
+                                                                        <td>{{$diary->account->name}}</td>
+                                                                        <td>{{$diary->amount}}</td>
+                                                                    </tr>
+                                                                    @endif
+                                                                    @endforeach
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        
                                                     </div>
                                                 </div>
                                             </td>
