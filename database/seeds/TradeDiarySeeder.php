@@ -23,7 +23,8 @@ class TradeDiarySeeder extends Seeder
             'handler' => '劉彥君',
             'comment' => '跟歷年一樣的金額',
             'event_id' => 1,
-            'user_id' => 1
+            'user_id' => 1,
+            'trade_at' => '2015-12-31'
         ]);
 
         Diary::create([

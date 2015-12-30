@@ -89,6 +89,7 @@ $(document).ready(function() {
                         <div class="row">
                             <div class="col-md-12">
 
+                                @foreach($tradeList as $trade)
                                 <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="9">
                                     <thead>
                                         <tr>
@@ -104,11 +105,11 @@ $(document).ready(function() {
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>2015-11-29</td>
-                                            <td>2015-11-30</td>
-                                            <td>行銷組購買文具</td>
-                                            <td>影子</td>
-                                            <td>遇雨</td>
+                                            <td>{{$trade->trade_at}}</td>
+                                            <td>{{$trade->created_at}}</td>
+                                            <td>{{$trade->name}}</td>
+                                            <td>{{$trade->handler}}</td>
+                                            <td>{{$trade->user->userDetail->last_name . $trade->user->userDetail->first_name}}</td>
                                             <td>
                                                 <div class="col-md-12">
                                                     <div class="row">
@@ -118,10 +119,14 @@ $(document).ready(function() {
                                                                 <th class="col-md-6">金額</th>
                                                             </thead>
                                                             <tbody>
+                                                                @foreach($trade->diary as $diary)
+                                                                @if($diary->direction === 1)
                                                                 <tr>
-                                                                    <td class="col-md-6">文具用品</td>
-                                                                    <td class="col-md-6">1000</td>
+                                                                    <td class="col-md-6">{{$diary->account->name}}</td>
+                                                                    <td class="col-md-6">{{$diary->amount}}</td>
                                                                 </tr>
+                                                                @endif
+                                                                @endforeach
                                                             </tbody>
                                                         </table>
                                                     </div>
@@ -132,16 +137,20 @@ $(document).ready(function() {
                                                                 <th class="col-md-6">金額</th>
                                                             </thead>
                                                             <tbody>
+                                                                @foreach($trade->diary as $diary)
+                                                                @if($diary->direction === 0)
                                                                 <tr>
-                                                                    <td class="col-md-6">文具用品</td>
-                                                                    <td class="col-md-6">1000</td>
+                                                                    <td class="col-md-6">{{$diary->account->name}}</td>
+                                                                    <td class="col-md-6">{{$diary->amount}}</td>
                                                                 </tr>
+                                                                @endif
+                                                                @endforeach
                                                             </tbody>
                                                         </table>
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td>---</td>
+                                            <td>{{$trade->comment}}</td>
                                             <td>
 
                                                 <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#edittrans">編輯</button>
@@ -198,6 +207,7 @@ $(document).ready(function() {
                                     </tr>
                                 </tfoot>
                             </table>
+                            @endforeach
 
                         </div>
                     </div>

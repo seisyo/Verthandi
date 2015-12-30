@@ -14,6 +14,11 @@ class Trade extends Model
     protected $fillable = ['name', 'comment', 'handler'];
     protected $dates = ['deleted_at'];
 
+    // public function user()
+    // {
+    //     return $this->hasOne('App\User', 'id', 'user_id');
+    // }
+
     public function user()
     {
         return $this->belongsTo('App\User');

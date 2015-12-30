@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Event;
+use App\Trade;
+
 use Session;
 use Validator;
 
@@ -16,7 +18,7 @@ class EventController extends Controller
 
     public function showEventDiary($id)
     {
-        return view('event.diary')->with(['eventList' => Event::all(), 'eventInfo' => Event::find($id)]);
+        return view('event.diary')->with(['eventList' => Event::all(), 'eventInfo' => Event::find($id), 'tradeList' => Trade::all()]);
     }
 
     public function showEventLedger($id)
