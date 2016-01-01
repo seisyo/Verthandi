@@ -4,6 +4,7 @@
 @section('custom_css')
 <link href="{{url('assets/css/plugins/datapicker/datepicker3.css')}}" rel="stylesheet">
 <link href="{{url('assets/css/plugins/footable/footable.core.css')}}" rel="stylesheet">
+<link rel="stylesheet" href="{{url('assets/css/plugins/select2/select2.min.css')}}">
 
 @endsection
 
@@ -11,6 +12,7 @@
 @section('custom_js')
 <script src="{{url('assets/js/plugins/datapicker/bootstrap-datepicker.js')}}"></script>
 <script src="{{url('assets/js/plugins/footable/footable.all.min.js')}}"></script>
+<script src="{{url('assets/js/plugins/select2/select2.full.min.js')}}"></script>
 <script src="{{url('assets/js/custom/add_transaction.js')}}"></script>
 <script src="{{url('assets/js/custom/delete_transaction.js')}}"></script>
 <script>
@@ -54,26 +56,61 @@ $(document).ready(function() {
                 <div class="row">
                     <div class="col-md-12">
 
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#adduser">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-transaction">
                             ＋新增交易分錄
                         </button>
 
-                        <div class="modal fade" id="adduser">
+                        <div class="modal fade" id="add-transaction">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                         <h4 class="modal-title" id="myModalLabel">新增交易分錄</h4>
                                     </div>
-                                    <div class="modal-body">
-                                        <div class="row">
-                                            @include('component.modal.transaction')
+                                    
+                                    <form class="form-horizontal" method="post" action="{{url('event/' . $eventInfo->id . '/diary/add')}}" id="transaction-add-form">
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                @include('component.modal.transaction')
+                                                <input type="hidden" id="debit_array" name="debit_array">
+                                                <input type="hidden" id="credit_array" name="credit_array">
+                                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                                        <button type="button" class="btn btn-primary">新增</button>
-                                    </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                            <button type="button" class="btn btn-primary" id="add-button">新增</button>
+                                        </div>
+                                    </form>
+                                    <script>
+                                        var debitJson = {};
+                                        var creditJson = {};
+                                        $("#add-button").click(function(){
+                                            
+                                            var count = 0;
+                                            $("div[id*='debit_account']").each(function(){
+                                                debitJson[count] = {
+                                                    "account" : $(this).find(".account").val(),
+                                                    "amount" : $(this).find(".amount").val()
+                                                };
+                                                count++;
+                                            });
+
+                                            count = 0;
+                                            $("div[id*='credit_account']").each(function(){
+                                                creditJson[count] = {
+                                                    "account" : $(this).find(".account").val(),
+                                                    "amount" : $(this).find(".amount").val()
+                                                };
+                                            });
+
+                                            $("#debit_array").val(JSON.stringify(debitJson));
+                                            $("#credit_array").val(JSON.stringify(creditJson));
+
+                                            $("#transaction-add-form").submit();
+                                        });
+                                    </script>
+
                                 </div>
                             </div>
                         </div>
@@ -158,9 +195,9 @@ $(document).ready(function() {
                                             <td>{{$trade->comment}}</td>
                                             <td>
 
-                                                <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#edittrans">編輯</button>
+                                                <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#edit-transaction">編輯</button>
 
-                                                <div class="modal fade" id="edittrans">
+                                                <div class="modal fade" id="edit-transaction">
                                                     <div class="modal-dialog" role="document">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
@@ -179,9 +216,9 @@ $(document).ready(function() {
                                                 </div>
                                                 <!-- modal end -->
 
-                                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deletetrans">刪除</button>
+                                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete-transaction">刪除</button>
 
-                                                <div class="modal fade" id="deletetrans">
+                                                <div class="modal fade" id="delete-transaction">
                                                     <div class="modal-dialog" role="document">
                                                         <div class="modal-content">
                                                             <div class="modal-header">

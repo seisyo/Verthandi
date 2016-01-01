@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 
 use App\Event;
 use App\Trade;
+use App\Account;
 
 use Session;
 use Validator;
@@ -18,7 +19,14 @@ class EventController extends Controller
 
     public function showEventDiary($id)
     {
-        return view('event.diary')->with(['eventList' => Event::all(), 'eventInfo' => Event::find($id), 'tradeList' => Trade::all()]);
+        $parentIdList = Account::select('parent_id')->distinct()->get();
+        $parentIdArray =[];
+        
+        foreach ($parentIdList as $parentId) {
+            array_push($parentIdArray, $parentId['parent_id']);
+        }
+
+        return view('event.diary')->with(['eventList' => Event::all(), 'eventInfo' => Event::find($id), 'tradeList' => Trade::all(), 'accountList' => Account::all(), 'parentList' => $parentIdArray]);
     }
 
     public function showEventLedger($id)
@@ -120,5 +128,13 @@ class EventController extends Controller
             $gets = Event::find($request->get('id'));
             return response()->json(['message' => 'Success', 'content' => $gets]);
         }
+    }
+
+    public function addEventDiary(Request $request, $id)
+    {
+
+        $debits = json_decode($request->get('debit_array'));
+        $credits = json_decode($request->get('credit_array'));
+
     }
 }

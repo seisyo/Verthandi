@@ -5,7 +5,7 @@
             
             <div class="form-group" id="sandbox-container">
                 <label>交易日期</label>
-                <input type="text" class="form-control"> 
+                <input type="text" class="form-control" name="trade_at"> 
                 <script>
                     $('#sandbox-container input').datepicker({});
                 </script>
@@ -13,17 +13,17 @@
             
             <div class="form-group">
                 <label>交易內容</label>
-                <input type="text" class="form-control">
+                <input type="text" class="form-control" name="name">
             </div>
             
             <div class="form-group">
                 <label>經手人</label>
-                <input type="text" class="form-control">
+                <input type="text" class="form-control" name="handler">
             </div>
             
             <div class="form-group">
                 <label>備註</label>
-                <textarea class="form-control"></textarea>
+                <textarea class="form-control" name="comment"></textarea>
             </div>
             
         </div>
@@ -43,10 +43,10 @@
             </div>
             <div class="row" id="debit_account1">
                 <div class="form-group col-md-6">
-                    <input type="text" class="form-control" placeholder="會計科目">
+                    <input type="text" class="form-control account" placeholder="會計科目">
                 </div>
                 <div class="form-group col-md-4">
-                    <input type="text" class="form-control" placeholder="金額">
+                    <input type="text" class="form-control amount" placeholder="金額">
                 </div>
                 <div class="col-md-2">
                     <button type="button" class="btn btn-outline btn-danger" id="debit_delbtn1">
@@ -59,6 +59,7 @@
                 add_transaction(debit_addbtn, 'debit_delbtn', 'debit_account', account_row_debit);
                 delete_transaction(account_row_debit);
             </script>
+           
 
         </div>
         
@@ -74,10 +75,10 @@
             </div>
             <div class="row" id="credit_account1">
                 <div class="form-group col-md-6">
-                    <input type="text" class="form-control" placeholder="會計科目">
+                    <input type="text" class="form-control account" placeholder="會計科目">
                 </div>
                 <div class="form-group col-md-4">
-                    <input type="text" class="form-control" placeholder="金額">
+                    <input type="text" class="form-control amount" placeholder="金額">
                 </div>
                 <div class="col-md-1">
                     <button type="button" class="btn btn-outline btn-danger" id="credit_delbtn1">
