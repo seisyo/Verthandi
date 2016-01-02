@@ -33,7 +33,9 @@
 
         <div class="col-md-6" id="account_row_debit">
             
-            <label>借方</label>
+            <div class="row">
+                <label>借方</label>
+            </div>
             <div class="row">
                 <div class="form-group col-md-1">
                     <button type="button" class="btn btn-outline btn-default" id="debit_addbtn">
@@ -65,7 +67,9 @@
         
         <div class="col-md-6" id="account_row_credit">
             
-            <label>貸方</label>
+            <div class="row">
+                <label>貸方</label>
+            </div>
             <div class="row">
                 <div class="form-group col-md-1">
                     <button type="button" class="btn btn-outline btn-default" id="credit_addbtn">

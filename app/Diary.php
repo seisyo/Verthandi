@@ -11,7 +11,7 @@ class Diary extends Model
 
     protected $table = 'diary';
     protected $guarded = ['id'];
-    protected $fillable = ['direction', 'amount'];
+    protected $fillable = ['direction', 'amount', 'trade_id', 'account_id'];
     protected $dates = ['deleted_at'];
 
     public function trade()

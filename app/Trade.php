@@ -11,7 +11,7 @@ class Trade extends Model
 
     protected $table = 'trade';
     protected $guarded = ['id'];
-    protected $fillable = ['name', 'comment', 'handler'];
+    protected $fillable = ['name', 'comment', 'handler', 'event_id', 'user_id', 'trade_at'];
     protected $dates = ['deleted_at'];
 
     // public function user()

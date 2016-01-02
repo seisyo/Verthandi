@@ -5,10 +5,12 @@ use Illuminate\Http\Request;
 
 use App\Event;
 use App\Trade;
+use App\Diary;
 use App\Account;
 
 use Session;
 use Validator;
+use DB;
 
 class EventController extends Controller
 {
@@ -132,9 +134,124 @@ class EventController extends Controller
 
     public function addEventDiary(Request $request, $id)
     {
+        $validator = Validator::make(
+        [  
+            'id' => $id,
+            'trade_at' => $request->get('trade_at'),
+            'name' => $request->get('name'),
+            'handler' => $request->get('handler'),
+            'comment' => $request->get('comment'),
+            'debit_array' => $request->get('debit_array'),
+            'credit_array' => $request->get('credit_array')
+        ],
+        [
+            'id' => 'required|exists:event,id',
+            'trade_at' => 'required|date',
+            'name' => 'required|max:95',
+            'handler' => 'required|max:15',
+            'comment' => 'string',
+            'debit_array' => 'required|json',
+            'credit_array' => 'required|json'
+        ]);
+        if ($validator->fails()) {
+            
+            $result = ['message' => 'Failed', 'content' => $validator->messages()];
+            return response()->json($result);
 
-        $debits = json_decode($request->get('debit_array'));
-        $credits = json_decode($request->get('credit_array'));
+        } else {
+            
+            //decode string to json
+            $debitDictionary = json_decode($request->get('debit_array'));
+            $creditDictionary = json_decode($request->get('credit_array'));
+            
+            //to check the balance
+            $debitTotal = 0;
+            $creditTotal = 0;
+            
+            //validate debit account
+            foreach ($debitDictionary as $debit) {
+                
+                $validator =  Validator::make(
+                [
+                    'account' => $debit->account,
+                    'amount' => $debit->amount
+                ],
+                [
+                    'account' => 'required|exists:account,id',
+                    'amount' => 'required|numeric|min:0'
+                ]);
 
+                if ($validator->fails()) {
+                    $result = ['message' => 'Failed', 'content' => $validator->messages()];
+                    return response()->json($result);
+                }
+                $debitTotal = $debitTotal + $debit->amount; 
+            }
+
+            //validate debit account
+            foreach ($creditDictionary as $credit) {
+                
+                $validator =  Validator::make(
+                [
+                    'account' => $credit->account,
+                    'amount' => $credit->amount
+                ],
+                [
+                    'account' => 'required|exists:account,id',
+                    'amount' => 'required|numeric|min:0'
+                ]);
+
+                if ($validator->fails()) {
+                    $result = ['message' => 'Failed', 'content' => $validator->messages()];
+                    return response()->json($result);
+                }
+                $creditTotal = $creditTotal + $credit->amount;
+            }
+
+            if ($debitTotal !== $creditTotal) {
+                
+                $result = ['message' => 'Failed', 'content' => 'It is not balance'];
+                return response()->json($result);
+
+            } else {
+
+                DB::transaction(function() use ($request, $id, $debitDictionary, $creditDictionary){
+
+                    //create the trade
+                    $trade = Trade::create([
+                        'name' => $request->get('name'),
+                        'handler' => $request->get('handler'),
+                        'comment' => $request->get('comment'),
+                        'event_id' => $id,
+                        'trade_at' => date("Y-m-d", strtotime($request->get('trade_at'))),
+                        'user_id' => Session::get('user')->id
+                    ]);
+
+                    foreach ($debitDictionary as $debit) {
+                        
+                        Diary::create([
+                            'direction' => 1,
+                            'amount' => $debit->amount,
+                            'trade_id' => $trade->id,
+                            'account_id' => $debit->account,
+                        ]);
+
+                    }
+
+                    foreach ($creditDictionary as $credit) {
+                        
+                        Diary::create([
+                            'direction' => 0,
+                            'amount' => $credit->amount,
+                            'trade_id' => $trade->id,
+                            'account_id' => $credit->account,
+                        ]);
+
+                    }
+                });
+            }
+        }
+        Session::flash('toast_message', ['type' => 'success', 'content' => '成功新增交易「' . $request->get('name') . '」']);
+        return redirect('event/' . $id . '/diary');
     }
 }

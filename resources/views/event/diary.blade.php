@@ -48,6 +48,7 @@ $(document).ready(function() {
 
 {{-- Content section --}}
 @section('content')
+@include('component.toast')
 <div class="row">
     <div class="col-md-12">
         <div class="ibox float-e-margins">
@@ -102,6 +103,7 @@ $(document).ready(function() {
                                                     "account" : $(this).find(".account").val(),
                                                     "amount" : $(this).find(".amount").val()
                                                 };
+                                                count++;
                                             });
 
                                             $("#debit_array").val(JSON.stringify(debitJson));
@@ -126,7 +128,6 @@ $(document).ready(function() {
                         <div class="row">
                             <div class="col-md-12">
 
-                                @foreach($tradeList as $trade)
                                 <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="9">
                                     <thead>
                                         <tr>
@@ -141,6 +142,7 @@ $(document).ready(function() {
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @foreach($tradeList as $trade)
                                         <tr>
                                             <td>{{date("Y-m-d", strtotime($trade->trade_at))}}</td>
                                             <td>{{date("Y-m-d", strtotime($trade->created_at))}}</td>
@@ -239,7 +241,7 @@ $(document).ready(function() {
                                             </td>
                                         </td>
                                     </tr>
-
+                                    @endforeach
                                 </tbody>    
                                 <tfoot>
                                     <tr>
@@ -249,7 +251,6 @@ $(document).ready(function() {
                                     </tr>
                                 </tfoot>
                             </table>
-                            @endforeach
 
                         </div>
                     </div>
