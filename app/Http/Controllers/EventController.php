@@ -134,6 +134,7 @@ class EventController extends Controller
 
     public function addEventDiary(Request $request, $id)
     {
+        //first validate
         $validator = Validator::make(
         [  
             'id' => $id,
@@ -155,8 +156,7 @@ class EventController extends Controller
         ]);
         if ($validator->fails()) {
             
-            $result = ['message' => 'Failed', 'content' => $validator->messages()];
-            return response()->json($result);
+            return redirect()->route('event::diary', ['id' => $id])->with('errors', $validator->messages());
 
         } else {
             
@@ -182,13 +182,13 @@ class EventController extends Controller
                 ]);
 
                 if ($validator->fails()) {
-                    $result = ['message' => 'Failed', 'content' => $validator->messages()];
-                    return response()->json($result);
+                    
+                    return redirect()->route('event::diary', ['id' => $id])->with('errors', $validator->messages());
                 }
                 $debitTotal = $debitTotal + $debit->amount; 
             }
 
-            //validate debit account
+            //validate credit account
             foreach ($creditDictionary as $credit) {
                 
                 $validator =  Validator::make(
@@ -202,16 +202,16 @@ class EventController extends Controller
                 ]);
 
                 if ($validator->fails()) {
-                    $result = ['message' => 'Failed', 'content' => $validator->messages()];
-                    return response()->json($result);
+                    
+                    return redirect()->route('event::diary', ['id' => $id])->with('errors', $validator->messages());
+
                 }
                 $creditTotal = $creditTotal + $credit->amount;
             }
 
             if ($debitTotal !== $creditTotal) {
                 
-                $result = ['message' => 'Failed', 'content' => 'It is not balance'];
-                return response()->json($result);
+                return redirect()->route('event::diary', ['id' => $id])->with('errors', 'It is not balanced.');
 
             } else {
 
@@ -251,7 +251,8 @@ class EventController extends Controller
                 });
             }
         }
+        
         Session::flash('toast_message', ['type' => 'success', 'content' => '成功新增交易「' . $request->get('name') . '」']);
-        return redirect('event/' . $id . '/diary');
+        return redirect()->route('event::diary', ['id' => $id]);
     }
 }

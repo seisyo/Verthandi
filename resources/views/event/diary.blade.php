@@ -3,6 +3,7 @@
 {{-- Custom css section --}}
 @section('custom_css')
 <link href="{{url('assets/css/plugins/datapicker/datepicker3.css')}}" rel="stylesheet">
+<link rel="stylesheet" href="{{url('assets/css/plugins/toastr/toastr.min.css')}}">
 <link href="{{url('assets/css/plugins/footable/footable.core.css')}}" rel="stylesheet">
 <link rel="stylesheet" href="{{url('assets/css/plugins/select2/select2.min.css')}}">
 
@@ -11,10 +12,13 @@
 {{-- Custom js section --}}
 @section('custom_js')
 <script src="{{url('assets/js/plugins/datapicker/bootstrap-datepicker.js')}}"></script>
+<script src="{{url('assets/js/plugins/toastr/toastr.min.js')}}"></script>
 <script src="{{url('assets/js/plugins/footable/footable.all.min.js')}}"></script>
 <script src="{{url('assets/js/plugins/select2/select2.full.min.js')}}"></script>
 <script src="{{url('assets/js/custom/add_transaction.js')}}"></script>
 <script src="{{url('assets/js/custom/delete_transaction.js')}}"></script>
+<script src="{{url('assets/js/custom/modal_autoopen.js')}}"></script>
+<script src="{{url('assets/js/custom/modal_reset.js')}}"></script>
 <script>
 $(document).ready(function() {
     $(".footable").footable();
@@ -39,10 +43,10 @@ $(document).ready(function() {
     <a href="{{route('event::manage')}}">活動帳簿管理</a>
 </li>
 <li>
-    <a href="{{url('event/' . $eventInfo->id . '/main')}}">{{$eventInfo->name}}</a>
+    <a href="{{route('event::main', ['id' => $eventInfo->id])}}">{{$eventInfo->name}}</a>
 </li>
 <li>
-    <a href="{{url('event/' . $eventInfo->id . '/diary')}}">日記簿</a>
+    <a href="{{route('event::diary', ['id' => $eventInfo->id])}}">日記簿</a>
 </li>
 @endsection
 
@@ -71,6 +75,18 @@ $(document).ready(function() {
                                     
                                     <form class="form-horizontal" method="post" action="{{url('event/' . $eventInfo->id . '/diary/add')}}" id="transaction-add-form">
                                         <div class="modal-body">
+                                            @if(Session::has(('errors')))
+                                            @foreach(Session::get('errors')->all() as $error)
+                                            <div class="alert alert-danger">
+                                                {{$error}}
+                                            </div>
+                                            <!-- when it has error, reload the page will auto open the modal -->
+                                            <script>
+                                                modal_autoopen("#add-transaction");
+                                            </script>
+                                            @endforeach
+                                            @endif
+
                                             <div class="row">
                                                 @include('component.modal.transaction')
                                                 <input type="hidden" id="debit_array" name="debit_array">

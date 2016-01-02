@@ -25,7 +25,7 @@
                         
                         @foreach($eventList as $event)
                         <li>
-                            <a href="{{url('event/' . $event->id . '/main')}}">
+                            <a href="{{route('event::main', ['id' => $event->id])}}">
                                 <div class="text-center link-block">
                                     <strong>{{$event->name}}</strong>
                                 </div>
