@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+//use Illuminate\Support\MessageBag;
 
 use App\Event;
 use App\Trade;
@@ -134,8 +135,10 @@ class EventController extends Controller
 
     public function addEventDiary(Request $request, $id)
     {
+        //!!!start validate!!!
+
         //first validate
-        $validator = Validator::make(
+        $validator1 = Validator::make(
         [  
             'id' => $id,
             'trade_at' => $request->get('trade_at'),
@@ -154,61 +157,51 @@ class EventController extends Controller
             'debit_array' => 'required|json',
             'credit_array' => 'required|json'
         ]);
-        if ($validator->fails()) {
+
+        //decode string to json
+        $debitDictionary = json_decode($request->get('debit_array'));
+        $creditDictionary = json_decode($request->get('credit_array'));
+        
+        //to check the balance
+        $debitTotal = 0;
+        $creditTotal = 0;
+        
+        //validate debit account
+        foreach ($debitDictionary as $debit) {
+            $validator2 =  Validator::make(
+            [
+                'account' => $debit->account,
+                'amount' => $debit->amount
+            ],
+            [
+                'account' => 'required|exists:account,id',
+                'amount' => 'required|numeric|min:0'
+            ]);
+            $debitTotal = $debitTotal + $debit->amount; 
+        }
+
+        //validate credit account
+        foreach ($creditDictionary as $credit) {
+            $validator3 =  Validator::make(
+            [
+                'account' => $credit->account,
+                'amount' => $credit->amount
+            ],
+            [
+                'account' => 'required|exists:account,id',
+                'amount' => 'required|numeric|min:0'
+            ]);
+            $creditTotal = $creditTotal + $credit->amount;
+        }
+        
+        //!!!end validate!!!
+
+        if ($validator1->fails() || $validator2->fails() || $validator3->fails()) {
             
-            return redirect()->route('event::diary', ['id' => $id])->with('errors', $validator->messages());
+            return redirect()->route('event::diary', ['id' => $id])->with('errors', $validator1->messages()->merge($validator2->messages())->merge($validator3->messages()));
 
         } else {
             
-            //decode string to json
-            $debitDictionary = json_decode($request->get('debit_array'));
-            $creditDictionary = json_decode($request->get('credit_array'));
-            
-            //to check the balance
-            $debitTotal = 0;
-            $creditTotal = 0;
-            
-            //validate debit account
-            foreach ($debitDictionary as $debit) {
-                
-                $validator =  Validator::make(
-                [
-                    'account' => $debit->account,
-                    'amount' => $debit->amount
-                ],
-                [
-                    'account' => 'required|exists:account,id',
-                    'amount' => 'required|numeric|min:0'
-                ]);
-
-                if ($validator->fails()) {
-                    
-                    return redirect()->route('event::diary', ['id' => $id])->with('errors', $validator->messages());
-                }
-                $debitTotal = $debitTotal + $debit->amount; 
-            }
-
-            //validate credit account
-            foreach ($creditDictionary as $credit) {
-                
-                $validator =  Validator::make(
-                [
-                    'account' => $credit->account,
-                    'amount' => $credit->amount
-                ],
-                [
-                    'account' => 'required|exists:account,id',
-                    'amount' => 'required|numeric|min:0'
-                ]);
-
-                if ($validator->fails()) {
-                    
-                    return redirect()->route('event::diary', ['id' => $id])->with('errors', $validator->messages());
-
-                }
-                $creditTotal = $creditTotal + $credit->amount;
-            }
-
             if ($debitTotal !== $creditTotal) {
                 
                 return redirect()->route('event::diary', ['id' => $id])->with('errors', 'It is not balanced.');

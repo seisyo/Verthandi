@@ -172,7 +172,7 @@ $(document).ready(function() {
                                                         <div class="col-md-4">
                                                             <table class="table table-bordered">
                                                                 <thead>
-                                                                    <th class="">借方</th>
+                                                                    <th class="col-md-3">借方</th>
                                                                     <th class="col-md-1">金額</th>
                                                                 </thead>
                                                                 <tbody>
@@ -191,7 +191,7 @@ $(document).ready(function() {
                                                         <div class="col-md-4">
                                                             <table class="table table-bordered">
                                                                 <thead>
-                                                                    <th class="">貸方</th>
+                                                                    <th class="col-md-3">貸方</th>
                                                                     <th class="col-md-1">金額</th>
                                                                 </thead>
                                                                 <tbody>
