@@ -29,7 +29,7 @@ class EventController extends Controller
             array_push($parentIdArray, $parentId['parent_id']);
         }
 
-        return view('event.diary')->with(['eventList' => Event::all(), 'eventInfo' => Event::find($id), 'tradeList' => Trade::all(), 'accountList' => Account::all(), 'parentList' => $parentIdArray]);
+        return view('event.diary')->with(['eventList' => Event::all(), 'eventInfo' => Event::find($id), 'tradeList' => Trade::where('event_id', '=', $id)->get(), 'accountList' => Account::all(), 'parentList' => $parentIdArray]);
     }
 
     public function showEventLedger($id)
