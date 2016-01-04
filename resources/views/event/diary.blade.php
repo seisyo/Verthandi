@@ -68,12 +68,13 @@ $(document).ready(function() {
                         <div class="modal fade" id="add-transaction">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
+                                    
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                         <h4 class="modal-title" id="myModalLabel">新增交易分錄</h4>
                                     </div>
                                     
-                                    <form class="form-horizontal" method="post" action="{{url('event/' . $eventInfo->id . '/diary/add')}}" id="transaction-add-form">
+                                    <form class="form-horizontal" method="post" action="{{route('event::diary/add', ['id' => $eventInfo->id])}}" id="transaction-add-form">
                                         <div class="modal-body">
                                             @if(Session::has(('errors')))
                                             @foreach(Session::get('errors')->all() as $error)
@@ -88,7 +89,7 @@ $(document).ready(function() {
                                             @endif
 
                                             <div class="row">
-                                                @include('component.modal.transaction')
+                                                @include('component.modal.transactionAdd')
                                                 <input type="hidden" id="debit_array" name="debit_array">
                                                 <input type="hidden" id="credit_array" name="credit_array">
                                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -213,22 +214,34 @@ $(document).ready(function() {
                                             <td>{{$trade->comment}}</td>
                                             <td>
 
-                                                <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#edit-transaction">編輯</button>
+                                                <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="{{'#edit-transaction' . $trade->id}}">
+                                                    編輯
+                                                </button>
 
-                                                <div class="modal fade" id="edit-transaction">
+                                                <div class="modal fade" id="{{'edit-transaction' . $trade->id}}">
                                                     <div class="modal-dialog" role="document">
                                                         <div class="modal-content">
+                                                            
                                                             <div class="modal-header">
                                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                                                 <h4 class="modal-title" id="myModalLabel">編輯交易分錄</h4>
                                                             </div>
-                                                            <div class="modal-body">
-                                                                <!-- @include('component.modal.transaction') -->
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                                                                <button type="button" class="btn btn-primary">確定修改</button>
-                                                            </div>
+
+                                                            <form class="form-horizontal" method="post" action="{{route('event::diary/edit', ['id' => $eventInfo->id])}}" id="transaction-add-form">
+                                                                
+                                                                <div class="modal-body">
+                                                                    <div class="row">
+                                                                        @include('component.modal.transactionEdit')
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                                                    <button type="button" class="btn btn-primary">確定修改</button>
+                                                                </div>
+
+                                                            </form>
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -256,8 +269,9 @@ $(document).ready(function() {
                                                 <!-- modal end -->
                                             </td>
                                         </td>
+                                        @endforeach
                                     </tr>
-                                    @endforeach
+                                    
                                 </tbody>    
                                 <tfoot>
                                     <tr>
@@ -278,4 +292,7 @@ $(document).ready(function() {
     </div>
 </div>
 </div>
+<script>
+    modal_reset(".modal");
+</script>
 @endsection

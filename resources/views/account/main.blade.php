@@ -280,4 +280,7 @@
         </div>
     </div>
 </div>
+<script>
+    modal_reset(".modal");
+</script>
 @endsection

@@ -248,4 +248,9 @@ class EventController extends Controller
         Session::flash('toast_message', ['type' => 'success', 'content' => '成功新增交易「' . $request->get('name') . '」']);
         return redirect()->route('event::diary', ['id' => $id]);
     }
+
+    public function editEventDiary(Request $request, $id)
+    {
+        dd($request);
+    }
 }

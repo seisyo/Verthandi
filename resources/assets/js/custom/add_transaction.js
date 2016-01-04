@@ -1,15 +1,15 @@
 function add_transaction(addbtn_name, delbtn_name, account_type, input_place, count){
     
-    var count = 1;
+    //var count = 1;
 
     $(addbtn_name).click(function(){
-        
-        $(input_place).append('<div class="row" id="' + account_type + '"><div class="form-group col-md-6"><input type="text" class="form-control account" placeholder="會計科目"></div><div class="form-group col-md-4"><input type="text" class="form-control amount" placeholder="金額"></div><div class="col-md-2"><button type="button" class="btn btn-outline btn-danger" id="' + delbtn_name + '">-</button></div></div>');
 
-        count = count + 1;
+        $(input_place).append('<div class="row" id="' + account_type + '"><div class="form-group col-md-6"><input type="text" class="form-control account" placeholder="會計科目"></div><div class="form-group col-md-5"><input type="text" class="form-control amount" placeholder="金額"></div><div class="col-md-1"><button type="button" class="btn btn-outline btn-danger" id="' + delbtn_name + '">-</button></div></div>');
 
         $('#' + account_type).attr("id", account_type + count);
-        $('#' + delbtn_name).attr("id", delbtn_name + count); 
+        $('#' + delbtn_name).attr("id", delbtn_name + count);
+
+        count = count + 1; 
     });
 
     return count;

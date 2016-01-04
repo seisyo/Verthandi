@@ -55,35 +55,6 @@ class UserController extends Controller
                 'phone' => $request->get('phone')
             ]);
         });
-
-        // //transaction start
-        // DB::beginTransaction();
-        // try {
-        //     //add new user to users table
-        //     User::create([
-        //         'username' => $request->get('username'),
-        //         'password' => Hash::make($default_password),
-        //         'nickname' => $request->get('nickname'),
-        //         'status' => 'enable',
-        //         'permission' => $request->get('permission')
-        //     ]);
-            
-        //     //add user detail info to users_detail table
-        //     UserDetail::create([
-        //         'user_id' => User::where('username', '=', $request->get('username'))->first()->id,
-        //         'first_name' => $request->get('first_name'),
-        //         'last_name' => $request->get('last_name'),
-        //         'email' => $request->get('email'),
-        //         'phone' => $request->get('phone')
-        //     ]);
-
-        // } catch (Exception $e) {
-        //     DB::rollBack();
-        //     Session::flash('toast_message', ['type' => 'danger', 'content' => '新增使用者失敗']);
-        //     return redirect()->route('user::main');
-        // }
-        // DB::commit();
-        // //transaction end
         
         //send password to user
         $mail = $request->get('email');
@@ -163,29 +134,6 @@ class UserController extends Controller
                     'email' => $request->get('email')            
                 ]);
             });
-
-
-            //transaction start
-            // DB::beginTransaction();
-            // try {
-            //     User::where('username', '=', $request->get('username'))->first()->update([
-            //         'nickname' => $request->get('nickname'),
-            //         'permission' => $request->get('permission')
-            //     ]);
-
-            //     UserDetail::where('user_id', '=', User::where('username', '=', $request->get('username'))->first()->id)->update([
-            //         'last_name' => $request->get('last_name'),
-            //         'first_name' => $request->get('first_name'),
-            //         'phone' => $request->get('phone'),
-            //         'email' => $request->get('email'),            
-            //     ]);
-            // } catch (Exception $e) {
-            //     DB::rollBack();
-            //     Session::flash('toast_message', ['type' => 'danger', 'content' => '編輯使用者失敗']);
-            //     return redirect()->route('user::main');
-            // }
-            // DB::commit();
-            // //transaction end
            
             Session::flash('toast_message', ['type' => 'success', 'content' => '成功更新使用者「' . User::find($request->get('id'))->username . '」']);
             return redirect()->route('user::main');

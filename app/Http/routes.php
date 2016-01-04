@@ -41,6 +41,9 @@ Route::group(['middleware' => 'LoginCheck'], function(){
         Route::post('{id}/diary/add',[
             'as' => 'diary/add', 'uses' => 'EventController@addEventDiary'
         ]);
+        Route::post('{id}/diary/edit',[
+            'as' => 'diary/edit', 'uses' => 'EventController@editEventDiary'
+        ]);
         Route::get('{id}/ledger', [
             'as' => 'ledger', 'uses' => 'EventController@showEventLedger'
         ]);
