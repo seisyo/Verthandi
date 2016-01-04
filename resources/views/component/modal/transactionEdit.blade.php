@@ -37,7 +37,7 @@
     <div class="row">
         <div class="col-md-12">
             
-            <div class="col-md-6" id="{{'account_row_debit' . $trade->id}}">
+            <div class="col-md-6" id="{{'edit_account_row_debit' . $trade->id}}">
                 <div class="row">
                     <label>借方</label>
                 </div>
@@ -74,12 +74,12 @@
                 @endif
                 @endforeach
                 <script>
-                    add_transaction({{'debit_addbtn' . $trade->id}}, 'debit_delbtn', 'debit_account', {{'account_row_debit' . $trade->id}}, count);
-                    delete_transaction({{'account_row_debit' . $trade->id}});
+                    add_transaction({{'debit_addbtn' . $trade->id}}, 'debit_delbtn', 'debit_account', {{'edit_account_row_debit' . $trade->id}}, count);
+                    delete_transaction({{'edit_account_row_debit' . $trade->id}});
                 </script>
             </div>
             
-            <div class="col-md-6" id="{{'account_row_credit' . $trade->id}}">
+            <div class="col-md-6" id="{{'edit_account_row_credit' . $trade->id}}">
                 <div class="row">
                     <label>貸方</label>
                 </div>
@@ -116,8 +116,8 @@
                 @endif
                 @endforeach
                 <script>
-                    add_transaction({{'credit_addbtn' . $trade->id}}, 'credit_delbtn', 'credit_account', {{'account_row_credit' . $trade->id}}, count);
-                    delete_transaction({{'account_row_credit' . $trade->id}});
+                    add_transaction({{'credit_addbtn' . $trade->id}}, 'credit_delbtn', 'credit_account', {{'edit_account_row_credit' . $trade->id}}, count);
+                    delete_transaction({{'edit_account_row_credit' . $trade->id}});
                 </script>
             </div>
 

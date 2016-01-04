@@ -106,7 +106,7 @@ $(document).ready(function() {
                                         $("#add-button").click(function(){
                                             
                                             var count = 0;
-                                            $("div[id*='debit_account']").each(function(){
+                                            $("#add_account_row_debit>div[id*='debit_account']").each(function(){
                                                 debitJson[count] = {
                                                     "account" : $(this).find(".account").val(),
                                                     "amount" : $(this).find(".amount").val()
@@ -115,7 +115,7 @@ $(document).ready(function() {
                                             });
 
                                             count = 0;
-                                            $("div[id*='credit_account']").each(function(){
+                                            $("#add_account_row_credit>div[id*='credit_account']").each(function(){
                                                 creditJson[count] = {
                                                     "account" : $(this).find(".account").val(),
                                                     "amount" : $(this).find(".amount").val()

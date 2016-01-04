@@ -37,7 +37,7 @@
     <div class="row">
         <div class="col-md-12">
             
-            <div class="col-md-6" id="account_row_debit">
+            <div class="col-md-6" id="add_account_row_debit">
                 <div class="row">
                     <label>借方</label>
                 </div>
@@ -52,22 +52,22 @@
                     <div class="form-group col-md-6">
                         <input type="text" class="form-control account" placeholder="會計科目">
                     </div>
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-5">
                         <input type="text" class="form-control amount" placeholder="金額">
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-1">
                         <button type="button" class="btn btn-outline btn-danger" id="debit_delbtn1">
                             -
                         </button>
                     </div>
                 </div>
                 <script>
-                    add_transaction(debit_addbtn, 'debit_delbtn', 'debit_account', account_row_debit);
-                    delete_transaction(account_row_debit);
+                    add_transaction(debit_addbtn, 'debit_delbtn', 'debit_account', add_account_row_debit);
+                    delete_transaction(add_account_row_debit);
                 </script>
             </div>
             
-            <div class="col-md-6" id="account_row_credit"> 
+            <div class="col-md-6" id="add_account_row_credit"> 
                 <div class="row">
                     <label>貸方</label>
                 </div>
@@ -82,7 +82,7 @@
                     <div class="form-group col-md-6">
                         <input type="text" class="form-control account" placeholder="會計科目">
                     </div>
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-5">
                         <input type="text" class="form-control amount" placeholder="金額">
                     </div>
                     <div class="col-md-1">
@@ -92,8 +92,8 @@
                     </div>
                 </div>
                 <script>
-                    add_transaction(credit_addbtn, 'credit_delbtn', 'credit_account', account_row_credit);
-                    delete_transaction(account_row_credit);
+                    add_transaction(credit_addbtn, 'credit_delbtn', 'credit_account', add_account_row_credit);
+                    delete_transaction(add_account_row_credit);
                 </script>
             </div>
 
