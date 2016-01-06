@@ -168,6 +168,7 @@ class EventController extends Controller
         
         //validate debit account
         foreach ($debitDictionary as $debit) {
+
             $validator2 =  Validator::make(
             [
                 'account' => $debit->account,
@@ -175,7 +176,7 @@ class EventController extends Controller
             ],
             [
                 'account' => 'required|exists:account,id',
-                'amount' => 'required|numeric|min:0'
+                'amount' => 'required|numeric|min:1'
             ]);
             $debitTotal = $debitTotal + $debit->amount; 
         }
@@ -189,7 +190,7 @@ class EventController extends Controller
             ],
             [
                 'account' => 'required|exists:account,id',
-                'amount' => 'required|numeric|min:0'
+                'amount' => 'required|numeric|min:1'
             ]);
             $creditTotal = $creditTotal + $credit->amount;
         }
@@ -286,6 +287,7 @@ class EventController extends Controller
         
         //validate debit account
         foreach ($debitDictionary as $debit) {
+            
             $validator2 =  Validator::make(
             [
                 'account' => $debit->account,
@@ -293,21 +295,22 @@ class EventController extends Controller
             ],
             [
                 'account' => 'required|exists:account,id',
-                'amount' => 'required|numeric|min:0'
+                'amount' => 'required|numeric|min:1'
             ]);
             $debitTotal = $debitTotal + $debit->amount; 
         }
 
         //validate credit account
         foreach ($creditDictionary as $credit) {
-            $validator3 =  Validator::make(
+            
+            $validator4 =  Validator::make(
             [
                 'account' => $credit->account,
                 'amount' => $credit->amount
             ],
             [
                 'account' => 'required|exists:account,id',
-                'amount' => 'required|numeric|min:0'
+                'amount' => 'required|numeric|min:1'
             ]);
             $creditTotal = $creditTotal + $credit->amount;
         }
