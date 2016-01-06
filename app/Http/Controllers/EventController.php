@@ -138,7 +138,7 @@ class EventController extends Controller
         //!!!start validate!!!
 
         //first validate
-        $validator1 = Validator::make(
+        $validatorTotal = Validator::make(
         [  
             'event_id' => $id,
             'trade_at' => $request->get('trade_at'),
@@ -169,7 +169,7 @@ class EventController extends Controller
         //validate debit account
         foreach ($debitDictionary as $debit) {
 
-            $validator2 =  Validator::make(
+            $validator =  Validator::make(
             [
                 'account' => $debit->account,
                 'amount' => $debit->amount
@@ -178,12 +178,18 @@ class EventController extends Controller
                 'account' => 'required|exists:account,id',
                 'amount' => 'required|numeric|min:1'
             ]);
+            
+            //merge the error message
+            if ($validator->fails()) {
+                $validatorTotal->messages()->merge($validator->messages());
+            }
+
             $debitTotal = $debitTotal + $debit->amount; 
         }
 
         //validate credit account
         foreach ($creditDictionary as $credit) {
-            $validator3 =  Validator::make(
+            $validator =  Validator::make(
             [
                 'account' => $credit->account,
                 'amount' => $credit->amount
@@ -192,14 +198,20 @@ class EventController extends Controller
                 'account' => 'required|exists:account,id',
                 'amount' => 'required|numeric|min:1'
             ]);
+
+            //merge the error message
+            if ($validator->fails()) {
+                $validatorTotal->messages()->merge($validator->messages());
+            }
+
             $creditTotal = $creditTotal + $credit->amount;
         }
         
         //!!!end validate!!!
 
-        if ($validator1->fails() || $validator2->fails() || $validator3->fails()) {
+        if (!$validatorTotal->messages()->isEmpty()) {
             
-            return redirect()->route('event::diary', ['id' => $id])->with('errors', $validator1->messages()->merge($validator2->messages())->merge($validator3->messages()));
+            return redirect()->route('event::diary', ['id' => $id])->with('errors', $validatorTotal->messages());
 
         } else {
 
@@ -255,7 +267,7 @@ class EventController extends Controller
         //!!!start validate!!!
 
         //first validate
-        $validator1 = Validator::make(
+        $validatorTotal = Validator::make(
         [  
             'event_id' => $id,
             'trade_id' => $request->get('trade_id'),
@@ -288,7 +300,7 @@ class EventController extends Controller
         //validate debit account
         foreach ($debitDictionary as $debit) {
             
-            $validator2 =  Validator::make(
+            $validator =  Validator::make(
             [
                 'account' => $debit->account,
                 'amount' => $debit->amount
@@ -297,13 +309,18 @@ class EventController extends Controller
                 'account' => 'required|exists:account,id',
                 'amount' => 'required|numeric|min:1'
             ]);
+            //merge the error message
+            if ($validator->fails()) {
+                $validatorTotal->messages()->merge($validator->messages());
+            }
+
             $debitTotal = $debitTotal + $debit->amount; 
         }
 
         //validate credit account
         foreach ($creditDictionary as $credit) {
             
-            $validator4 =  Validator::make(
+            $validator =  Validator::make(
             [
                 'account' => $credit->account,
                 'amount' => $credit->amount
@@ -312,17 +329,22 @@ class EventController extends Controller
                 'account' => 'required|exists:account,id',
                 'amount' => 'required|numeric|min:1'
             ]);
+            //merge the error message
+            if ($validator->fails()) {
+                $validatorTotal->messages()->merge($validator->messages());
+            }
+
             $creditTotal = $creditTotal + $credit->amount;
         }
-        
+        //dd($validatorTotal->messages());
         //!!!end validate!!!
 
-        if ($validator1->fails() || $validator2->fails() || $validator3->fails()) {
-            
-            return redirect()->route('event::diary', ['id' => $id])->with('errors' . $request->get('trade_id'), $validator1->messages()->merge($validator2->messages())->merge($validator3->messages()));
+        if (!$validatorTotal->messages()->isEmpty()) {
+
+            return redirect()->route('event::diary', ['id' => $id])->with('errors' . $request->get('trade_id'), $validatorTotal->messages());
 
         } else {
-            
+
             if ($debitTotal !== $creditTotal) {
                 
                 return redirect()->route('event::diary', ['id' => $id])->with('errors' . $request->get('trade_id'), new MessageBag(['It is not balanced']));
