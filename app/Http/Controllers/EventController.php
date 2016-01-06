@@ -2,7 +2,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-//use Illuminate\Support\MessageBag;
+use Illuminate\Support\MessageBag;
 
 use App\Event;
 use App\Trade;
@@ -201,10 +201,10 @@ class EventController extends Controller
             return redirect()->route('event::diary', ['id' => $id])->with('errors', $validator1->messages()->merge($validator2->messages())->merge($validator3->messages()));
 
         } else {
-            
+
             if ($debitTotal !== $creditTotal) {
-                
-                return redirect()->route('event::diary', ['id' => $id])->with('errors', 'It is not balanced.');
+
+                return redirect()->route('event::diary', ['id' => $id])->with('errors', new MessageBag(['It is not balanced']));
 
             } else {
 
@@ -322,7 +322,7 @@ class EventController extends Controller
             
             if ($debitTotal !== $creditTotal) {
                 
-                return redirect()->route('event::diary', ['id' => $id])->with('errors' . $request->get('trade_id'), 'It is not balanced.');
+                return redirect()->route('event::diary', ['id' => $id])->with('errors' . $request->get('trade_id'), new MessageBag(['It is not balanced']));
 
             } else {
 
