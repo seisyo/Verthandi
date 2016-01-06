@@ -145,7 +145,7 @@ $(document).ready(function() {
                         <div class="row">
                             <div class="col-md-12">
 
-                                <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="9">
+                                <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="8">
                                     <thead>
                                         <tr>
                                             <th data-toggle="true">交易日期</th>
@@ -170,9 +170,10 @@ $(document).ready(function() {
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         
-                                                        <div class="col-md-4">
+                                                        <div class="col-md-5">
                                                             <table class="table table-bordered">
                                                                 <thead>
+                                                                    <th class="col-md-1">編號</th>
                                                                     <th class="col-md-3">借方</th>
                                                                     <th class="col-md-1">金額</th>
                                                                 </thead>
@@ -180,6 +181,7 @@ $(document).ready(function() {
                                                                     @foreach($trade->diary as $diary)
                                                                     @if($diary->direction === 1)
                                                                     <tr>
+                                                                        <td>{{$diary->account->id}}</td>
                                                                         <td>{{$diary->account->name}}</td>
                                                                         <td>{{$diary->amount}}</td>
                                                                     </tr>
@@ -189,9 +191,10 @@ $(document).ready(function() {
                                                             </table>
                                                         </div>
 
-                                                        <div class="col-md-4">
+                                                        <div class="col-md-5">
                                                             <table class="table table-bordered">
                                                                 <thead>
+                                                                    <th class="col-md-1">編號</th>
                                                                     <th class="col-md-3">貸方</th>
                                                                     <th class="col-md-1">金額</th>
                                                                 </thead>
@@ -199,6 +202,7 @@ $(document).ready(function() {
                                                                     @foreach($trade->diary as $diary)
                                                                     @if($diary->direction === 0)
                                                                     <tr>
+                                                                        <td>{{$diary->account->id}}</td>
                                                                         <td>{{$diary->account->name}}</td>
                                                                         <td>{{$diary->amount}}</td>
                                                                     </tr>
@@ -227,42 +231,98 @@ $(document).ready(function() {
                                                                 <h4 class="modal-title" id="myModalLabel">編輯交易分錄</h4>
                                                             </div>
 
-                                                            <form class="form-horizontal" method="post" action="{{route('event::diary/edit', ['id' => $eventInfo->id])}}" id="transaction-add-form">
+                                                            <form class="form-horizontal" method="post" action="{{route('event::diary/edit', ['id' => $eventInfo->id])}}" id="{{'transaction-edit-form' . $trade->id}}">
                                                                 
                                                                 <div class="modal-body">
+                                                                    @if(Session::has(('errors' . $trade->id)))
+                                                                    @foreach(Session::get('errors' . $trade->id)->all() as $error)
+                                                                    <div class="alert alert-danger">
+                                                                        {{$error}}
+                                                                    </div>
+                                                                    <!-- when it has error, reload the page will auto open the modal -->
+                                                                    <script>
+                                                                        modal_autoopen("{{'#edit-transaction' . $trade->id}}");
+                                                                    </script>
+                                                                    @endforeach
+                                                                    @endif
                                                                     <div class="row">
                                                                         @include('component.modal.transactionEdit')
+                                                                        <input type="hidden" id="{{'debit_array' . $trade->id}}" name="debit_array">
+                                                                        <input type="hidden" id="{{'credit_array' . $trade->id}}" name="credit_array">
+                                                                        <input type="hidden" name="trade_id" value="{{$trade->id}}">
+                                                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                                                     </div>
                                                                 </div>
 
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                                                                    <button type="button" class="btn btn-primary">確定修改</button>
+                                                                    <button type="button" class="btn btn-primary" id="{{'edit-button' . $trade->id}}">確定修改</button>
                                                                 </div>
 
                                                             </form>
+                                                            <script>
+                                                                var debitJson = {};
+                                                                var creditJson = {};
+                                                                $("{{'#edit-button' . $trade->id}}").click(function(){
+                                                                    
+                                                                    var count = 0;
+                                                                    $("{{'#edit_account_row_debit' . $trade->id}}>div[id*='debit_account']").each(function(){
+                                                                        debitJson[count] = {
+                                                                            "account" : $(this).find(".account").val(),
+                                                                            "amount" : $(this).find(".amount").val()
+                                                                        };
+                                                                        count++;
+                                                                    });
+
+                                                                    count = 0;
+                                                                    $("{{'#edit_account_row_credit' . $trade->id}}>div[id*='credit_account']").each(function(){
+                                                                        creditJson[count] = {
+                                                                            "account" : $(this).find(".account").val(),
+                                                                            "amount" : $(this).find(".amount").val()
+                                                                        };
+                                                                        count++;
+                                                                    });
+
+                                                                    $("{{'#debit_array' . $trade->id}}").val(JSON.stringify(debitJson));
+                                                                    $("{{'#credit_array' . $trade->id}}").val(JSON.stringify(creditJson));
+
+                                                                    $("{{'#transaction-edit-form' . $trade->id}}").submit();
+                                                                });
+                                                            </script>
 
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <!-- modal end -->
 
-                                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete-transaction">刪除</button>
+                                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="{{'#delete-transaction' . $trade->id}}">
+                                                    刪除
+                                                </button>
 
-                                                <div class="modal fade" id="delete-transaction">
+                                                <div class="modal fade" id="{{'delete-transaction' . $trade->id}}">
                                                     <div class="modal-dialog" role="document">
                                                         <div class="modal-content">
+                                                            
                                                             <div class="modal-header">
                                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                                                 <h4 class="modal-title" id="myModalLabel">刪除交易分錄</h4>
                                                             </div>
+
                                                             <div class="modal-body">
-                                                                確定要刪除此交易分錄嗎？
+                                                                確定要刪除交易分錄「{{$trade->name}}」嗎？
                                                             </div>
+
                                                             <div class="modal-footer">
-                                                                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                                                                <button type="button" class="btn btn-danger">確定刪除</button>
+                                                                
+                                                                <form class="form-horizontal" method="post" action="{{route('event::diary/delete', ['id' => $eventInfo->id])}}">
+                                                                    <input type="hidden" name="trade_id" value="{{$trade->id}}">
+                                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                                                    <button type="submit" class="btn btn-danger">確定刪除</button>
+                                                                </form>
+                                                                
                                                             </div>
+
                                                         </div>
                                                     </div>
                                                 </div>

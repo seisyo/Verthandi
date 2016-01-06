@@ -140,7 +140,7 @@ class EventController extends Controller
         //first validate
         $validator1 = Validator::make(
         [  
-            'id' => $id,
+            'event_id' => $id,
             'trade_at' => $request->get('trade_at'),
             'name' => $request->get('name'),
             'handler' => $request->get('handler'),
@@ -149,7 +149,7 @@ class EventController extends Controller
             'credit_array' => $request->get('credit_array')
         ],
         [
-            'id' => 'required|exists:event,id',
+            'event_id' => 'required|exists:event,id',
             'trade_at' => 'required|date',
             'name' => 'required|max:95',
             'handler' => 'required|max:15',
@@ -251,6 +251,158 @@ class EventController extends Controller
 
     public function editEventDiary(Request $request, $id)
     {
-        dd($request);
+        //!!!start validate!!!
+
+        //first validate
+        $validator1 = Validator::make(
+        [  
+            'event_id' => $id,
+            'trade_id' => $request->get('trade_id'),
+            'trade_at' => $request->get('trade_at'),
+            'name' => $request->get('name'),
+            'handler' => $request->get('handler'),
+            'comment' => $request->get('comment'),
+            'debit_array' => $request->get('debit_array'),
+            'credit_array' => $request->get('credit_array')
+        ],
+        [
+            'event_id' => 'required|exists:event,id',
+            'trade_id' => 'required|exists:trade,id',
+            'trade_at' => 'required|date',
+            'name' => 'required|max:95',
+            'handler' => 'required|max:15',
+            'comment' => 'string',
+            'debit_array' => 'required|json',
+            'credit_array' => 'required|json'
+        ]);
+
+        //decode string to json
+        $debitDictionary = json_decode($request->get('debit_array'));
+        $creditDictionary = json_decode($request->get('credit_array'));
+        
+        //to check the balance
+        $debitTotal = 0;
+        $creditTotal = 0;
+        
+        //validate debit account
+        foreach ($debitDictionary as $debit) {
+            $validator2 =  Validator::make(
+            [
+                'account' => $debit->account,
+                'amount' => $debit->amount
+            ],
+            [
+                'account' => 'required|exists:account,id',
+                'amount' => 'required|numeric|min:0'
+            ]);
+            $debitTotal = $debitTotal + $debit->amount; 
+        }
+
+        //validate credit account
+        foreach ($creditDictionary as $credit) {
+            $validator3 =  Validator::make(
+            [
+                'account' => $credit->account,
+                'amount' => $credit->amount
+            ],
+            [
+                'account' => 'required|exists:account,id',
+                'amount' => 'required|numeric|min:0'
+            ]);
+            $creditTotal = $creditTotal + $credit->amount;
+        }
+        
+        //!!!end validate!!!
+
+        if ($validator1->fails() || $validator2->fails() || $validator3->fails()) {
+            
+            return redirect()->route('event::diary', ['id' => $id])->with('errors' . $request->get('trade_id'), $validator1->messages()->merge($validator2->messages())->merge($validator3->messages()));
+
+        } else {
+            
+            if ($debitTotal !== $creditTotal) {
+                
+                return redirect()->route('event::diary', ['id' => $id])->with('errors' . $request->get('trade_id'), 'It is not balanced.');
+
+            } else {
+
+                DB::transaction(function() use ($request, $id, $debitDictionary, $creditDictionary){
+
+                    //create the trade
+                    Trade::find($request->get('trade_id'))->update([
+                        'name' => $request->get('name'),
+                        'handler' => $request->get('handler'),
+                        'comment' => $request->get('comment'),
+                        'event_id' => $id,
+                        'trade_at' => date("Y-m-d", strtotime($request->get('trade_at'))),
+                        'user_id' => Session::get('user')->id
+                    ]);
+
+                    $diarys = Trade::find($request->get('trade_id'))->diary;
+
+                    foreach ($diarys as $diary) {
+                        $diary->delete();
+                    }
+
+                    foreach ($debitDictionary as $debit) {
+                        
+                        Diary::create([
+                            'direction' => 1,
+                            'amount' => $debit->amount,
+                            'trade_id' => $request->get('trade_id'),
+                            'account_id' => $debit->account,
+                        ]);
+
+                    }
+
+                    foreach ($creditDictionary as $credit) {
+                        
+                        Diary::create([
+                            'direction' => 0,
+                            'amount' => $credit->amount,
+                            'trade_id' => $request->get('trade_id'),
+                            'account_id' => $credit->account,
+                        ]);
+
+                    }
+                });
+            }
+        }
+        
+        Session::flash('toast_message', ['type' => 'success', 'content' => '成功編輯交易「' . $request->get('name') . '」']);
+        return redirect()->route('event::diary', ['id' => $id]);
+    }
+
+    public function deleteEventDiary(Request $request, $id)
+    {
+        $validator = Validator::make(
+        [
+            'event_id' => $id,
+            'trade_id' => $request->get('trade_id')
+        ],
+        [
+            'event_id' => 'required|exists:event,id',
+            'trade_id' => 'required|exists:trade,id'
+        ]);
+
+        if ($validator->fails()) {
+            
+            return redirect()->route('event::diary', ['id' => $id])->with('errors' . $request->get('trade_id'), $validator->messages());
+        
+        } else {
+
+            $diarys = Trade::find($request->get('trade_id'))->diary;
+
+            foreach ($diarys as $diary) {
+                $diary->delete();
+            }
+
+            $deleteTrade = Trade::find($request->get('trade_id'))->name;
+            Trade::find($request->get('trade_id'))->delete();
+
+            Session::flash('toast_message', ['type' => 'success', 'content' => '成功刪除交易「' . $deleteTrade . '」']);
+            return redirect()->route('event::diary', ['id' => $id]);
+
+        }
     }
 }

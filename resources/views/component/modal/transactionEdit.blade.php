@@ -38,9 +38,11 @@
         <div class="col-md-12">
             
             <div class="col-md-6" id="{{'edit_account_row_debit' . $trade->id}}">
+                
                 <div class="row">
                     <label>借方</label>
                 </div>
+
                 <div class="row">
                     <div class="form-group col-md-1">
                         <button type="button" class="btn btn-outline btn-default" id="{{'debit_addbtn' . $trade->id}}">
@@ -48,6 +50,7 @@
                         </button>
                     </div>
                 </div>
+
                 @foreach($trade->diary as $diary)
                 @if($diary->direction === 1)
                 <script>
@@ -73,6 +76,7 @@
                 </script>
                 @endif
                 @endforeach
+                
                 <script>
                     add_transaction({{'debit_addbtn' . $trade->id}}, 'debit_delbtn', 'debit_account', {{'edit_account_row_debit' . $trade->id}}, count);
                     delete_transaction({{'edit_account_row_debit' . $trade->id}});
@@ -80,9 +84,11 @@
             </div>
             
             <div class="col-md-6" id="{{'edit_account_row_credit' . $trade->id}}">
+                
                 <div class="row">
                     <label>貸方</label>
                 </div>
+                
                 <div class="row">
                     <div class="form-group col-md-1">
                         <button type="button" class="btn btn-outline btn-default" id="{{'credit_addbtn' . $trade->id}}">
@@ -90,6 +96,7 @@
                         </button>
                     </div>
                 </div>
+
                 @foreach($trade->diary as $diary)
                 @if($diary->direction === 0)
                 <script>
@@ -115,6 +122,7 @@
                 </script>
                 @endif
                 @endforeach
+
                 <script>
                     add_transaction({{'credit_addbtn' . $trade->id}}, 'credit_delbtn', 'credit_account', {{'edit_account_row_credit' . $trade->id}}, count);
                     delete_transaction({{'edit_account_row_credit' . $trade->id}});
