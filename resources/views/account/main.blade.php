@@ -51,10 +51,10 @@
 
         // $confModal.modal({ backdrop : false });
 
-        $("#parent-id").select2({
-            placeholder: "搜尋",
-            allowClear: true
-        });
+        // $("#parent-id").select2({
+        //     placeholder: "搜尋",
+        //     allowClear: true
+        // });
         
         $("#search-id").change(function(){
             var url = "{{route('account::searchById')}}";

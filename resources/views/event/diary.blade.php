@@ -293,7 +293,7 @@ $(document).ready(function() {
                                                             </thead>
                                                             <tbody>
                                                                 @foreach($trade->diary as $diary)
-                                                                @if($diary->direction === 1)
+                                                                @if($diary->direction === "1")
                                                                 <tr>
                                                                     <td>{{$diary->account->id}}</td>
                                                                     <td>{{$diary->account->name}}</td>
@@ -314,7 +314,7 @@ $(document).ready(function() {
                                                             </thead>
                                                             <tbody>
                                                                 @foreach($trade->diary as $diary)
-                                                                @if($diary->direction === 0)
+                                                                @if($diary->direction === "0")
                                                                 <tr>
                                                                     <td>{{$diary->account->id}}</td>
                                                                     <td>{{$diary->account->name}}</td>
