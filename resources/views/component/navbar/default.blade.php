@@ -25,16 +25,16 @@
                 </div>
             </li>
             <li class="">
-                <a href="{{route('event::manage')}}"><i class="fa fa-futbol-o"></i> <span class="nav-label">活動帳簿管理</span> </a>
+                <a href="{{route('event::manage')}}"><i class="fa fa-futbol-o"></i> <span class="nav-label">活動管理</span> </a>
             </li>
             <li class="">
                 <a href="{{route('index')}}"><i class="fa fa-area-chart"></i> <span class="nav-label">報表輸出</span> </a>
             </li>
             <li class="">
-                <a href="{{route('account::main')}}"><i class="fa fa-database"></i> <span class="nav-label">會計科目管理</span> </a>
+                <a href="{{route('account::main')}}"><i class="fa fa-database"></i> <span class="nav-label">科目管理</span> </a>
             </li>
             <li class="">
-                <a href="{{route('user::main')}}"><i class="fa fa-child"></i> <span class="nav-label">使用者管理</span> </a>
+                <a href="{{route('user::main')}}"><i class="fa fa-child"></i> <span class="nav-label">人員管理</span> </a>
             </li>
         </ul>
     </div>  

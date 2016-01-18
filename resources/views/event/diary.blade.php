@@ -148,12 +148,11 @@ $(document).ready(function() {
                                 <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="8">
                                     <thead>
                                         <tr>
-                                            <th data-toggle="true">交易日期</th>
-                                            <th>記帳日</th>
+                                            <th data-toggle="true" class="col-md-2">交易日</th>
                                             <th>交易內容</th>
                                             <th class="col-md-1">經手人</th>
-                                            <th class="col-md-1">記帳人</th>   
-                                            <th>備註</th>
+                                            <th class="col-md-1">記帳人</th>
+                                            <th class="col-md-2">記帳日</th>
                                             <th class="col-md-2">操作</th>
                                             <th data-hide="all"></th>
                                         </tr>
@@ -162,11 +161,10 @@ $(document).ready(function() {
                                         @foreach($tradeList as $trade)
                                         <tr>
                                             <td>{{date("Y-m-d", strtotime($trade->trade_at))}}</td>
-                                            <td>{{date("Y-m-d", strtotime($trade->created_at))}}</td>
                                             <td>{{$trade->name}}</td>
                                             <td>{{$trade->handler}}</td>
                                             <td>{{$trade->user->userDetail->last_name . $trade->user->userDetail->first_name}}</td>
-                                            <td>{{$trade->comment}}</td>
+                                            <td>{{date("Y-m-d", strtotime($trade->created_at))}}</td>
                                             <td>
 
                                                 <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="{{'#edit-transaction' . $trade->id}}">
@@ -293,7 +291,7 @@ $(document).ready(function() {
                                                             </thead>
                                                             <tbody>
                                                                 @foreach($trade->diary as $diary)
-                                                                @if($diary->direction === "1")
+                                                                @if($diary->direction === "1" || $diary->direction === 1)
                                                                 <tr>
                                                                     <td>{{$diary->account->id}}</td>
                                                                     <td>{{$diary->account->name}}</td>
@@ -314,7 +312,7 @@ $(document).ready(function() {
                                                             </thead>
                                                             <tbody>
                                                                 @foreach($trade->diary as $diary)
-                                                                @if($diary->direction === "0")
+                                                                @if($diary->direction === "0" || $diary->direction === 0)
                                                                 <tr>
                                                                     <td>{{$diary->account->id}}</td>
                                                                     <td>{{$diary->account->name}}</td>

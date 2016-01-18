@@ -1,7 +1,7 @@
 <div class="col-md-12">
     
     <div class="form-group">
-        <label class="col-md-3 control-label">父會計科目編號</label>
+        <label class="col-md-3 control-label">父科目編號</label>
         <div class="col-md-9">
             <select class="form-control aa" name="parent_id" id="parent-id">
                 <option></option>
@@ -23,7 +23,7 @@
     <div class="hr-line-dashed"></div>
 
     <div class="form-group">
-        <label class="col-md-3 control-label">會計科目編號</label>
+        <label class="col-md-3 control-label">科目編號</label>
         <div class="col-md-9">
             <input type="text" class="form-control" name="id">
         </div>
