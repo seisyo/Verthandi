@@ -8,6 +8,7 @@ class Account extends Model
 {
     protected $table = 'account';
     protected $fillable = ['id', 'name', 'comment', 'parent_id', 'direction'];
+    protected $primaryKey = ['id', 'parent_id'];
     public $timestamps = false;
 
     public function account()
