@@ -22,7 +22,6 @@
                     </a>
                     
                     <ul class="dropdown-menu dropdown-messages">
-                        
                         @foreach($eventList as $event)
                         <li>
                             <a href="{{route('event::main', ['id' => $event->id])}}">
@@ -35,13 +34,6 @@
                         <li class="divider"></li>
                         
                         @endforeach
-                        <li>
-                            <a href="{{route('event::manage')}}">
-                                <div class="text-center link-block">
-                                    <strong>新增活動帳簿</strong> 
-                                </div>
-                            </a>
-                        </li>
                     </ul>
                 </li>
             <li>

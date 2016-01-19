@@ -12,7 +12,7 @@ class Account extends Model
 
     public function account()
     {
-        return $this->hasOne('App\Account', 'parent_id', 'id');
+        return $this->hasOne('App\Account', 'id', 'parent_id');
     }
 
     public function diary()

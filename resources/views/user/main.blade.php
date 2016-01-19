@@ -35,18 +35,30 @@ $(document).ready(function(){
     });
     
     $("#search-id").change(function(){
-        var url = "{{route('user::searchById')}}";
+            
+            if($("#search-id").val() != ""){
 
-        setTimeout(function(){
-            DoAjax(url, {id: $("#search-id").val()},
-                function(data, textStatus, jqXHR){
-                    //hide all tr
-                    $("tbody > tr").hide();
-                    //show the selected tr
-                    $("#" + data.content.id).show();
+                var url = "{{route('account::searchById')}}";
+                setTimeout(function(){
+                    DoAjax(url, {id: $("#search-id").val()},
+                        function(data, textStatus, jqXHR){
+                            var datas = data.content;
+                            //hide all tr
+                            $("tbody > tr").hide();
+                            $.each(datas, function(key, value){
+                                //show the selected tr
+                                $("#" + value.id).show();
+                            });
+                        });
                 });
-        });
-    }); 
+
+            } else {
+                
+                $("tbody > tr").show();
+
+            }
+            
+        }); 
 });
 
 </script>
@@ -174,7 +186,7 @@ $(document).ready(function(){
                                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
-                                                                <h4 class="modal-title">預覽＆編輯使用者</h4>
+                                                                <h4 class="modal-title">編輯使用者</h4>
                                                             </div>
                                                             
                                                             <form class="form-horizontal" method="post" action="{{route('user::edit')}}">

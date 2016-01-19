@@ -33,46 +33,34 @@
             placeholder: "搜尋",
             allowClear: true
         });
-
-        // $("#parent-id").click(function(){
-        //     // $.fn.modal.Constructor.prototype.enforceFocus = function () {};
-        //     $(this).select2({
-        //         placeholder: "搜尋",
-        //         allowClear: true
-        //     });
-        // });
-        // var enforceModalFocusFn = $.fn.modal.Constructor.prototype.enforceFocus;
-
-        // $.fn.modal.Constructor.prototype.enforceFocus = function() {};
-
-        // $confModal.on('hidden', function() {
-        //     $.fn.modal.Constructor.prototype.enforceFocus = enforceModalFocusFn;
-        // });
-
-        // $confModal.modal({ backdrop : false });
-
-        // $("#parent-id").select2({
-        //     placeholder: "搜尋",
-        //     allowClear: true
-        // });
         
         $("#search-id").change(function(){
-            var url = "{{route('account::searchById')}}";
+            
+            if($("#search-id").val() != ""){
 
-            setTimeout(function(){
-                DoAjax(url, {id: $("#search-id").val()},
-                    function(data, textStatus, jqXHR){
-                        var datas = data.content;
-                        //hide all tr
-                        $("tbody > tr").hide();
-                        $.each(datas, function(key, value){
-                            //show the selected tr
-                            $("#" + value.id).show();
+                var url = "{{route('account::searchById')}}";
+                setTimeout(function(){
+                    DoAjax(url, {id: $("#search-id").val()},
+                        function(data, textStatus, jqXHR){
+                            var datas = data.content;
+                            //hide all tr
+                            $("tbody > tr").hide();
+                            $.each(datas, function(key, value){
+                                //show the selected tr
+                                $("#" + value.id).show();
+                            });
                         });
-                    });
-            });
+                });
+
+            } else {
+                
+                $("tbody > tr").show();
+
+            }
+            
         }); 
-    })
+    });
+
 </script>
 @endsection
 
@@ -175,8 +163,7 @@
                                     <th class="col-md-1">科目編號</th>
                                     <th class="">科目名稱</th>
                                     <th class="col-md-1">方向</th>
-                                    <th class="col-md-1">父科目</th>
-                                    <th class="col-md-2">備註</th>
+                                    <th>父科目</th>
                                     <th class="col-md-2">操作</th>
                                 </tr>
                             </thead>
@@ -192,7 +179,6 @@
                                     <td>貸</td>
                                     @endif
                                     <td>{{$account->parent_id}}</td>   
-                                    <td>{{$account->comment}}</td>
                                     <td>
 
                                         <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="{{'#edit-account'.$account->id}}">
