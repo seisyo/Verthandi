@@ -187,19 +187,27 @@
                                     
                                     @if ($account->parent_id === 0)
                                     <td>{{(int)(str_pad($account->parent_id . $account->id, 6, '0', STR_PAD_RIGHT))}}</td>
-                                    <td>{{$account->name}}</td>
                                     @else
                                     <td>{{(int)(str_pad($account->parent_id . $account->id, 5, '0', STR_PAD_RIGHT))}}</td>
-                                    <td>{{str_pad($account->name, strlen($account->parent_id . $account->id)*15, ' - ', STR_PAD_LEFT)}}</td>
                                     @endif
                                     
-                                    
+                                    @if (strlen((int)($account->parent_id . $account->id)) === 1)
+                                    <td>{{$account->name}}</td>
+                                    @elseif (strlen((int)($account->parent_id . $account->id)) === 2)
+                                    <td>{{'- - ' . $account->name}}</td>
+                                    @elseif (strlen((int)($account->parent_id . $account->id)) === 3)
+                                    <td>{{'- - - - ' . $account->name}}</td>
+                                    @elseif (strlen((int)($account->parent_id . $account->id)) === 4)
+                                    <td>{{'- - - - - - ' . $account->name}}</td>
+                                    @elseif (strlen((int)($account->parent_id . $account->id)) === 5)
+                                    <td>{{'- - - - - - - - ' . $account->name}}</td>
+                                    @endif
                                     @if ($account->direction)
                                     <td>借</td>
                                     @else
                                     <td>貸</td>
                                     @endif
-                                    <td>{{$account->parentName}}</td>  
+                                    <td>{{$account->parent_name}}</td>  
                                     <td>
 
                                         <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="{{'#edit-account'.$account->id}}">

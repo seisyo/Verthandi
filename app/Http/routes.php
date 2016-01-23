@@ -11,7 +11,10 @@
 |
 */
 
-
+Route::get('/test', function() {
+    
+    dd(DB::select('select name from account where concat(parent_id,id) = 11'));
+});
 
 //WEB
 Route::group(['as' => 'login::'], function(){

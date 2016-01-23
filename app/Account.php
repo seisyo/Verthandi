@@ -24,11 +24,14 @@ class Account extends Model
     }
 
     //original function
-    public function parentName()
+    public function getParentNameAttribute()
     {
-        if($this->parent_id === '0'){
-            return DB::select('select name from account where concat(parent_id,id) = ?', [$this->parent_id])->name;
+        if($this->parent_id !== 0){
+            //parent_id + id = 01 or 00 must be cast to INTEGER like 1 or 0 than can be selected.
+            return DB::select('select name from account where cast(concat(parent_id,id) as INTEGER) = ?', [$this->parent_id])[0]->name;
+        } else {
+            return '';
         }
-        
+                
     }
 }
