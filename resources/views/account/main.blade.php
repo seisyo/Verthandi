@@ -57,11 +57,21 @@
                 });
 
             } else {
-                
                 $("tbody > tr").show();
-
             }
             
+        });
+
+        $("#parent-id").change(function(){
+            $.ajax({type: 'GET',
+                    url: "{{route('account::searchNextIdByParentId')}}", 
+                    data: {
+                        parent_id: $("#parent-id").val()
+                    },
+                    success: function(result){
+                        $("#parentable-id").html($("#parent-id").val() + result.content);
+                    }
+                });
         });
 
         // $('#add-account').on('show.bs.modal', function () {
@@ -173,7 +183,7 @@
 
                             <thead>
                                 <tr>
-                                    <th class="col-md-1">科目編號</th>
+                                    <th class="col-md-2">科目編號</th>
                                     <th class="">科目名稱</th>
                                     <th class="col-md-1">方向</th>
                                     <th>父科目</th>

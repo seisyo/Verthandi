@@ -8,16 +8,16 @@ use App\Event;
 
 use Session;
 use Validator;
+use DB;
 
 class AccountController extends Controller
 {
     public function showAccount()
     {
         //make a parent_id array to push to view
-        $parentIdList = Account::select('parent_id')->where('id', '!=' , '0')->where('parent_id', '!=', '0')->distinct()->get();
-        //dd($parentIdList);
-
-        return view('account.main')->with(['accountList' => Account::all(), 'parentList' => $parentIdList, 'eventList' => Event::all()]);
+        $parentIdArray = DB::select('select cast(concat(parent_id,id) as INTEGER) as parentable_id,name from account where length(cast(concat(parent_id,id) as INTEGER)) < 5 and id != 0');
+        //dd($parentIdArray);
+        return view('account.main')->with(['accountList' => Account::all(), 'parentList' => $parentIdArray, 'eventList' => Event::all()]);
     }
 
     public function addAccount(Request $request)
@@ -93,6 +93,34 @@ class AccountController extends Controller
         return response()->json(Account::all());
     }
 
+    public function searchNextIdByParentId(Request $request)
+    {
+        $validator = Validator::make(
+        [
+            'parent_id' => $request->get('parent_id')
+        ],
+        [
+            'parent_id' => 'required|numeric'
+        ]);
+
+        if ($validator->fails()) {
+            
+            $result = ['type' => 'Failed', 'content' => $validator->messages()];
+            return response()->json($result);
+
+        } else {
+
+            $result = DB::select('select max(id)+1 as useable_id from account where cast(parent_id  as INTEGER) = ?', [$request->get('parent_id')]);
+            if ($result[0]->useable_id === null) {
+                return response()->json(['type' => 'Success', 'content' => 1]);
+            } else {
+                return response()->json(['type' => 'Success', 'content' => $result[0]->useable_id]);
+            }
+            
+        }
+
+    }
+
     public function searchByIdAccount(Request $request)
     {
         $validator = Validator::make(
@@ -105,7 +133,7 @@ class AccountController extends Controller
 
         if ($validator->fails()) {
             
-            $result = ['message' => 'Failed', 'content' => $validator->messages()];
+            $result = ['type' => 'Failed', 'content' => $validator->messages()];
             return response()->json($result);
 
         } else {
@@ -141,17 +169,6 @@ class AccountController extends Controller
 
             }
 
-            // $arr = str_split(strval($request->get('id')));
-            // $length = count($arr);
-            // $count = 1;
-            
-            // foreach ($arr as $value) {
-            //     if ($value === '0') {
-                    
-            //     } else {
-            //         $count++;
-            //     }            
-            // }
         }
     }
 }

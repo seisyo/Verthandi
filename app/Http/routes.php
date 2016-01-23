@@ -10,6 +10,7 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+
 //WEB
 Route::group(['as' => 'login::'], function(){
     Route::get('/login', [
@@ -94,6 +95,9 @@ Route::group(['middleware' => 'LoginCheck'], function(){
         ]);
         Route::get('/search/id', [
             'as' => 'searchById', 'uses' => 'AccountController@searchByIdAccount'
+        ]);
+        Route::get('/search/nextId',[
+            'as' => 'searchNextIdByParentId', 'uses' => 'AccountController@searchNextIdByParentId'
         ]);
     });
 

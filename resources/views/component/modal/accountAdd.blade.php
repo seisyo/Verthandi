@@ -5,10 +5,8 @@
         <div class="col-md-9">
             <select class="form-control aa" name="parent_id" id="parent-id">
                 <option></option>
-                @foreach ($accountList as $account)
-                    @if ($parentList->contains('parent_id', $account->parent_id.$account->id)))
-                    <option value="{{$account->parent_id . $account->id}}">{{(int)($account->parent_id . $account->id).'  '. $account->name}}</option>
-                    @endif
+                @foreach ($parentList as $account)
+                    <option value="{{$account->parentable_id}}">{{str_pad($account->parentable_id, 5, 0, STR_PAD_RIGHT) . '  ' . $account->name}}</option>
                 @endforeach
             </select>
         </div>
@@ -19,7 +17,7 @@
     <div class="form-group">
         <label class="col-md-3 control-label">科目編號</label>
         <div class="col-md-9">
-            <input type="text" class="form-control" name="id">
+            <h3 id="parentable-id"></h3>   
         </div>
     </div>
 
