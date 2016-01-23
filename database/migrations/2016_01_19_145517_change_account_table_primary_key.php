@@ -15,7 +15,7 @@ class ChangeAccountTablePrimaryKey extends Migration
         Schema::table('account', function ($table) {
             
             $table->dropForeign('account_parent_id_foreign');
-            $table->dropPrimary('id');
+            $table->dropPrimary('account_id_primary');
             $table->primary(['id', 'parent_id']);
             $table->foreign('parent_id')->references('id')->on('account');
 
@@ -32,7 +32,7 @@ class ChangeAccountTablePrimaryKey extends Migration
         Schema::table('account', function ($table) {
             
             $table->dropForeign('account_parent_id_foreign');
-            $table->dropPrimary(['id', 'parent_id']);
+            $table->dropPrimary(['account_id_primary', 'account_parent_id_primary']);
             $table->primary('id');
             $table->foreign('parent_id')->references('id')->on('account');
 

@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+use DB;
+
 class Account extends Model
 {
     protected $table = 'account';
@@ -19,5 +21,14 @@ class Account extends Model
     public function diary()
     {
         return $this->hasMany('App\Diary');
+    }
+
+    //original function
+    public function parentName()
+    {
+        if($this->parent_id === '0'){
+            return DB::select('select name from account where concat(parent_id,id) = ?', [$this->parent_id])->name;
+        }
+        
     }
 }

@@ -31,13 +31,13 @@ class TradeDiarySeeder extends Seeder
             'direction' => true,
             'amount' => 1000,
             'trade_id' => 1,
-            'account_id' => 5211
+            'account_id' => 1
         ]);
         Diary::create([
             'direction' => false,
             'amount' => 1000,
             'trade_id' => 1,
-            'account_id' => 11133
+            'account_id' => 1
         ]);
     }
 }

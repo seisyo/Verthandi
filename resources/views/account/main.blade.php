@@ -4,6 +4,7 @@
 @section('custom_css')
 <link rel="stylesheet" href="{{url('assets/css/plugins/toastr/toastr.min.css')}}">
 <link rel="stylesheet" href="{{url('assets/css/plugins/select2/select2.min.css')}}">
+<link href="{{url('assets/css/plugins/footable/footable.core.css')}}" rel="stylesheet">
 @endsection
 
 {{-- Custom js section --}}
@@ -12,10 +13,13 @@
 <script src="{{url('assets/js/plugins/select2/select2.full.min.js')}}"></script>
 <script src="{{url('assets/js/custom/modal_autoopen.js')}}"></script>
 <script src="{{url('assets/js/custom/modal_reset.js')}}"></script>
+<script src="{{url('assets/js/plugins/footable/footable.all.min.js')}}"></script>
 <script type="text/javascript">
 
     $(document).ready(function(){
         
+        $(".footable").footable();
+
         var DoAjax = function(url, parametors, sHandler, eHandler, pageNotFoundHandler){
             $.ajax({
                 type: "GET",
@@ -58,7 +62,16 @@
 
             }
             
-        }); 
+        });
+
+        // $('#add-account').on('show.bs.modal', function () {
+           
+        //    $("#parent-id").select2({
+        //         placeholder: "搜尋",
+        //         allowClear: true
+        //     });
+        // });
+            
     });
 
 </script>
@@ -156,7 +169,7 @@
                 <div class="row">
                     <div class="col-md-12">
 
-                        <table class="table table-bordered">
+                        <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="1000">
 
                             <thead>
                                 <tr>
@@ -171,14 +184,22 @@
                             <tbody>
                                 @foreach ($accountList as $account)
                                 <tr id="{{$account->id}}">
-                                    <td>{{$account->id}}</td>
+                                    
+                                    @if ($account->parent_id === 0)
+                                    <td>{{(int)(str_pad($account->parent_id . $account->id, 6, '0', STR_PAD_RIGHT))}}</td>
                                     <td>{{$account->name}}</td>
+                                    @else
+                                    <td>{{(int)(str_pad($account->parent_id . $account->id, 5, '0', STR_PAD_RIGHT))}}</td>
+                                    <td>{{str_pad($account->name, strlen($account->parent_id . $account->id)*15, ' - ', STR_PAD_LEFT)}}</td>
+                                    @endif
+                                    
+                                    
                                     @if ($account->direction)
                                     <td>借</td>
                                     @else
                                     <td>貸</td>
                                     @endif
-                                    <td>{{$account->parent_id}}</td>   
+                                    <td>{{$account->parentName}}</td>  
                                     <td>
 
                                         <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="{{'#edit-account'.$account->id}}">

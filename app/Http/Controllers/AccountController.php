@@ -20,6 +20,7 @@ class AccountController extends Controller
         foreach ($parentIdList as $parentId) {
             array_push($parentIdArray, $parentId['parent_id']);
         }
+        
 
         return view('account.main')->with(['accountList' => Account::all(), 'parentList' => $parentIdArray, 'eventList' => Event::all()]);
     }

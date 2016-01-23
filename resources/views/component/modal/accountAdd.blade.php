@@ -11,12 +11,6 @@
                     @endif
                 @endforeach
             </select>
-            <script>
-                // $("#parent_id").select2({
-                //     placeholder: "搜尋",
-                //     allowClear: true
-                // });
-            </script>
         </div>
     </div>
     
