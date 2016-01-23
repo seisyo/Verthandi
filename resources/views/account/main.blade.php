@@ -183,108 +183,114 @@
 
                             <tbody>
                                 @foreach ($accountList as $account)
-                                <tr id="{{$account->id}}">
+                                <tr id="{{$account->parent_id . $account->id}}">
                                     
-                                    @if ($account->parent_id === 0)
-                                    <td>{{(int)(str_pad($account->parent_id . $account->id, 6, '0', STR_PAD_RIGHT))}}</td>
-                                    @else
-                                    <td>{{(int)(str_pad($account->parent_id . $account->id, 5, '0', STR_PAD_RIGHT))}}</td>
-                                    @endif
-                                    
-                                    @if (strlen((int)($account->parent_id . $account->id)) === 1)
-                                    <td>{{$account->name}}</td>
-                                    @elseif (strlen((int)($account->parent_id . $account->id)) === 2)
-                                    <td>{{'- - ' . $account->name}}</td>
-                                    @elseif (strlen((int)($account->parent_id . $account->id)) === 3)
-                                    <td>{{'- - - - ' . $account->name}}</td>
-                                    @elseif (strlen((int)($account->parent_id . $account->id)) === 4)
-                                    <td>{{'- - - - - - ' . $account->name}}</td>
-                                    @elseif (strlen((int)($account->parent_id . $account->id)) === 5)
-                                    <td>{{'- - - - - - - - ' . $account->name}}</td>
-                                    @endif
-                                    @if ($account->direction)
-                                    <td>借</td>
-                                    @else
-                                    <td>貸</td>
-                                    @endif
-                                    <td>{{$account->parent_name}}</td>  
-                                    <td>
+                                    @if ($account->id !== 0)
+                                        <!-- print account id -->
+                                        @if ($account->parent_id === 0)
+                                        <td>{{(int)(str_pad($account->parent_id . $account->id, 6, '0', STR_PAD_RIGHT))}}</td>
+                                        @else
+                                        <td>{{(int)(str_pad($account->parent_id . $account->id, 5, '0', STR_PAD_RIGHT))}}</td>
+                                        @endif
+                                        <!-- print account name -->
+                                        @if (strlen((int)($account->parent_id . $account->id)) === 1)
+                                        <td>{{$account->name}}</td>
+                                        @elseif (strlen((int)($account->parent_id . $account->id)) === 2)
+                                        <td>{{'- - ' . $account->name}}</td>
+                                        @elseif (strlen((int)($account->parent_id . $account->id)) === 3)
+                                        <td>{{'- - - - ' . $account->name}}</td>
+                                        @elseif (strlen((int)($account->parent_id . $account->id)) === 4)
+                                        <td>{{'- - - - - - ' . $account->name}}</td>
+                                        @elseif (strlen((int)($account->parent_id . $account->id)) === 5)
+                                        <td>{{'- - - - - - - - ' . $account->name}}</td>
+                                        @endif
+                                        <!-- print account direction -->
+                                        @if ($account->direction)
+                                        <td>借</td>
+                                        @else
+                                        <td>貸</td>
+                                        @endif
+                                        <!-- print acccount's parent name -->
+                                        <td>{{$account->parent_name}}</td>
+                                        
+                                        <td>
+                                            <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="{{'#edit-account' . $account->parent_id . $account->id}}">
+                                                編輯
+                                            </button>
 
-                                        <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="{{'#edit-account'.$account->id}}">
-                                            編輯
-                                        </button>
+                                            <div class="modal fade" id="{{'edit-account' . $account->parent_id . $account->id}}">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
 
-                                        <div class="modal fade" id="{{'edit-account'.$account->id}}">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                            <h4 class="modal-title">編輯會計科目</h4>
+                                                        </div>
 
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                        <h4 class="modal-title">編輯會計科目</h4>
+                                                        <form class="form-horizontal" method="post" action="{{route('account::edit')}}">
+                                                            <div class="modal-body">
+                                                                @if(Session::has(('errors'.$account->id)))
+                                                                @foreach(Session::get('errors'.$account->id)->all() as $error)
+                                                                <div class="alert alert-danger">
+                                                                    {{$error}}
+                                                                </div>
+                                                                <script>
+                                                                modal_autoopen("{{'#edit-account'.$account->id}}");
+                                                                </script>
+                                                                @endforeach
+                                                                @endif
+                                                                <div class="row">
+                                                                    @include("component.modal.accountEdit")
+                                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                                                <a href="">
+                                                                    <button type="submit" class="btn btn-primary">確定修改</button>
+                                                                </a>
+                                                            </div>
+                                                        </form>
+
                                                     </div>
+                                                </div>
+                                            </div>
+                                            <!-- modal end -->
 
-                                                    <form class="form-horizontal" method="post" action="{{route('account::edit')}}">
+                                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="{{'#delete-account'.$account->id}}">
+                                                刪除
+                                            </button>
+
+                                            <div class="modal fade" id="{{'delete-account'.$account->id}}">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                            <h4 class="modal-title">刪除會計科目</h4>
+                                                        </div>
                                                         <div class="modal-body">
-                                                            @if(Session::has(('errors'.$account->id)))
-                                                            @foreach(Session::get('errors'.$account->id)->all() as $error)
-                                                            <div class="alert alert-danger">
-                                                                {{$error}}
-                                                            </div>
-                                                            <script>
-                                                            modal_autoopen("{{'#edit-account'.$account->id}}");
-                                                            </script>
-                                                            @endforeach
-                                                            @endif
-                                                            <div class="row">
-                                                                @include("component.modal.accountEdit")
-                                                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                                            </div>
+                                                            確定要刪除會計科目「{{$account->name}}」嗎？
                                                         </div>
                                                         <div class="modal-footer">
-
-                                                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                                                            <a href="">
-                                                                <button type="submit" class="btn btn-primary">確定修改</button>
-                                                            </a>
+                                                            <form method="post" action="{{route('account::delete')}}">
+                                                                <input type="hidden" name="id" value="{{$account->id}}">
+                                                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                                                <button type="submit" class="btn btn-danger">確定刪除</button>
+                                                            </form>
                                                         </div>
-                                                    </form>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- modal end -->
-
-                                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="{{'#delete-account'.$account->id}}">
-                                            刪除
-                                        </button>
-
-                                        <div class="modal fade" id="{{'delete-account'.$account->id}}">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                        <h4 class="modal-title">刪除會計科目</h4>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        確定要刪除會計科目「{{$account->name}}」嗎？
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <form method="post" action="{{route('account::delete')}}">
-                                                            <input type="hidden" name="id" value="{{$account->id}}">
-                                                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                                                            <button type="submit" class="btn btn-danger">確定刪除</button>
-                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <!-- modal end -->
-                                    </td>
+                                            <!-- modal end -->
+                                        </td>
+                                    @endif  
+                                   
                                 </tr>
                                 @endforeach
                             </tbody>

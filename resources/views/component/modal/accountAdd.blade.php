@@ -6,8 +6,8 @@
             <select class="form-control aa" name="parent_id" id="parent-id">
                 <option></option>
                 @foreach ($accountList as $account)
-                    @if (in_array($account->id, $parentList))
-                    <option value="{{$account->id}}">{{$account->id .'  '. $account->name}}</option>
+                    @if ($parentList->contains('parent_id', $account->parent_id.$account->id)))
+                    <option value="{{$account->parent_id . $account->id}}">{{(int)($account->parent_id . $account->id).'  '. $account->name}}</option>
                     @endif
                 @endforeach
             </select>
