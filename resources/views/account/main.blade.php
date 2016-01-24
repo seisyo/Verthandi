@@ -198,13 +198,13 @@
                                         @if (strlen((int)($account->parent_id . $account->id)) === 1)
                                         <td>{{$account->name}}</td>
                                         @elseif (strlen((int)($account->parent_id . $account->id)) === 2)
-                                        <td>{{'- - ' . $account->name}}</td>
+                                        <td><span style="margin-left:10%"></span>{{'－'.$account->name}}</td>
                                         @elseif (strlen((int)($account->parent_id . $account->id)) === 3)
-                                        <td>{{'- - - - ' . $account->name}}</td>
+                                        <td><span style="margin-left:20%"></span>{{'－'.$account->name}}</td>
                                         @elseif (strlen((int)($account->parent_id . $account->id)) === 4)
-                                        <td>{{'- - - - - - ' . $account->name}}</td>
+                                        <td><span style="margin-left:30%"></span>{{'－'.$account->name}}</td>
                                         @elseif (strlen((int)($account->parent_id . $account->id)) === 5)
-                                        <td>{{'- - - - - - - - ' . $account->name}}</td>
+                                        <td><span style="margin-left:40%"></span>{{'－'.$account->name}}</td>
                                         @endif
                                         <!-- print account direction -->
                                         @if ($account->direction)
