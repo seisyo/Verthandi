@@ -20,58 +20,48 @@
         
         $(".footable").footable();
 
-        var DoAjax = function(url, parametors, sHandler, eHandler, pageNotFoundHandler){
-            $.ajax({
-                type: "GET",
-                url: url,
-                data: parametors,
-                success: sHandler,
-                error: eHandler,
-                statusCode:{
-                    404: pageNotFoundHandler
-                }
-            });
-        };
-
         $("#search-id").select2({
             placeholder: "搜尋",
             allowClear: true
         });
-        
+
+        // search the account's all child account
         $("#search-id").change(function(){
             
-            if($("#search-id").val() != ""){
-
-                var url = "{{route('account::searchById')}}";
-                setTimeout(function(){
-                    DoAjax(url, {id: $("#search-id").val()},
-                        function(data, textStatus, jqXHR){
-                            var datas = data.content;
-                            //hide all tr
-                            $("tbody > tr").hide();
-                            $.each(datas, function(key, value){
-                                //show the selected tr
-                                $("#" + value.id).show();
-                            });
+            if ($("#search-id").val() != "") {  
+                $.ajax({
+                    type: 'GET',
+                    url: "{{route('account::searchById')}}",
+                    data: {
+                        id: $("#search-id").val()
+                    },
+                    success: function(result){
+                        var datas = result.content;
+                        //hide all tr
+                        $("tbody > tr").hide();
+                        $.each(datas, function(key, value){
+                            //show the selected tr
+                            $("#" + value.id).show();
                         });
+                    }
                 });
-
             } else {
                 $("tbody > tr").show();
             }
-            
         });
 
+        //predict the new account's number
         $("#parent-id").change(function(){
-            $.ajax({type: 'GET',
-                    url: "{{route('account::searchNextIdByParentId')}}", 
-                    data: {
-                        parent_id: $("#parent-id").val()
-                    },
-                    success: function(result){
-                        $("#parentable-id").html($("#parent-id").val() + result.content);
-                    }
-                });
+            $.ajax({
+                type: 'GET',
+                url: "{{route('account::searchNextIdByParentId')}}", 
+                data: {
+                    parent_id: $("#parent-id").val()
+                },
+                success: function(result){
+                    $("#parentable-id").html($("#parent-id").val() + result.content);
+                }
+            });
         });
 
         // $('#add-account').on('show.bs.modal', function () {
@@ -166,7 +156,9 @@
                         <select class="form-control" id="search-id">
                             <option></option>
                             @foreach ($accountList as $account)
-                            <option value="{{$account->id}}">{{$account->id .'  '. $account->name}}</option>
+                            @if ($account->id !==0)
+                            <option value="{{$account->parent_id . $account->id}}">{{(int)($account->parent_id . $account->id) .'  '. $account->name}}</option>
+                            @endif
                             @endforeach
                         </select>
                         

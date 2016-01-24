@@ -123,12 +123,17 @@ class AccountController extends Controller
 
     public function searchByIdAccount(Request $request)
     {
+        $id = substr($request->get('id'), strlen($request->get('id'))-1);
+        $parent_id = substr($request->get('id'), 0, strlen($request->get('id')) - 1);
+        
         $validator = Validator::make(
         [
-            'id' => $request->get('id')
+            'id' => $id,
+            'parent_id' => $parent_id
         ],
         [
-            'id' => 'required|exists:account,id'
+            'id' => 'required|exists:account,id',
+            'parent_id' => 'required|exists:account,parent_id'
         ]);
 
         if ($validator->fails()) {
@@ -137,38 +142,16 @@ class AccountController extends Controller
             return response()->json($result);
 
         } else {
-            
-            if ($request->get('id') % 10000 === 0) {
-                
-                $gets = Account::where('id', '<' ,$request->get('id') + 10000)->where('id', '>=', $request->get('id'))->get();
-                return response()->json(['message' => 'Success', 'content' => $gets]);
 
-            } elseif ($request->get('id') % 1000 === 0) {
+            // start account id
+            $startId = (int)(str_pad((int)$request->get('id'), 5, '0', STR_PAD_RIGHT));
+            // end account id
+            $endId = (int)(str_pad((int)$request->get('id') + 1, 5, '0', STR_PAD_RIGHT));            
+            // create view full_id as (select *,RPAD(cast(concat(parent_id,id) as INTEGER),5,'0') as full_id from account);
+            // full_id is a view. 
+            $result = DB::select('select concat(parent_id,id) as id from full_id where full_id >= cast(:head as INTEGER) and full_id < cast(:tail as INTEGER)', ['head' => $startId, 'tail' => $endId]);
 
-                $gets = Account::where('id', '<' ,$request->get('id') + 1000)->where('id', '>=', $request->get('id'))->get();
-                return response()->json(['message' => 'Success', 'content' => $gets]);
-
-            } elseif ($request->get('id') % 100 === 0) {
-
-                $gets = Account::where('id', '<' ,$request->get('id') + 100)->where('id', '>=', $request->get('id'))->get();
-                return response()->json(['message' => 'Success', 'content' => $gets]);
-
-            } elseif ($request->get('id') % 10 === 0) {
-
-                $gets = Account::where('id', '<' ,$request->get('id') + 10)->where('id', '>=', $request->get('id'))->get();
-                return response()->json(['message' => 'Success', 'content' => $gets]);
-
-            } elseif ($request->get('id') % 1 === 0) {
-
-                $gets = Account::where('id', '<' ,$request->get('id') + 1)->where('id', '>=', $request->get('id'))->get();
-                return response()->json(['message' => 'Success', 'content' => $gets]);
-
-            } else {
-                
-                return response()->json(['message' => 'Failed', 'content' => 'Something wrong!']);
-
-            }
-
+            return response()->json(['type' => 'Success', 'content' => $result]);
         }
     }
 }
