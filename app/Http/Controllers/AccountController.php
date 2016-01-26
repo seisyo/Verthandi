@@ -23,68 +23,92 @@ class AccountController extends Controller
     public function addAccount(Request $request)
     {
         $this->validate($request, [
-            'id' => 'required|unique:account,id|numeric|max:99999|min:10000',
             'name' => 'required|max:45',
-            'parent_id' => 'exists:account,id',
+            'parent_id' => 'required|numeric',
             'direction' => 'required|boolean',
             'comment' => 'string'
         ]);
 
-        Account::create([
-            'id' => $request->get('id'),
-            'name' => $request->get('name'),
-            'parent_id' => $request->get('parent_id'),
-            'direction' => $request->get('direction'),
-            'comment' => $request->get('comment')
-        ]);
+        $id = DB::select('select max(id)+1 as useable_id from account where cast(parent_id  as INTEGER) = ?', [$request->get('parent_id')])[0]->useable_id;
+        // if $id return null, it presents this parent does't have child account, so return 1 
+        if ($id === null) {
+            $id = 1;
+        } elseif ($id > 9) {
+            
+            Session::flash('toast_message', ['type' => 'warning', 'content' => '無法再新增子科目於此父科目']);
+            return redirect()->route('account::main');
 
-        Session::flash('toast_message', ['type' => 'success', 'content' => '成功新增會計科目「' . $request->get('name') . '」']);
+        } else {
+            DB::table('account')->insert([
+                'id' => $id,
+                'name' => $request->get('name'),
+                'parent_id' => $request->get('parent_id'),
+                'direction' => $request->get('direction'),
+                'comment' => $request->get('comment')
+            ]);
+
+            Session::flash('toast_message', ['type' => 'success', 'content' => '成功新增會計科目「' . $request->get('name') . '」']);
+            
+            return redirect()->route('account::main');
+        }
         
-        return redirect()->route('account::main');
+        
     }
 
     public function editAccount(Request $request)
     {
         $validator = Validator::make(
         [   
+            'id' => $request->get('id'),
+            'parent_id' => $request->get('parent_id'),
             'name' => $request->get('name'),
             'comment' => $request->get('comment')
         ],
         [
+            'id' => 'required|exists:account,id',
+            'parent_id' => 'required|exists:account,parent_id',
             'name' => 'required|max:45',
             'comment' => 'string'
         ]);
 
         if ($validator->fails()) {
-            
-            $errorname = 'errors' . $request->get('id');
-            
+            $errorname = 'errors' . $request->get('parent_id') . $request->get('id');
             return redirect()->route('account::main')->with($errorname, $validator->messages());
 
+        } else {
+            DB::table('account')->where('id', '=', $request->get('id'))->where('parent_id', '=', $request->get('parent_id'))->update([
+                'name' => $request->get('name'),
+                'comment' => $request->get('comment')
+            ]);
+
+            Session::flash('toast_message', ['type' => 'success', 'content'=> '成功編輯會計科目「' . $request->get('name') . '」']);
+            return redirect()->route('account::main');
         }
-
-        Account::where('id', '=', $request->get('id'))->first()->update([
-            'name' => $request->get('name'),
-            'comment' => $request->get('comment')
-        ]);
-
-        Session::flash('toast_message', ['type' => 'success', 'content'=> '成功編輯會計科目「' . $request->get('name') . '」']);
-         
-        return redirect()->route('account::main');
     }
 
     public function deleteAccount(Request $request)
     {
         $this->validate($request, [
-            'id' => 'required|exists:account,id'
+            'id' => 'required|exists:account,id',
+            'parent_id' => 'required|exists:account,parent_id'
         ]);
 
-        $deleteAccountName = Account::where('id', '=', $request->get('id'))->first()->name;
-        Account::where('id', '=', $request->get('id'))->first()->delete();
+        $check = Account::where('parent_id', '=', $request->get('parent_id') . $request->get('id'))->first();
+        $query = DB::table('account')->where('id', '=', $request->get('id'))->where('parent_id', '=', $request->get('parent_id'));
+        $deleteAccountName = $query->get()[0]->name;
 
-        Session::flash('toast_message', ['type' => 'success', 'content' => '成功刪除會計科目「' . $deleteAccountName . '」']);
+        if ($check === null) {
+            $query->delete();
+
+            Session::flash('toast_message', ['type' => 'success', 'content' => '成功刪除會計科目「' . $deleteAccountName . '」']);
+            return redirect()->route('account::main');
+        } else {
+
+            Session::flash('toast_message', ['type' => 'warning', 'content' => '刪除會計科目「' . $deleteAccountName . '」失敗（無法刪除父科目）']);
+            return redirect()->route('account::main');
+        }
+     
         
-        return redirect()->route('account::main');
 
     }
 

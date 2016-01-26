@@ -59,7 +59,18 @@
                     parent_id: $("#parent-id").val()
                 },
                 success: function(result){
-                    $("#parentable-id").html($("#parent-id").val() + result.content);
+                    if (Number(result.content) >= 10) {
+                        
+                        $("#add-button").addClass("disabled");
+                        $("#add-button").prop("disabled", true);
+                        $("#parentable-id").html("此父科目無法再新增");
+
+                    } else {
+                        
+                        $("#add-button").removeClass("disabled");
+                        $("#add-button").prop("disabled", false);
+                        $("#parentable-id").html($("#parent-id").val() + result.content);
+                    };
                 }
             });
         });
@@ -140,9 +151,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                                            <a href="">
-                                                <button type="submit" class="btn btn-primary">新增</button>
-                                            </a>
+                                            <button type="submit" class="btn btn-primary" id="add-button">新增</button>
                                         </div>
                                     </form>
                                 </div>
@@ -233,13 +242,13 @@
 
                                                         <form class="form-horizontal" method="post" action="{{route('account::edit')}}">
                                                             <div class="modal-body">
-                                                                @if(Session::has(('errors'.$account->id)))
-                                                                @foreach(Session::get('errors'.$account->id)->all() as $error)
+                                                                @if(Session::has(('errors' . $account->parent_id . $account->id)))
+                                                                @foreach(Session::get('errors' . $account->parent_id . $account->id)->all() as $error)
                                                                 <div class="alert alert-danger">
                                                                     {{$error}}
                                                                 </div>
                                                                 <script>
-                                                                modal_autoopen("{{'#edit-account'.$account->id}}");
+                                                                modal_autoopen("{{'#edit-account' . $account->parent_id . $account->id}}");
                                                                 </script>
                                                                 @endforeach
                                                                 @endif
@@ -262,11 +271,11 @@
                                             </div>
                                             <!-- modal end -->
 
-                                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="{{'#delete-account'.$account->id}}">
+                                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="{{'#delete-account' . $account->parent_id . $account->id}}">
                                                 刪除
                                             </button>
 
-                                            <div class="modal fade" id="{{'delete-account'.$account->id}}">
+                                            <div class="modal fade" id="{{'delete-account' . $account->parent_id . $account->id}}">
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
@@ -281,6 +290,7 @@
                                                         <div class="modal-footer">
                                                             <form method="post" action="{{route('account::delete')}}">
                                                                 <input type="hidden" name="id" value="{{$account->id}}">
+                                                                <input type="hidden" name="parent_id" value="{{$account->parent_id}}">
                                                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                                                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
                                                                 <button type="submit" class="btn btn-danger">確定刪除</button>

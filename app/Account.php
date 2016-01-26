@@ -13,11 +13,6 @@ class Account extends Model
     protected $primaryKey = ['id', 'parent_id'];
     public $timestamps = false;
 
-    public function account()
-    {
-        return $this->hasOne('App\Account', 'id', 'parent_id');
-    }
-
     public function diary()
     {
         return $this->hasMany('App\Diary');

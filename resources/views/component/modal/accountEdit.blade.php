@@ -17,5 +17,6 @@
     </div>
 
     <input type="hidden" class="form-control" name="id" value="{{$account->id}}">
+    <input type="hidden" class="form-control" name="parent_id" value="{{$account->parent_id}}">
 
 </div>
