@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+use DB;
+
 class Diary extends Model
 {
     use SoftDeletes;
@@ -17,6 +19,11 @@ class Diary extends Model
     public function trade()
     {
         return $this->belongsTo('App\Trade');
+    }
+
+    public function getAccountAttribute()
+    {
+        return DB::select("select RPAD(cast(concat(parent_id,id) as INTEGER),5,'0') as fullId, name from account where id = :id and parent_id = :parent_id", ['id' => $this->account_id, 'parent_id' => $this->account_parent_id])[0];
     }
 
 }

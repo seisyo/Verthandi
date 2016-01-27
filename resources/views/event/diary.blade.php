@@ -23,7 +23,7 @@
     
     var result = '{{$accountList}}';
     var accountList = $.parseJSON(result.replace(/&quot;/g, '"'));
-    
+
     $(document).ready(function() {
         
         $(".footable").footable();
@@ -306,8 +306,8 @@
                                                                 @foreach($trade->diary as $diary)
                                                                 @if($diary->direction === "1" || $diary->direction === 1)
                                                                 <tr>
-                                                                    <td></td>
-                                                                    <td></td>
+                                                                    <td>{{$diary->account->fullId}}</td>
+                                                                    <td>{{$diary->account->name}}</td>
                                                                     <td>{{$diary->amount}}</td>
                                                                 </tr>
                                                                 @endif
@@ -327,8 +327,8 @@
                                                                 @foreach($trade->diary as $diary)
                                                                 @if($diary->direction === "0" || $diary->direction === 0)
                                                                 <tr>
-                                                                    <td></td>
-                                                                    <td></td>
+                                                                    <td>{{$diary->account->fullId}}</td>
+                                                                    <td>{{$diary->account->name}}</td>
                                                                     <td>{{$diary->amount}}</td>
                                                                 </tr>
                                                                 @endif
