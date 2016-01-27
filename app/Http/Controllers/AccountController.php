@@ -16,7 +16,7 @@ class AccountController extends Controller
     {
         //make a parent_id array to push to view
         $parentIdArray = DB::select('select cast(concat(parent_id,id) as INTEGER) as parentable_id,name from account where length(cast(concat(parent_id,id) as INTEGER)) < 5 and id != 0');
-        //dd($parentIdArray);
+
         return view('account.main')->with(['accountList' => Account::all(), 'parentList' => $parentIdArray, 'eventList' => Event::all()]);
     }
 

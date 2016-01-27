@@ -22,14 +22,12 @@ class EventController extends Controller
 
     public function showEventDiary($id)
     {
-        $parentIdList = Account::select('parent_id')->distinct()->get();
-        $parentIdArray =[];
-        
-        foreach ($parentIdList as $parentId) {
-            array_push($parentIdArray, $parentId['parent_id']);
-        }
+        //make a parent_id array to push to view
+        $parentIdArray = DB::select('select cast(concat(parent_id,id) as INTEGER) as parentable_id,name from account where length(cast(concat(parent_id,id) as INTEGER)) < 5 and id != 0');
+        $accountArray = DB::select('select full_id, name from full_id');
 
-        return view('event.diary')->with(['eventList' => Event::all(), 'eventInfo' => Event::find($id), 'tradeList' => Trade::where('event_id', '=', $id)->get(), 'accountList' => Account::all(), 'parentList' => $parentIdArray]);
+        
+        return view('event.diary')->with(['eventList' => Event::all(), 'eventInfo' => Event::find($id), 'tradeList' => Trade::where('event_id', '=', $id)->get(), 'accountList' => $accountArray, 'parentList' => $parentIdArray]);
     }
 
     public function showEventLedger($id)

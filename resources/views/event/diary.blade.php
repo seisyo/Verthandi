@@ -20,9 +20,11 @@
 <script src="{{url('assets/js/custom/modal_autoopen.js')}}"></script>
 <script src="{{url('assets/js/custom/modal_reset.js')}}"></script>
 <script>
-$(document).ready(function() {
-    $(".footable").footable();
-});
+    $(document).ready(function() {
+        
+        $(".footable").footable();
+        
+    });
 </script>
 @endsection
 
@@ -195,7 +197,7 @@ $(document).ready(function() {
                                                                     @endforeach
                                                                     @endif
                                                                     <div class="row">
-                                                                        @include('component.modal.transactionEdit')
+                                                                       
                                                                         <input type="hidden" id="{{'debit_array' . $trade->id}}" name="debit_array">
                                                                         <input type="hidden" id="{{'credit_array' . $trade->id}}" name="credit_array">
                                                                         <input type="hidden" name="trade_id" value="{{$trade->id}}">
@@ -293,8 +295,8 @@ $(document).ready(function() {
                                                                 @foreach($trade->diary as $diary)
                                                                 @if($diary->direction === "1" || $diary->direction === 1)
                                                                 <tr>
-                                                                    <td>{{$diary->account->id}}</td>
-                                                                    <td>{{$diary->account->name}}</td>
+                                                                    <td></td>
+                                                                    <td></td>
                                                                     <td>{{$diary->amount}}</td>
                                                                 </tr>
                                                                 @endif
@@ -314,8 +316,8 @@ $(document).ready(function() {
                                                                 @foreach($trade->diary as $diary)
                                                                 @if($diary->direction === "0" || $diary->direction === 0)
                                                                 <tr>
-                                                                    <td>{{$diary->account->id}}</td>
-                                                                    <td>{{$diary->account->name}}</td>
+                                                                    <td></td>
+                                                                    <td></td>
                                                                     <td>{{$diary->amount}}</td>
                                                                 </tr>
                                                                 @endif

@@ -13,10 +13,10 @@ class Account extends Model
     protected $primaryKey = ['id', 'parent_id'];
     public $timestamps = false;
 
-    public function diary()
-    {
-        return $this->hasMany('App\Diary');
-    }
+    // public function diary()
+    // {
+    //     return $this->hasMany('App\Diary');
+    // }
 
     //original function
     public function getParentNameAttribute()

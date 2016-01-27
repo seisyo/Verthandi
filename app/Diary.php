@@ -19,9 +19,10 @@ class Diary extends Model
         return $this->belongsTo('App\Trade');
     }
 
-    public function account()
-    {
-        return $this->belongsTo('App\Account');
-    }
+    // public function account()
+    // {
+    //     return $this->belongsTo('App\Account');
+    // }
+    
 
 }
