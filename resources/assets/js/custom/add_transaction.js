@@ -4,7 +4,7 @@ function add_transaction(addbtn_name, delbtn_name, account_type, input_place, co
 
     $(addbtn_name).click(function(){
 
-        $(input_place).append('<div class="row" id="' + account_type + '"><div class="form-group col-md-6"><input type="text" class="form-control account" placeholder="會計科目"></div><div class="form-group col-md-5"><input type="text" class="form-control amount" placeholder="金額"></div><div class="col-md-1"><button type="button" class="btn btn-outline btn-danger" id="' + delbtn_name + '">-</button></div></div>');
+        $(input_place).append('<div class="row" id="' + account_type + count +'"><div class="form-group col-md-6"><select class="form-control account"><option></option></select><script>$.each(accountList, function(key, value){$("div#' + account_type + count + '> div.col-md-6 > select.account").append("<option value=" + value.full_id + ">" + value.name + "</option>")});</script></div><div class="form-group col-md-5"><input type="text" class="form-control amount" placeholder="金額"></div><div class="col-md-1"><button type="button" class="btn btn-outline btn-danger" id="' + delbtn_name + count + '">-</button></div></div>');
 
         $('#' + account_type).attr("id", account_type + count);
         $('#' + delbtn_name).attr("id", delbtn_name + count);

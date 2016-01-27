@@ -11,18 +11,12 @@ class Diary extends Model
 
     protected $table = 'diary';
     protected $guarded = ['id'];
-    protected $fillable = ['direction', 'amount', 'trade_id', 'account_id'];
+    protected $fillable = ['direction', 'amount', 'trade_id', 'account_id', 'account_parent_id'];
     protected $dates = ['deleted_at'];
 
     public function trade()
     {
         return $this->belongsTo('App\Trade');
     }
-
-    // public function account()
-    // {
-    //     return $this->belongsTo('App\Account');
-    // }
-    
 
 }

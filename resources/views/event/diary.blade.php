@@ -20,11 +20,22 @@
 <script src="{{url('assets/js/custom/modal_autoopen.js')}}"></script>
 <script src="{{url('assets/js/custom/modal_reset.js')}}"></script>
 <script>
+    
+    var result = '{{$accountList}}';
+    var accountList = $.parseJSON(result.replace(/&quot;/g, '"'));
+    
     $(document).ready(function() {
         
         $(".footable").footable();
+
         
+
+        // $.each(accountList, function(key, value){
+        //     console.log(value.name);
+        // });
+
     });
+
 </script>
 @endsection
 
