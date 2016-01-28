@@ -56,7 +56,7 @@
                 </script>
 
                 @foreach($trade->diary as $diary)
-                @if($diary->direction === 1)
+                @if((int)$diary->direction === 1)
                 
                 <div class="row" id="debit_account">
                     <div class="form-group col-md-6">
@@ -114,7 +114,7 @@
                 </script>
                 
                 @foreach($trade->diary as $diary)
-                @if($diary->direction === 0)
+                @if((int)$diary->direction === 0)
 
                 <div class="row" id="credit_account">
                     <div class="form-group col-md-6">
