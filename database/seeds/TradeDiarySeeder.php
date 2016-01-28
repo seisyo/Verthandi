@@ -38,8 +38,8 @@ class TradeDiarySeeder extends Seeder
             'direction' => false,
             'amount' => 1000,
             'trade_id' => 1,
-            'account_id' => 1,
-            'account_parent_id' => 21
+            'account_id' => 7,
+            'account_parent_id' => 211
         ]);
     }
 }

@@ -51,14 +51,24 @@
                     </div>
                 </div>
 
-                @foreach($trade->diary as $diary)
-                @if($diary->direction === 1)
                 <script>
                     var count = 1;
                 </script>
+
+                @foreach($trade->diary as $diary)
+                @if($diary->direction === 1)
+                
                 <div class="row" id="debit_account">
                     <div class="form-group col-md-6">
-                        <input type="text" class="form-control account" placeholder="會計科目" value="{{$diary->account->id}}">
+                        <select class="form-control account">
+                            <option></option>
+                            
+                        </select>
+                        <script>
+                            $.each(accountList, function(key, value){
+                                $("{{'div#edit_account_row_debit' . $trade->id}} > div#debit_account > div.col-md-6 > select.account").append("<option value=" + value.full_id + " class=" + value.full_id + ">" + value.full_id + " " + value.name + "</option>");
+                            });
+                        </script>
                     </div>
                     <div class="form-group col-md-5">
                         <input type="text" class="form-control amount" placeholder="金額" value="{{$diary->amount}}">
@@ -69,9 +79,11 @@
                         </button>
                     </div>
                 </div>
+
                 <script>
                     $('#debit_account').attr("id", "debit_account" + count);
                     $('#debit_delbtn').attr("id", "debit_delbtn" + count);
+                    $("{{'div#edit_account_row_debit' . $trade->id}} > div#debit_account" + count + " > div.col-md-6 > select.account > option.{{$diary->account->fullId}}").attr("selected", "selected");
                     count = count + 1;
                 </script>
                 @endif
@@ -97,14 +109,23 @@
                     </div>
                 </div>
 
-                @foreach($trade->diary as $diary)
-                @if($diary->direction === 0)
                 <script>
                     var count = 1;
                 </script>
+                
+                @foreach($trade->diary as $diary)
+                @if($diary->direction === 0)
+
                 <div class="row" id="credit_account">
                     <div class="form-group col-md-6">
-                        <input type="text" class="form-control account" placeholder="會計科目" value="{{$diary->account->id}}">
+                        <select class="form-control account">
+                            <option></option>
+                        </select>
+                        <script>
+                            $.each(accountList, function(key, value){
+                                $("{{'div#edit_account_row_credit' . $trade->id}} > div#credit_account > div.col-md-6 > select.account").append("<option value=" + value.full_id + " class=" + value.full_id + ">" + value.full_id + " " + value.name + "</option>");
+                            });
+                        </script>
                     </div>
                     <div class="form-group col-md-5">
                         <input type="text" class="form-control amount" placeholder="金額" value="{{$diary->amount}}">
@@ -115,9 +136,12 @@
                         </button>
                     </div>
                 </div>
+
                 <script>
                     $('#credit_account').attr("id", "credit_account" + count);
                     $('#credit_delbtn').attr("id", "credit_delbtn" + count);
+                    alert({{$diary->account->fullId}});
+                    $("{{'div#edit_account_row_credit' . $trade->id}} > div#credit_account" + count + " > div.col-md-6 > select.account > option.{{$diary->account->fullId}}").attr("selected", "selected");
                     count = count + 1;
                 </script>
                 @endif

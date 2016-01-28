@@ -52,6 +52,15 @@
             });
             $("select.account").focus();
         });
+
+        $("[id^=edit-transaction]").on('show.bs.modal', function(){
+
+            $("select.account").select2({
+                placeholder: "會計科目",
+                allowClear: true
+            });
+            $("select.account").focus();
+        });
     });
 
 
@@ -206,7 +215,7 @@
                                                     編輯
                                                 </button>
 
-                                                <div class="modal fade" id="{{'edit-transaction' . $trade->id}}">
+                                                <div class="modal modal-wide fade" id="{{'edit-transaction' . $trade->id}}">
                                                     <div class="modal-dialog" role="document">
                                                         <div class="modal-content">
                                                             
@@ -230,7 +239,7 @@
                                                                     @endforeach
                                                                     @endif
                                                                     <div class="row">
-                                                                       
+                                                                        @include('component.modal.transactionEdit')
                                                                         <input type="hidden" id="{{'debit_array' . $trade->id}}" name="debit_array">
                                                                         <input type="hidden" id="{{'credit_array' . $trade->id}}" name="credit_array">
                                                                         <input type="hidden" name="trade_id" value="{{$trade->id}}">

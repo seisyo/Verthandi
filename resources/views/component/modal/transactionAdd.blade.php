@@ -51,7 +51,7 @@
 
                 <div class="row" id="debit_account1">
                     <div class="form-group col-md-6">
-                        <select class="form-control account" id="123">
+                        <select class="form-control account">
                             <option></option>
                             
                         </select>
@@ -95,7 +95,6 @@
                         </select>
                         <script>
                             $.each(accountList, function(key, value){
-                                console.log(value.name);
                                 $('div#credit_account1 > div.col-md-6 > select.account').append("<option value=" + value.full_id + ">" + value.full_id + " " + value.name + "</option>");
                             });
                         </script>
