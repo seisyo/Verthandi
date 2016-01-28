@@ -5,6 +5,23 @@
 <link rel="stylesheet" href="{{url('assets/css/plugins/toastr/toastr.min.css')}}">
 <link rel="stylesheet" href="{{url('assets/css/plugins/select2/select2.min.css')}}">
 <link href="{{url('assets/css/plugins/footable/footable.core.css')}}" rel="stylesheet">
+<style>
+    .modal.modal-wide .modal-dialog {
+        width: 60%;
+    }
+    .select2-container {
+        width: 100% !important;
+        height:100%;
+        padding: 0;
+        z-index: 2098;
+    }
+    .select2-close-mask{
+        z-index: 2099;
+    }
+    .select2-dropdown{
+        z-index: 3051;
+    }
+</style>
 @endsection
 
 {{-- Custom js section --}}
@@ -75,13 +92,15 @@
             });
         });
 
-        // $('#add-account').on('show.bs.modal', function () {
+        $('#add-account').on('show.bs.modal', function () {
            
-        //    $("#parent-id").select2({
-        //         placeholder: "搜尋",
-        //         allowClear: true
-        //     });
-        // });
+           $("#parent-id").select2({
+                placeholder: "搜尋",
+                allowClear: true
+            });
+           $("#parent-id").focus();
+           
+        });
             
     });
 

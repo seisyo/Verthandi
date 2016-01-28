@@ -22,7 +22,7 @@
     .select2-dropdown{
         z-index: 3051;
     }
-    </style>
+</style>
 @endsection
 
 {{-- Custom js section --}}
