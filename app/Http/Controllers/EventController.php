@@ -328,13 +328,20 @@ class EventController extends Controller
         //validate debit account
         foreach ($debitDictionary as $debit) {
             
+            $debitConcatId = trim($debit->account, "0");
+            
+            $debitAccountId = substr($debitConcatId, strlen($debitConcatId) - 1);
+            $debitAccountParentId = substr($debitConcatId, 0, strlen($debitConcatId) - 1);
+
             $validator =  Validator::make(
             [
-                'account' => $debit->account,
+                'account_id' => $debitAccountId,
+                'account_parent_id' => $debitAccountParentId,
                 'amount' => $debit->amount
             ],
             [
-                'account' => 'required|exists:account,id',
+                'account_id' => 'required|exists:account,id',
+                'account_parent_id' => 'required|exists:account,parent_id',
                 'amount' => 'required|numeric|min:1'
             ]);
             //merge the error message
@@ -348,13 +355,20 @@ class EventController extends Controller
         //validate credit account
         foreach ($creditDictionary as $credit) {
             
+            $creditConcatId = trim($credit->account, "0");
+            
+            $creditAccountId = substr($creditConcatId, strlen($creditConcatId) - 1);
+            $creditaAccountParentId = substr($creditConcatId, 0, strlen($creditConcatId) - 1);
+
             $validator =  Validator::make(
             [
-                'account' => $credit->account,
+                'account_id' => $creditAccountId,
+                'account_parent_id' => $creditaAccountParentId,
                 'amount' => $credit->amount
             ],
             [
-                'account' => 'required|exists:account,id',
+                'account_id' => 'required|exists:account,id',
+                'account_parent_id' => 'required|exists:account,parent_id',
                 'amount' => 'required|numeric|min:1'
             ]);
             //merge the error message
@@ -364,7 +378,16 @@ class EventController extends Controller
 
             $creditTotal = $creditTotal + $credit->amount;
         }
-        //dd($validatorTotal->messages());
+        // check balace
+        if ($debitTotal !== $creditTotal) {
+            $validatorTotal->messages()->merge(new MessageBag(['借貸不平衡']));
+        }
+
+        // check date
+        if (date("Y-m-d", strtotime($request->get('trade_at'))) > date("Y-m-d")) {
+            $validatorTotal->messages()->merge(new MessageBag(['交易尚未發生']));
+        }
+
         //!!!end validate!!!
 
         if (!$validatorTotal->messages()->isEmpty()) {
@@ -373,53 +396,58 @@ class EventController extends Controller
 
         } else {
 
-            if ($debitTotal !== $creditTotal) {
-                
-                return redirect()->route('event::diary', ['id' => $id])->with('errors' . $request->get('trade_id'), new MessageBag(['It is not balanced']));
+            DB::transaction(function() use ($request, $id, $debitDictionary, $creditDictionary){
 
-            } else {
+                //edit the trade
+                Trade::find($request->get('trade_id'))->update([
+                    'name' => $request->get('name'),
+                    'handler' => $request->get('handler'),
+                    'comment' => $request->get('comment'),
+                    'event_id' => $id,
+                    'trade_at' => date("Y-m-d", strtotime($request->get('trade_at'))),
+                    'user_id' => Session::get('user')->id
+                ]);
 
-                DB::transaction(function() use ($request, $id, $debitDictionary, $creditDictionary){
+                $diarys = Trade::find($request->get('trade_id'))->diary;
 
-                    //create the trade
-                    Trade::find($request->get('trade_id'))->update([
-                        'name' => $request->get('name'),
-                        'handler' => $request->get('handler'),
-                        'comment' => $request->get('comment'),
-                        'event_id' => $id,
-                        'trade_at' => date("Y-m-d", strtotime($request->get('trade_at'))),
-                        'user_id' => Session::get('user')->id
+                foreach ($diarys as $diary) {
+                    $diary->delete();
+                }
+
+                foreach ($debitDictionary as $debit) {
+                    
+                    $debitConcatId = trim($debit->account, "0");
+        
+                    $debitAccountId = substr($debitConcatId, strlen($debitConcatId) - 1);
+                    $debitAccountParentId = substr($debitConcatId, 0, strlen($debitConcatId) - 1);
+
+                    Diary::create([
+                        'direction' => 1,
+                        'amount' => $debit->amount,
+                        'trade_id' => $request->get('trade_id'),
+                        'account_id' => $debitAccountId,
+                        'account_parent_id' => $debitAccountParentId
                     ]);
 
-                    $diarys = Trade::find($request->get('trade_id'))->diary;
+                }
 
-                    foreach ($diarys as $diary) {
-                        $diary->delete();
-                    }
+                foreach ($creditDictionary as $credit) {
+                    
+                    $creditConcatId = trim($credit->account, "0");
+        
+                    $creditAccountId = substr($creditConcatId, strlen($creditConcatId) - 1);
+                    $creditaAccountParentId = substr($creditConcatId, 0, strlen($creditConcatId) - 1);
 
-                    foreach ($debitDictionary as $debit) {
-                        
-                        Diary::create([
-                            'direction' => 1,
-                            'amount' => $debit->amount,
-                            'trade_id' => $request->get('trade_id'),
-                            'account_id' => $debit->account,
-                        ]);
+                    Diary::create([
+                        'direction' => 0,
+                        'amount' => $credit->amount,
+                        'trade_id' => $request->get('trade_id'),
+                        'account_id' => $creditAccountId,
+                        'account_parent_id' => $creditaAccountParentId
+                    ]);
 
-                    }
-
-                    foreach ($creditDictionary as $credit) {
-                        
-                        Diary::create([
-                            'direction' => 0,
-                            'amount' => $credit->amount,
-                            'trade_id' => $request->get('trade_id'),
-                            'account_id' => $credit->account,
-                        ]);
-
-                    }
-                });
-            }
+                }
+            });
         }
         
         Session::flash('toast_message', ['type' => 'success', 'content' => '成功編輯交易「' . $request->get('name') . '」']);

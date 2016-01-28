@@ -140,7 +140,6 @@
                 <script>
                     $('#credit_account').attr("id", "credit_account" + count);
                     $('#credit_delbtn').attr("id", "credit_delbtn" + count);
-                    alert({{$diary->account->fullId}});
                     $("{{'div#edit_account_row_credit' . $trade->id}} > div#credit_account" + count + " > div.col-md-6 > select.account > option.{{$diary->account->fullId}}").attr("selected", "selected");
                     count = count + 1;
                 </script>

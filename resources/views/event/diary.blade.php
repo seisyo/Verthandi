@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="{{url('assets/css/plugins/select2/select2.min.css')}}">
 <style>
     .modal.modal-wide .modal-dialog {
-        width: 55%;
+        width: 60%;
     }
     .select2-container {
         width: 100% !important;
