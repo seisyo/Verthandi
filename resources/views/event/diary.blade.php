@@ -6,7 +6,23 @@
 <link rel="stylesheet" href="{{url('assets/css/plugins/toastr/toastr.min.css')}}">
 <link href="{{url('assets/css/plugins/footable/footable.core.css')}}" rel="stylesheet">
 <link rel="stylesheet" href="{{url('assets/css/plugins/select2/select2.min.css')}}">
-
+<style>
+    .modal.modal-wide .modal-dialog {
+        width: 55%;
+    }
+    .select2-container {
+        width: 100% !important;
+        height:100%;
+        padding: 0;
+        z-index: 2098;
+    }
+    .select2-close-mask{
+        z-index: 2099;
+    }
+    .select2-dropdown{
+        z-index: 3051;
+    }
+    </style>
 @endsection
 
 {{-- Custom js section --}}
@@ -28,13 +44,19 @@
         
         $(".footable").footable();
 
-        
-
-        // $.each(accountList, function(key, value){
-        //     console.log(value.name);
-        // });
-
+        $("#add-transaction").on('show.bs.modal', function(){
+            
+            $("select.account").select2({
+                placeholder: "會計科目",
+                allowClear: true
+            });
+            $("select.account").focus();
+        });
     });
+
+
+
+    
 
 </script>
 @endsection
@@ -78,7 +100,7 @@
                             ＋新增交易分錄
                         </button>
 
-                        <div class="modal fade" id="add-transaction">
+                        <div class="modal fade modal-wide" id="add-transaction">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     

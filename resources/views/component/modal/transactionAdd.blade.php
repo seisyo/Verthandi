@@ -51,13 +51,13 @@
 
                 <div class="row" id="debit_account1">
                     <div class="form-group col-md-6">
-                        <select class="form-control account">
+                        <select class="form-control account" id="123">
                             <option></option>
                             
                         </select>
                         <script>
                             $.each(accountList, function(key, value){
-                                $('div#debit_account1 > div.col-md-6 > select.account').append("<option value=" + value.full_id + ">" + value.name + "</option>")
+                                $('div#debit_account1 > div.col-md-6 > select.account').append("<option value=" + value.full_id + ">" + value.full_id + " " + value.name + "</option>")
                             });
                         </script>
                     </div>
@@ -96,7 +96,7 @@
                         <script>
                             $.each(accountList, function(key, value){
                                 console.log(value.name);
-                                $('div#credit_account1 > div.col-md-6 > select.account').append("<option value=" + value.full_id + ">" + value.name + "</option>");
+                                $('div#credit_account1 > div.col-md-6 > select.account').append("<option value=" + value.full_id + ">" + value.full_id + " " + value.name + "</option>");
                             });
                         </script>
                     </div>
