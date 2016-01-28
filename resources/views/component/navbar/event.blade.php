@@ -27,17 +27,17 @@
             <li class="active">
                 <a href="{{route('event::main')}}">
                     <i class="fa fa-paper-plane"></i>
-                    <span class="nav-label">
-                        {{$eventInfo->name}}
-                    </span>
+                        <span class="nav-label">
+                            {{$eventInfo->name}}
+                        </span>
                     <span class="fa arrow"></span>
                 </a>
                 <ul class="nav nav-second-level collapse">
                     <li class="">
-                        <a href="{{route('event::diary', ['id' => $eventInfo->id])}}"><span class="nav-label"><i class="fa fa-book"></i>日記簿</span> </a>
+                        <a href="{{route('event::diary', ['id' => $eventInfo->id])}}"><i class="fa fa-book"></i>日記簿</a>
                     </li>
                     <li class="">
-                        <a href="{{route('event::ledger', ['id' => $eventInfo->id])}}"><span class="nav-label"><i class="fa fa-bookmark"></i>分類帳</span> </a>
+                        <a href="{{route('event::ledger', ['id' => $eventInfo->id])}}"><i class="fa fa-bookmark"></i>分類帳</a>
                     </li>
                 </ul>
             </li>
