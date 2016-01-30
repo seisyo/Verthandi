@@ -33,23 +33,30 @@ Route::group(['middleware' => 'LoginCheck'], function(){
         Route::get('{id}/main', [
             'as' => 'main', 'uses' => 'EventController@showEventMain'
         ]);
+        
+        // diary
         Route::get('{id}/diary',[
-            'as' => 'diary', 'uses' => 'EventController@showEventDiary'
+            'as' => 'diary', 'uses' => 'DiaryController@showEventDiary'
         ]);
         Route::post('{id}/diary/add',[
-            'as' => 'diary/add', 'uses' => 'EventController@addEventDiary'
+            'as' => 'diary/add', 'uses' => 'DiaryController@addEventDiary'
         ]);
         Route::post('{id}/diary/edit',[
-            'as' => 'diary/edit', 'uses' => 'EventController@editEventDiary'
+            'as' => 'diary/edit', 'uses' => 'DiaryController@editEventDiary'
         ]);
         Route::post('{id}/diary/delete',[
-            'as' => 'diary/delete', 'uses' => 'EventController@deleteEventDiary'
+            'as' => 'diary/delete', 'uses' => 'DiaryController@deleteEventDiary'
         ]);
+        Route::get('diary/files/{fileName}/', [
+            'as' => 'diary/file/downloader', 'uses' => 'DiaryController@displayAttachedFile'
+        ]);
+
+        // ledger
         Route::get('{id}/ledger', [
             'as' => 'ledger', 'uses' => 'EventController@showEventLedger'
         ]);
 
-        //manage
+        // manage
         Route::post('add',[
             'as' => 'add', 'uses' => 'EventController@addEvent'
         ]);

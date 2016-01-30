@@ -371,6 +371,20 @@
                                                             </tbody>
                                                         </table>
                                                     </div>
+
+                                                    <div class="col-md-2">
+                                                        <ol>
+                                                            @foreach($fileLinkList as $fileLink)
+                                                            @if($fileLink->trade_id === $trade->id)
+                                                                <li>
+                                                                    <a href="{{route('event::diary/file/downloader', ['fileName' => $fileLink->file_name])}}" target="blank">
+                                                                        附件{{$fileLink->file_name}}
+                                                                    </a>
+                                                                </li>
+                                                            @endif
+                                                            @endforeach
+                                                        </ol>
+                                                    </div>
                                                     
                                                 </div>
                                             </div>
