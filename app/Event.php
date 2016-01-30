@@ -18,4 +18,9 @@ class Event extends Model
     {
         return $this->hasMany('App\Trade');
     }
+
+    public function diaryAttachedFiles()
+    {
+        return $this->hasMany('App\DiaryAttachedFiles');
+    }
 }

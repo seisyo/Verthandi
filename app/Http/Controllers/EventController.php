@@ -13,6 +13,7 @@ use Session;
 use Validator;
 use DB;
 use Input;
+use Storage;
 
 class EventController extends Controller
 {
@@ -250,7 +251,7 @@ class EventController extends Controller
             
         }
 
-        dd('set point');
+        //dd('set point');
         //end validate
         if (!$validatorTotal->messages()->isEmpty()) {
             
@@ -259,7 +260,7 @@ class EventController extends Controller
 
         } else {
 
-            DB::transaction(function() use ($request, $id, $debitDictionary, $creditDictionary, $file){
+            DB::transaction(function() use ($request, $id, $debitDictionary, $creditDictionary, $files){
 
                 //create the trade
                 $trade = Trade::create([
@@ -306,9 +307,13 @@ class EventController extends Controller
 
                 }
                 // move the file to the storage/app/user-upload
-                
-                if ($request->hasFile('receipt')) {
-                    $file->move('/Users/jo-seisho/www/Verthandi/storage/app/user-upload', $id . $trade->id . '.' . $file->getClientOriginalExtension());
+                if ($request->hasFile('diary_attached_files')) {
+                    
+                    foreach ($files as $file) {
+                        // create the file's storage path & name
+                        dd(date('Y', strtotime($trade->trade_at)));
+                        //$filePath = $id . '/' . $trade->trade_at
+                    }
                 }
                 
             });

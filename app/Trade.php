@@ -33,4 +33,9 @@ class Trade extends Model
     {
         return $this->hasMany('App\Diary');
     }
+
+    public function diaryAttachedFiles()
+    {
+        return $this->hasMany('App\DiaryAttachedFiles');
+    }
 }
