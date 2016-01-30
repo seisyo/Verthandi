@@ -377,7 +377,7 @@
                                                             @foreach($fileLinkList as $fileLink)
                                                             @if($fileLink->trade_id === $trade->id)
                                                                 <li>
-                                                                    <a href="{{route('event::diary/file/downloader', ['fileName' => $fileLink->file_name])}}" target="blank">
+                                                                    <a href="{{route('event::diary/file/downloader', ['fileName' => $fileLink->file_name])}}" target="_blank">
                                                                         附件{{$fileLink->file_name}}
                                                                     </a>
                                                                 </li>

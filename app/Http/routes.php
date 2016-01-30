@@ -47,7 +47,7 @@ Route::group(['middleware' => 'LoginCheck'], function(){
         Route::post('{id}/diary/delete',[
             'as' => 'diary/delete', 'uses' => 'DiaryController@deleteEventDiary'
         ]);
-        Route::get('diary/files/{fileName}/', [
+        Route::get('diary/file/downloader/{fileName}/', [
             'as' => 'diary/file/downloader', 'uses' => 'DiaryController@displayAttachedFile'
         ]);
 

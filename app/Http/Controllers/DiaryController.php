@@ -15,6 +15,7 @@ use Validator;
 use DB;
 use Storage;
 use File;
+use Response;
 
 class DiaryController extends Controller
 {
@@ -437,8 +438,15 @@ class DiaryController extends Controller
         if ($validator->fails()) {
             return response($validator->messages());
         } else {
+            
             $filePath = DiaryAttachedFiles::where('file_name', '=', $fileName)->first()->file_path;
-            return response()->download(storage_path($filePath . DIRECTORY_SEPARATOR . $fileName));
+            $pathToImage = storage_path($filePath . DIRECTORY_SEPARATOR . $fileName);
+            $fileType = File::type($pathToImage);
+
+            $response = Response::make( File::get($pathToImage), 200);
+            $response->header("Content-Type", $fileType);
+
+            return $response;
         }
     }
 }
