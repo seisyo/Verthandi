@@ -330,11 +330,11 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     
-                                                    <div class="col-md-5">
+                                                    <div class="col-md-4">
                                                         <table class="table table-bordered">
                                                             <thead>
                                                                 <th class="col-md-1">編號</th>
-                                                                <th class="col-md-3">借方</th>
+                                                                <th class="col-md-2">借方</th>
                                                                 <th class="col-md-1">金額</th>
                                                             </thead>
                                                             <tbody>
@@ -351,11 +351,11 @@
                                                         </table>
                                                     </div>
 
-                                                    <div class="col-md-5">
+                                                    <div class="col-md-4">
                                                         <table class="table table-bordered">
                                                             <thead>
                                                                 <th class="col-md-1">編號</th>
-                                                                <th class="col-md-3">貸方</th>
+                                                                <th class="col-md-2">貸方</th>
                                                                 <th class="col-md-1">金額</th>
                                                             </thead>
                                                             <tbody>
@@ -373,17 +373,17 @@
                                                     </div>
 
                                                     <div class="col-md-2">
-                                                        <ol>
+                                                        <ul>
                                                             @foreach($fileLinkList as $fileLink)
                                                             @if($fileLink->trade_id === $trade->id)
                                                                 <li>
                                                                     <a href="{{route('event::diary/file/downloader', ['fileName' => $fileLink->file_name])}}" target="_blank">
-                                                                        附件{{$fileLink->file_name}}
+                                                                        {{$fileLink->file_name}}
                                                                     </a>
                                                                 </li>
                                                             @endif
                                                             @endforeach
-                                                        </ol>
+                                                        </ul>
                                                     </div>
                                                     
                                                 </div>

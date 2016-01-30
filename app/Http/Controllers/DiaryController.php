@@ -137,7 +137,7 @@ class DiaryController extends Controller
                     $validatorTotal->messages()->merge(new MessageBag(['上傳收據相片失敗']));
                 } else {
                     // check the file name
-                    if (!in_array($file->getClientOriginalExtension(), ['jpeg', 'png'])) {
+                    if (!in_array($file->getClientOriginalExtension(), ['jpeg', 'png', 'jpg'])) {
                         $validatorTotal->messages()->merge(new MessageBag(['上傳收據相片檔名不符']));
                     }
                     // check the file size
@@ -208,7 +208,7 @@ class DiaryController extends Controller
                     foreach ($files as $key => $file) {
                         // create the file's storage path & name
                         $filePath = join(DIRECTORY_SEPARATOR, ['app', 'diary', $id, $trade->id]);
-                        $fileName = join('_', [$id, $trade->id, $key + 1, '.' . $file->getClientOriginalExtension()]);
+                        $fileName = join('-', [$id, $trade->id, $key + 1, '.' . $file->getClientOriginalExtension()]);
                         
                         // move the file
                         $file->move(storage_path($filePath), $fileName);
