@@ -8,12 +8,15 @@ use App\Event;
 use App\Trade;
 use App\Diary;
 use App\Account;
+use App\DiaryAttachedFiles;
 
 use Session;
 use Validator;
 use DB;
 use Input;
 use Storage;
+use File;
+use Hash;
 
 class EventController extends Controller
 {
@@ -250,8 +253,6 @@ class EventController extends Controller
             }
             
         }
-
-        //dd('set point');
         //end validate
         if (!$validatorTotal->messages()->isEmpty()) {
             
@@ -308,14 +309,23 @@ class EventController extends Controller
                 }
                 // move the file to the storage/app/user-upload
                 if ($request->hasFile('diary_attached_files')) {
-                    
-                    foreach ($files as $file) {
+
+                    foreach ($files as $key => $file) {
                         // create the file's storage path & name
-                        dd(date('Y', strtotime($trade->trade_at)));
-                        //$filePath = $id . '/' . $trade->trade_at
+                        $filePath = join(DIRECTORY_SEPARATOR, ['app', 'diary', $id, $trade->id]);
+                        $fileName = join('_', [$id, $trade->id, $key + 1, '.' . $file->getClientOriginalExtension()]);
+                        
+                        // move the file
+                        $file->move(storage_path($filePath), $fileName);
+
+                        DiaryAttachedFiles::create([
+                            'event_id' => $id,
+                            'trade_id' => $trade->id,
+                            'file_path' => $filePath,
+                            'file_name' => $fileName
+                        ]);
                     }
                 }
-                
             });
             
         }
