@@ -8,7 +8,7 @@ class DiaryAttachedFiles extends Model
 {
     protected $table = 'diary_attached_files';
     protected $guarded = ['id'];
-    protected $fillable = ['event_id', 'trade_id', 'file_path', 'file_name'];   
+    protected $fillable = ['event_id', 'trade_id', 'file_path', 'file_name', 'uploader'];   
 
     public function trade()
     {

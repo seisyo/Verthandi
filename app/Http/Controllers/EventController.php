@@ -322,7 +322,8 @@ class EventController extends Controller
                             'event_id' => $id,
                             'trade_id' => $trade->id,
                             'file_path' => $filePath,
-                            'file_name' => $fileName
+                            'file_name' => $fileName,
+                            'uploader' => Session::get('user')->id
                         ]);
                     }
                 }
