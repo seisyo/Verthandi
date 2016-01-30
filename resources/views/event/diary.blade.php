@@ -6,6 +6,8 @@
 <link rel="stylesheet" href="{{url('assets/css/plugins/toastr/toastr.min.css')}}">
 <link href="{{url('assets/css/plugins/footable/footable.core.css')}}" rel="stylesheet">
 <link rel="stylesheet" href="{{url('assets/css/plugins/select2/select2.min.css')}}">
+<link rel="stylesheet" href="{{url('assets/css/plugins/dropzone/basic.css')}}">
+<link rel="stylesheet" href="{{url('assets/css/plugins/dropzone/dropzone.css')}}">
 <style>
     .modal.modal-wide .modal-dialog {
         width: 60%;
@@ -35,6 +37,7 @@
 <script src="{{url('assets/js/custom/delete_transaction.js')}}"></script>
 <script src="{{url('assets/js/custom/modal_autoopen.js')}}"></script>
 <script src="{{url('assets/js/custom/modal_reset.js')}}"></script>
+<script src="{{url('assets/js/plugins/dropzone/dropzone.js')}}"></script>
 <script>
     
     var result = '{{$accountList}}';
@@ -61,6 +64,7 @@
             });
             $("select.account").focus();
         });
+
     });
 
 
@@ -118,7 +122,7 @@
                                         <h4 class="modal-title" id="myModalLabel">新增交易分錄</h4>
                                     </div>
                                     
-                                    <form class="form-horizontal" method="post" action="{{route('event::diary/add', ['id' => $eventInfo->id])}}" id="transaction-add-form">
+                                    <form class="form-horizontal" method="post" action="{{route('event::diary/add', ['id' => $eventInfo->id])}}" id="transaction-add-form" enctype="multipart/form-data">
                                         <div class="modal-body">
                                             @if(Session::has(('errors')))
                                             @foreach(Session::get('errors')->all() as $error)

@@ -12,6 +12,7 @@ use App\Account;
 use Session;
 use Validator;
 use DB;
+use Input;
 
 class EventController extends Controller
 {
@@ -132,9 +133,7 @@ class EventController extends Controller
 
     public function addEventDiary(Request $request, $id)
     {
-        //!!!start validate!!!
-
-        //first validate
+        // first validate
         $validatorTotal = Validator::make(
         [  
             'event_id' => $id,
@@ -143,7 +142,7 @@ class EventController extends Controller
             'handler' => $request->get('handler'),
             'comment' => $request->get('comment'),
             'debit_array' => $request->get('debit_array'),
-            'credit_array' => $request->get('credit_array')
+            'credit_array' => $request->get('credit_array'),
         ],
         [
             'event_id' => 'required|exists:event,id',
@@ -152,7 +151,7 @@ class EventController extends Controller
             'handler' => 'required|max:15',
             'comment' => 'string',
             'debit_array' => 'required|json',
-            'credit_array' => 'required|json'
+            'credit_array' => 'required|json',
         ]);
 
         //decode string to json
@@ -227,16 +226,40 @@ class EventController extends Controller
         if (date("Y-m-d", strtotime($request->get('trade_at'))) > date("Y-m-d")) {
             $validatorTotal->messages()->merge(new MessageBag(['交易尚未發生']));
         }
-        
-        //!!!end validate!!!
 
+        // check the upload file
+        $files = $request->file('diary_attached_files');
+            
+        if ($request->hasFile('diary_attached_files')) {
+            
+            foreach ($files as $file) {
+                
+                if (!$file->isValid()) {
+                    $validatorTotal->messages()->merge(new MessageBag(['上傳收據相片失敗']));
+                } else {
+                    // check the file name
+                    if (!in_array($file->getClientOriginalExtension(), ['jpeg', 'png'])) {
+                        $validatorTotal->messages()->merge(new MessageBag(['上傳收據相片檔名不符']));
+                    }
+                    // check the file size
+                    if ($file->getMaxFilesize() < $file->getClientSize()) {
+                        $validatorTotal->messages()->merge(new MessageBag(['上傳收據相片檔名過大']));
+                    }
+                }
+            }
+            
+        }
+
+        dd('set point');
+        //end validate
         if (!$validatorTotal->messages()->isEmpty()) {
             
+            $request->flash();
             return redirect()->route('event::diary', ['id' => $id])->with('errors', $validatorTotal->messages());
 
         } else {
 
-            DB::transaction(function() use ($request, $id, $debitDictionary, $creditDictionary){
+            DB::transaction(function() use ($request, $id, $debitDictionary, $creditDictionary, $file){
 
                 //create the trade
                 $trade = Trade::create([
@@ -282,6 +305,12 @@ class EventController extends Controller
                     ]);
 
                 }
+                // move the file to the storage/app/user-upload
+                
+                if ($request->hasFile('receipt')) {
+                    $file->move('/Users/jo-seisho/www/Verthandi/storage/app/user-upload', $id . $trade->id . '.' . $file->getClientOriginalExtension());
+                }
+                
             });
             
         }

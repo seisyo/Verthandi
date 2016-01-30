@@ -6,31 +6,43 @@
             <div class="col-md-12">
                 <div class="form-group" id="sandbox-container">
                     <label>交易日期*</label>
-                    <input type="text" class="form-control" name="trade_at"> 
+                    <input type="text" class="form-control" name="trade_at" value="{{old('trade_at')}}"> 
                     <script>
-                        $('#sandbox-container input').datepicker({});
+                        $('#sandbox-container input').datepicker("setDate", new Date());
                     </script>
                 </div> 
             </div>
             <div class="col-md-12">
                 <div class="form-group">
                     <label>交易內容*</label>
-                    <input type="text" class="form-control" name="name">
+                    <input type="text" class="form-control" name="name" value="{{old('name')}}">
                 </div>
             </div>
             <div class="col-md-12">
                 <div class="form-group">
                     <label>經手人*</label>
-                    <input type="text" class="form-control" name="handler">
+                    <input type="text" class="form-control" name="handler" value="{{old('handler')}}">
                 </div>
             </div>
             <div class="col-md-12">
                 <div class="form-group">
                     <label>備註</label>
-                    <textarea class="form-control" name="comment"></textarea>
+                    <textarea class="form-control" name="comment">{{old('comment')}}</textarea>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>收據相片</label>
+                    <input type="file" name="diary_attached_files[]" id="diary_attached_files" multiple>
                 </div>
             </div>
     
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            
         </div>
     </div>
     
