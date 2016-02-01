@@ -232,8 +232,7 @@ class DiaryController extends Controller
 
     public function editEventDiary(Request $request, $id)
     {
-        //!!!start validate!!!
-
+        dd($request);
         //first validate
         $validatorTotal = Validator::make(
         [  
@@ -411,7 +410,6 @@ class DiaryController extends Controller
         } else {
 
             $diarys = Trade::find($request->get('trade_id'))->diary;
-
             foreach ($diarys as $diary) {
                 $diary->delete();
             }
@@ -425,7 +423,7 @@ class DiaryController extends Controller
         }
     }
 
-    public function displayAttachedFile($fileName)
+    public function downloadAttachedFile($fileName)
     {
         $validator = Validator::make(
         [
@@ -440,14 +438,41 @@ class DiaryController extends Controller
         } else {
             
             $file = DiaryAttachedFiles::where('file_name', '=', $fileName)->first();
-            $filePath = join(DIRECTORY_SEPARATOR, ['app', 'diary', $id, $trade->id]);
-            $pathToImage = storage_path($filePath . DIRECTORY_SEPARATOR . $fileName);
-            $fileType = File::type($pathToImage);
+            $filePath = join(DIRECTORY_SEPARATOR, ['app', 'diary', $file->event_id, $file->trade_id]);
+            $pathToFile = storage_path($filePath . DIRECTORY_SEPARATOR . $fileName);
+            $fileType = File::type($pathToFile);
 
-            $response = Response::make( File::get($pathToImage), 200);
+            $response = Response::make( File::get($pathToFile), 200);
             $response->header("Content-Type", $fileType);
 
             return $response;
+        }
+    }
+
+    // API
+    public function deleteAttachedFile(Request $request)
+    {
+        $validator = Validator::make(
+        [
+            'file_name' => $request->get('file_name')
+        ],
+        [
+            'file_name' => 'required|exists:diary_attached_files,file_name'
+        ]);
+
+        if ($validator->fails()) {
+            $result = ['type' => 'Failed', 'content' => $validator->messages()];
+            return response()->json($result);
+        } else {
+            
+            $file = DiaryAttachedFiles::where('file_name', '=', $request->get('file_name'))->first();
+            $filePath = join(DIRECTORY_SEPARATOR, ['diary', $file->event_id, $file->trade_id]);
+            $pathToFile = storage_path($filePath . DIRECTORY_SEPARATOR . $request->get('file_name'));
+            
+            Storage::delete($filePath . DIRECTORY_SEPARATOR . $request->get('file_name'));
+            $file->delete();
+            
+            return response()->json(['type' => 'Success', 'content' => '已刪除']);
         }
     }
 }

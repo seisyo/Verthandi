@@ -67,10 +67,6 @@
 
     });
 
-
-
-    
-
 </script>
 @endsection
 

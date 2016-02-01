@@ -208,7 +208,7 @@ class UserController extends Controller
 
         } else {
 
-            $gets = User::find($request->get('id'));
+            $gets = User::find($request->get('id'))->id;
             return response()->json(['message' => 'Success', 'content' => $gets]);
         }
     }

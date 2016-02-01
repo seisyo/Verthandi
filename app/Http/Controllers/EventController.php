@@ -116,13 +116,13 @@ class EventController extends Controller
 
         if ($validator->fails()) {
 
-            $result = ['message' => 'Failed', 'content' => $validator->messages()];
+            $result = ['type' => 'Failed', 'content' => $validator->messages()];
             return response()->json($result);
 
         } else {
 
             $gets = Event::find($request->get('id'));
-            return response()->json(['message' => 'Success', 'content' => $gets]);
+            return response()->json(['type' => 'Success', 'content' => $gets]);
         }
     }
 }

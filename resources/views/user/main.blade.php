@@ -38,24 +38,19 @@ $(document).ready(function(){
             
             if($("#search-id").val() != ""){
 
-                var url = "{{route('account::searchById')}}";
+                var url = "{{route('user::searchById')}}";
                 setTimeout(function(){
                     DoAjax(url, {id: $("#search-id").val()},
                         function(data, textStatus, jqXHR){
-                            var datas = data.content;
-                            //hide all tr
+                            // hide all tr
                             $("tbody > tr").hide();
-                            $.each(datas, function(key, value){
-                                //show the selected tr
-                                $("#" + value.id).show();
-                            });
+                            // show the selected tr
+                            $("#" + data.content).show();
                         });
                 });
 
             } else {
-                
                 $("tbody > tr").show();
-
             }
             
         }); 

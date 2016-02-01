@@ -32,7 +32,7 @@
             </div>
             <div class="col-md-12">
                 <div class="form-group">
-                    <label>收據相片</label>
+                    <label>新增檔案</label>
                     <input type="file" name="diary_attached_files[]" id="diary_attached_files" multiple>
                 </div>
             </div>
@@ -102,7 +102,7 @@
                 </div>
                 <div class="row" id="credit_account1">
                     <div class="form-group col-md-6">
-                        <select class="form-control account" id="123">
+                        <select class="form-control account">
                             <option></option>
                         </select>
                         <script>

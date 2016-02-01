@@ -30,6 +30,53 @@
                     <textarea class="form-control" name="comment">{{$trade->comment}}</textarea>
                 </div>
             </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>刪除檔案</label>
+                    <div class="col-md-12" id="{{'delete-file' . $trade->id}}">
+                        @foreach($fileLinkList as $fileLink)
+                        @if($fileLink->trade_id === $trade->id)
+                        <div class="row">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <a href="{{route('event::diary/file/downloader', ['fileName' => $fileLink->file_name])}}" target="_blank">
+                                        {{$fileLink->file_name}}
+                                    </a>
+                                </div>
+                                <div class="">
+                                    <button type="button" class="" id="{{'delete-file' . $fileLink->event_id . $fileLink->trade_id . $fileLink->file_number}}"><i class="fa fa-trash"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <script>
+                            $("{{'#delete-file' . $fileLink->event_id . $fileLink->trade_id . $fileLink->file_number}}").click(function(){
+                                $.ajax({
+                                    type: 'GET',
+                                    url: "{{route('event::diary/file/deleter')}}",
+                                    data: {
+                                        file_name: '{{$fileLink->file_name}}'
+                                    },
+                                    success: function(){
+                                        $("{{'#delete-file' . $fileLink->event_id . $fileLink->trade_id . $fileLink->file_number}}").parent().parent().parent().append('<p>{{$fileLink->file_name}}  已刪除</p>')
+                                        $("{{'#delete-file' . $fileLink->event_id . $fileLink->trade_id . $fileLink->file_number}}").parent().parent().remove();
+                                    },
+                                    error: function(){
+                                        $("{{'#delete-file' . $fileLink->event_id . $fileLink->trade_id . $fileLink->file_number}}").parent().parent().parent().append('<p>Error</p>')
+                                    }
+                                });
+                            });
+                        </script>        
+                        @endif
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>新增檔案</label>
+                    <input type="file" name="diary_attached_files[]" id="diary_attached_files" multiple>
+                </div>
+            </div>
     
         </div>
     </div>
