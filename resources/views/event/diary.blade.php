@@ -224,7 +224,7 @@
                                                                 <h4 class="modal-title" id="myModalLabel">編輯交易分錄</h4>
                                                             </div>
 
-                                                            <form class="form-horizontal" method="post" action="{{route('event::diary/edit', ['id' => $eventInfo->id])}}" id="{{'transaction-edit-form' . $trade->id}}">
+                                                            <form class="form-horizontal" method="post" action="{{route('event::diary/edit', ['id' => $eventInfo->id])}}" id="{{'transaction-edit-form' . $trade->id}}" enctype="multipart/form-data">
                                                                 
                                                                 <div class="modal-body">
                                                                     @if(Session::has(('errors' . $trade->id)))

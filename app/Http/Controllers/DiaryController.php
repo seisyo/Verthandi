@@ -32,6 +32,7 @@ class DiaryController extends Controller
 
     public function addEventDiary(Request $request, $id)
     {
+        dd($request->hasFile('diary_attached_files'));
         // first validate
         $validatorTotal = Validator::make(
         [  
@@ -232,7 +233,7 @@ class DiaryController extends Controller
 
     public function editEventDiary(Request $request, $id)
     {
-        dd($request);
+        // dd($request->hasFile('diary_attached_files'));
         //first validate
         $validatorTotal = Validator::make(
         [  
@@ -327,6 +328,28 @@ class DiaryController extends Controller
             $validatorTotal->messages()->merge(new MessageBag(['交易尚未發生']));
         }
 
+        // check the upload file
+        $files = $request->file('diary_attached_files');
+            
+        if ($request->hasFile('diary_attached_files')) {
+            
+            foreach ($files as $file) {
+                
+                if (!$file->isValid()) {
+                    $validatorTotal->messages()->merge(new MessageBag(['上傳收據相片失敗']));
+                } else {
+                    // check the file name
+                    if (!in_array($file->getClientOriginalExtension(), ['jpeg', 'png', 'jpg'])) {
+                        $validatorTotal->messages()->merge(new MessageBag(['上傳收據相片檔名不符']));
+                    }
+                    // check the file size
+                    if ($file->getMaxFilesize() < $file->getClientSize()) {
+                        $validatorTotal->messages()->merge(new MessageBag(['上傳收據相片檔名過大']));
+                    }
+                }
+            }
+            
+        }
         //!!!end validate!!!
 
         if (!$validatorTotal->messages()->isEmpty()) {
@@ -335,7 +358,7 @@ class DiaryController extends Controller
 
         } else {
 
-            DB::transaction(function() use ($request, $id, $debitDictionary, $creditDictionary){
+            DB::transaction(function() use ($request, $id, $debitDictionary, $creditDictionary, $files){
 
                 //edit the trade
                 Trade::find($request->get('trade_id'))->update([
@@ -385,6 +408,27 @@ class DiaryController extends Controller
                         'account_parent_id' => $creditaAccountParentId
                     ]);
 
+                }
+
+                // move the file to the storage/app/user-upload
+                if ($request->hasFile('diary_attached_files')) {
+
+                    foreach ($files as $key => $file) {
+                        // create the file's storage path & name
+                        $filePath = join(DIRECTORY_SEPARATOR, ['app', 'diary', $id, $request->get('trade_id')]);
+                        $useableId = DB::select('select max(file_number) + 1 as useable_id from diary_attached_files where event_id = :eid and trade_id = :tid', ['eid' => $id, 'tid' => $request->get('trade_id')])[0]->useable_id;
+                        $fileName = join('-', [$id, $request->get('trade_id'), $useableId, '.' . $file->getClientOriginalExtension()]);
+                        // move the file
+                        $file->move(storage_path($filePath), $fileName);
+
+                        DiaryAttachedFiles::create([
+                            'event_id' => $id,
+                            'trade_id' => $request->get('trade_id'),
+                            'file_number' => $useableId,
+                            'file_name' => $fileName,
+                            'uploader' => Session::get('user')->id
+                        ]);
+                    }
                 }
             });
         }
