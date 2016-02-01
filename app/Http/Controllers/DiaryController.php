@@ -216,7 +216,7 @@ class DiaryController extends Controller
                         DiaryAttachedFiles::create([
                             'event_id' => $id,
                             'trade_id' => $trade->id,
-                            'file_path' => $filePath,
+                            'file_number' => $key + 1,
                             'file_name' => $fileName,
                             'uploader' => Session::get('user')->id
                         ]);
@@ -439,7 +439,8 @@ class DiaryController extends Controller
             return response($validator->messages());
         } else {
             
-            $filePath = DiaryAttachedFiles::where('file_name', '=', $fileName)->first()->file_path;
+            $file = DiaryAttachedFiles::where('file_name', '=', $fileName)->first();
+            $filePath = join(DIRECTORY_SEPARATOR, ['app', 'diary', $id, $trade->id]);
             $pathToImage = storage_path($filePath . DIRECTORY_SEPARATOR . $fileName);
             $fileType = File::type($pathToImage);
 
