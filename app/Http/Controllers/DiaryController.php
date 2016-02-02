@@ -417,6 +417,9 @@ class DiaryController extends Controller
                         // create the file's storage path & name
                         $filePath = join(DIRECTORY_SEPARATOR, ['app', 'diary', $id, $request->get('trade_id')]);
                         $useableId = DB::select('select max(file_number) + 1 as useable_id from diary_attached_files where event_id = :eid and trade_id = :tid', ['eid' => $id, 'tid' => $request->get('trade_id')])[0]->useable_id;
+                        if ($useableId === null) {
+                            $useableId = 1;
+                        }
                         $fileName = join('-', [$id, $request->get('trade_id'), $useableId, '.' . $file->getClientOriginalExtension()]);
                         // move the file
                         $file->move(storage_path($filePath), $fileName);
