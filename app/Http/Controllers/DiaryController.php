@@ -32,7 +32,6 @@ class DiaryController extends Controller
 
     public function addEventDiary(Request $request, $id)
     {
-        dd($request->hasFile('diary_attached_files'));
         // first validate
         $validatorTotal = Validator::make(
         [  
@@ -456,17 +455,27 @@ class DiaryController extends Controller
             return redirect()->route('event::diary', ['id' => $id])->with('errors' . $request->get('trade_id'), $validator->messages());
         } else {
 
-            $diarys = Trade::find($request->get('trade_id'))->diary;
-            foreach ($diarys as $diary) {
-                $diary->delete();
-            }
-
+            // save the trade name
             $deleteTrade = Trade::find($request->get('trade_id'))->name;
-            Trade::find($request->get('trade_id'))->delete();
+
+            DB::transaction(function() use ($request, $id){
+                // delete the relate file's
+                $files = DiaryAttachedFiles::where('event_id', '=', $id)->where('trade_id', '=', $request->get('trade_id'))->get();
+                foreach ($files as $file) {
+                    Storage::delete(join(DIRECTORY_SEPARATOR, ['diary', $file->event_id, $file->trade_id, $file->file_name]));
+                    $file->delete();
+                }
+                // delete the relate diarys
+                $diarys = Trade::find($request->get('trade_id'))->diary;
+                foreach ($diarys as $diary) {
+                    $diary->delete();
+                }
+                // delete the trade 
+                Trade::find($request->get('trade_id'))->delete();
+            });
 
             Session::flash('toast_message', ['type' => 'success', 'content' => '成功刪除交易「' . $deleteTrade . '」']);
             return redirect()->route('event::diary', ['id' => $id]);
-
         }
     }
 
@@ -511,12 +520,9 @@ class DiaryController extends Controller
             $result = ['type' => 'Failed', 'content' => $validator->messages()];
             return response()->json($result);
         } else {
+            $file = DiaryAttachedFiles::where('file_name', '=', $request->get('file_name'))->first();      
             
-            $file = DiaryAttachedFiles::where('file_name', '=', $request->get('file_name'))->first();
-            $filePath = join(DIRECTORY_SEPARATOR, ['diary', $file->event_id, $file->trade_id]);
-            $pathToFile = storage_path($filePath . DIRECTORY_SEPARATOR . $request->get('file_name'));
-            
-            Storage::delete($filePath . DIRECTORY_SEPARATOR . $request->get('file_name'));
+            Storage::delete(join(DIRECTORY_SEPARATOR, ['diary', $file->event_id, $file->trade_id, $file->file_name]));
             $file->delete();
             
             return response()->json(['type' => 'Success', 'content' => '已刪除']);
