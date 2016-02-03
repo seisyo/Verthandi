@@ -112,7 +112,7 @@
                                                         </div>
                                                         <div class="modal-body">
                                                             <div class="row">
-                                                                @include("component.modal.transaction")
+                                                                
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer">
