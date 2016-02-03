@@ -52,7 +52,6 @@ class AccountController extends Controller
             return redirect()->route('account::main');
         }
         
-        
     }
 
     public function editAccount(Request $request)
@@ -134,15 +133,29 @@ class AccountController extends Controller
 
         } else {
 
-            $result = DB::select('select max(id)+1 as useable_id from account where cast(parent_id  as INTEGER) = ?', [$request->get('parent_id')]);
-            if ($result[0]->useable_id === null) {
+            $result = DB::select('select max(id) + 1 as max_id from account where cast(parent_id  as INTEGER) = ?', [$request->get('parent_id')]);
+            
+            if ($result[0]->max_id === null) {
                 return response()->json(['type' => 'Success', 'content' => 1]);
             } else {
-                return response()->json(['type' => 'Success', 'content' => $result[0]->useable_id]);
+                $check = True;
+                $count = 1;
+                $useableId = null;
+                while ($check && $count <= $result[0]->max_id) {
+                    $number = DB::select('select id from account where cast(parent_id as INTEGER) = :parent_id and cast(id as INTEGER) = :id', ['parent_id' => $request->get('parent_id'), 'id' => $count]);
+                    if ($number == null) {
+                        $useableId = $count;
+                        $check = False;
+                    } elseif ($count === $result[0]->max_id) {
+                        $useableId = $result[0]->max_id;
+                        $check = False;
+                    } else {
+                        $count = $count + 1;
+                    }
+                }
+                return response()->json(['type' => 'Success', 'content' => $useableId]);
             }
-            
         }
-
     }
 
     public function searchByIdAccount(Request $request)
