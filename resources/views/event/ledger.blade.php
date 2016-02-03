@@ -43,29 +43,8 @@
                     <div class="row">
                         
                         <div class="col-md-3">
-                            <select class="form-control">
-                                <option value="資產">資產</option>
-                                <option value="負債">負債</option>
-                                <option value="餘絀">餘絀</option>
-                                <option value="收益">收益</option>
-                                <option value="費損">費損</option>
-                            </select>
-                        </div>
-                        <div class="col-md-3">
-                            <select class="form-control">
-                                <option value="現金">現金</option>
-                                <option value="文具用品">文具用品</option>
-                                <option value="手續費">手續費</option>
-                                <option value="其他應付款">其他應付款</option>
-                                <option value="短期借款">短期借款</option>
-                            </select>
-                        </div>
-                        <div class="col-md-3">
                             <div class="input-group">
                                 <input type="text" placeholder="搜尋" class="input-sm form-control">
-                                <span class="input-group-btn">
-                                    <button type="button" class="btn btn-sm btn-primary"> 搜尋</button> 
-                                </span>
                             </div>
                         </div>
                     </div>

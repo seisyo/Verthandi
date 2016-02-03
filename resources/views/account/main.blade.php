@@ -6,8 +6,8 @@
 <link rel="stylesheet" href="{{url('assets/css/plugins/select2/select2.min.css')}}">
 <link href="{{url('assets/css/plugins/footable/footable.core.css')}}" rel="stylesheet">
 <style>
-    .modal.modal-wide .modal-dialog {
-        width: 60%;
+    #search-div > .select2-container {
+        z-index: 2;
     }
     .select2-container {
         width: 100% !important;
@@ -179,7 +179,7 @@
                         <!-- modal end -->
                     </div>
 
-                    <div class="col-md-3 pull-right">
+                    <div class="col-md-3 pull-right" id="search-div">
 
                         <select class="form-control" id="search-id">
                             <option></option>
