@@ -65,7 +65,6 @@
                     <div class="form-group col-md-6">
                         <select class="form-control account">
                             <option></option>
-                            
                         </select>
                         <script>
                             $.each(accountList, function(key, value){

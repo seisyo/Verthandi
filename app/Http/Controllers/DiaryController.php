@@ -19,23 +19,23 @@ use Response;
 
 class DiaryController extends Controller
 {
-    public function showEventDiary($id)
+    public function showEventDiary($eventId)
     {
         $accountArray = DB::select('select full_id, name from full_id where cast(concat(parent_id,id) as INTEGER) not in (select parent_id from account)');
         return view('event.diary')->with(['eventList' => Event::all(), 
-                                          'eventInfo' => Event::find($id), 
-                                          'tradeList' => Trade::where('event_id', '=', $id)->get(), 
+                                          'eventInfo' => Event::find($eventId), 
+                                          'tradeList' => Trade::where('event_id', '=', $eventId)->get(), 
                                           'accountList' => json_encode($accountArray),
-                                          'fileLinkList' => DiaryAttachedFiles::where('event_id', '=', $id)->get()
+                                          'fileLinkList' => DiaryAttachedFiles::where('event_id', '=', $eventId)->get()
                                         ]);
     }
 
-    public function addEventDiary(Request $request, $id)
+    public function addEventDiary(Request $request, $eventId)
     {
         // first validate
         $validatorTotal = Validator::make(
         [  
-            'event_id' => $id,
+            'event_id' => $eventId,
             'trade_at' => $request->get('trade_at'),
             'name' => $request->get('name'),
             'handler' => $request->get('handler'),
@@ -152,18 +152,18 @@ class DiaryController extends Controller
         if (!$validatorTotal->messages()->isEmpty()) {
             
             $request->flash();
-            return redirect()->route('event::diary', ['id' => $id])->with('errors', $validatorTotal->messages());
+            return redirect()->route('event::diary', ['eventId' => $eventId])->with('errors', $validatorTotal->messages());
 
         } else {
 
-            DB::transaction(function() use ($request, $id, $debitDictionary, $creditDictionary, $files){
+            DB::transaction(function() use ($request, $eventId, $debitDictionary, $creditDictionary, $files){
 
                 //create the trade
                 $trade = Trade::create([
                     'name' => $request->get('name'),
                     'handler' => $request->get('handler'),
                     'comment' => $request->get('comment'),
-                    'event_id' => $id,
+                    'event_id' => $eventId,
                     'trade_at' => date("Y-m-d", strtotime($request->get('trade_at'))),
                     'user_id' => Session::get('user')->id
                 ]);
@@ -207,14 +207,14 @@ class DiaryController extends Controller
 
                     foreach ($files as $key => $file) {
                         // create the file's storage path & name
-                        $filePath = join(DIRECTORY_SEPARATOR, ['app', 'diary', $id, $trade->id]);
-                        $fileName = join('-', [$id, $trade->id, $key + 1, '.' . $file->getClientOriginalExtension()]);
+                        $filePath = join(DIRECTORY_SEPARATOR, ['app', 'diary', $eventId, $trade->id]);
+                        $fileName = join('-', [$eventId, $trade->id, $key + 1, '.' . $file->getClientOriginalExtension()]);
                         
                         // move the file
                         $file->move(storage_path($filePath), $fileName);
 
                         DiaryAttachedFiles::create([
-                            'event_id' => $id,
+                            'event_id' => $eventId,
                             'trade_id' => $trade->id,
                             'file_number' => $key + 1,
                             'file_name' => $fileName,
@@ -227,16 +227,16 @@ class DiaryController extends Controller
         }
         
         Session::flash('toast_message', ['type' => 'success', 'content' => '成功新增交易「' . $request->get('name') . '」']);
-        return redirect()->route('event::diary', ['id' => $id]);
+        return redirect()->route('event::diary', ['eventId' => $eventId]);
     }
 
-    public function editEventDiary(Request $request, $id)
+    public function editEventDiary(Request $request, $eventId)
     {
         // dd($request->hasFile('diary_attached_files'));
         //first validate
         $validatorTotal = Validator::make(
         [  
-            'event_id' => $id,
+            'event_id' => $eventId,
             'trade_id' => $request->get('trade_id'),
             'trade_at' => $request->get('trade_at'),
             'name' => $request->get('name'),
@@ -353,18 +353,18 @@ class DiaryController extends Controller
 
         if (!$validatorTotal->messages()->isEmpty()) {
 
-            return redirect()->route('event::diary', ['id' => $id])->with('errors' . $request->get('trade_id'), $validatorTotal->messages());
+            return redirect()->route('event::diary', ['eventId' => $eventId])->with('errors' . $request->get('trade_id'), $validatorTotal->messages());
 
         } else {
 
-            DB::transaction(function() use ($request, $id, $debitDictionary, $creditDictionary, $files){
+            DB::transaction(function() use ($request, $eventId, $debitDictionary, $creditDictionary, $files){
 
                 //edit the trade
                 Trade::find($request->get('trade_id'))->update([
                     'name' => $request->get('name'),
                     'handler' => $request->get('handler'),
                     'comment' => $request->get('comment'),
-                    'event_id' => $id,
+                    'event_id' => $eventId,
                     'trade_at' => date("Y-m-d", strtotime($request->get('trade_at'))),
                     'user_id' => Session::get('user')->id
                 ]);
@@ -414,17 +414,17 @@ class DiaryController extends Controller
 
                     foreach ($files as $key => $file) {
                         // create the file's storage path & name
-                        $filePath = join(DIRECTORY_SEPARATOR, ['app', 'diary', $id, $request->get('trade_id')]);
-                        $useableId = DB::select('select max(file_number) + 1 as useable_id from diary_attached_files where event_id = :eid and trade_id = :tid', ['eid' => $id, 'tid' => $request->get('trade_id')])[0]->useable_id;
+                        $filePath = join(DIRECTORY_SEPARATOR, ['app', 'diary', $eventId, $request->get('trade_id')]);
+                        $useableId = DB::select('select max(file_number) + 1 as useable_id from diary_attached_files where event_id = :eid and trade_id = :tid', ['eid' => $eventId, 'tid' => $request->get('trade_id')])[0]->useable_id;
                         if ($useableId === null) {
                             $useableId = 1;
                         }
-                        $fileName = join('-', [$id, $request->get('trade_id'), $useableId, '.' . $file->getClientOriginalExtension()]);
+                        $fileName = join('-', [$eventId, $request->get('trade_id'), $useableId, '.' . $file->getClientOriginalExtension()]);
                         // move the file
                         $file->move(storage_path($filePath), $fileName);
 
                         DiaryAttachedFiles::create([
-                            'event_id' => $id,
+                            'event_id' => $eventId,
                             'trade_id' => $request->get('trade_id'),
                             'file_number' => $useableId,
                             'file_name' => $fileName,
@@ -436,14 +436,14 @@ class DiaryController extends Controller
         }
         
         Session::flash('toast_message', ['type' => 'success', 'content' => '成功編輯交易「' . $request->get('name') . '」']);
-        return redirect()->route('event::diary', ['id' => $id]);
+        return redirect()->route('event::diary', ['eventId' => $eventId]);
     }
 
-    public function deleteEventDiary(Request $request, $id)
+    public function deleteEventDiary(Request $request, $eventId)
     {
         $validator = Validator::make(
         [
-            'event_id' => $id,
+            'event_id' => $eventId,
             'trade_id' => $request->get('trade_id')
         ],
         [
@@ -452,15 +452,15 @@ class DiaryController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect()->route('event::diary', ['id' => $id])->with('errors' . $request->get('trade_id'), $validator->messages());
+            return redirect()->route('event::diary', ['eventId' => $eventId])->with('errors' . $request->get('trade_id'), $validator->messages());
         } else {
 
             // save the trade name
             $deleteTrade = Trade::find($request->get('trade_id'))->name;
 
-            DB::transaction(function() use ($request, $id){
+            DB::transaction(function() use ($request, $eventId){
                 // delete the relate file's
-                $files = DiaryAttachedFiles::where('event_id', '=', $id)->where('trade_id', '=', $request->get('trade_id'))->get();
+                $files = DiaryAttachedFiles::where('event_id', '=', $eventId)->where('trade_id', '=', $request->get('trade_id'))->get();
                 foreach ($files as $file) {
                     Storage::delete(join(DIRECTORY_SEPARATOR, ['diary', $file->event_id, $file->trade_id, $file->file_name]));
                     $file->delete();
@@ -475,7 +475,7 @@ class DiaryController extends Controller
             });
 
             Session::flash('toast_message', ['type' => 'success', 'content' => '成功刪除交易「' . $deleteTrade . '」']);
-            return redirect()->route('event::diary', ['id' => $id]);
+            return redirect()->route('event::diary', ['eventId' => $eventId]);
         }
     }
 

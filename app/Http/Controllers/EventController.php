@@ -25,11 +25,6 @@ class EventController extends Controller
         return view('event.main')->with(['eventList' => Event::all(), 'eventInfo' => Event::find($id)]);
     }
 
-    public function showEventLedger($id)
-    {
-        return view('event.ledger')->with(['eventList' => Event::all(), 'eventInfo' => Event::find($id)]);
-    }
-
     public function showEventManage()
     {
         return view('event.manage')->with(['eventList' => Event::all()]);

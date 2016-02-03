@@ -87,10 +87,10 @@
     <a href="{{route('event::manage')}}">活動帳簿管理</a>
 </li>
 <li>
-    <a href="{{route('event::main', ['id' => $eventInfo->id])}}">{{$eventInfo->name}}</a>
+    <a href="{{route('event::main', ['eventId' => $eventInfo->id])}}">{{$eventInfo->name}}</a>
 </li>
 <li>
-    <a href="{{route('event::diary', ['id' => $eventInfo->id])}}">日記簿</a>
+    <a href="{{route('event::diary', ['eventId' => $eventInfo->id])}}">日記簿</a>
 </li>
 @endsection
 

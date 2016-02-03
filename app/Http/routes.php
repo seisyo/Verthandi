@@ -30,21 +30,21 @@ Route::group(['middleware' => 'LoginCheck'], function(){
     //event
     Route::group(['as' => 'event::', 'prefix' => 'event'], function(){
         //every event
-        Route::get('{id}/main', [
+        Route::get('{eventId}/main', [
             'as' => 'main', 'uses' => 'EventController@showEventMain'
         ]);
         
         // diary
-        Route::get('{id}/diary',[
+        Route::get('{eventId}/diary',[
             'as' => 'diary', 'uses' => 'DiaryController@showEventDiary'
         ]);
-        Route::post('{id}/diary/add',[
+        Route::post('{eventId}/diary/add',[
             'as' => 'diary/add', 'uses' => 'DiaryController@addEventDiary'
         ]);
-        Route::post('{id}/diary/edit',[
+        Route::post('{eventId}/diary/edit',[
             'as' => 'diary/edit', 'uses' => 'DiaryController@editEventDiary'
         ]);
-        Route::post('{id}/diary/delete',[
+        Route::post('{eventId}/diary/delete',[
             'as' => 'diary/delete', 'uses' => 'DiaryController@deleteEventDiary'
         ]);
         Route::get('diary/file/downloader/{fileName}/', [
@@ -56,8 +56,12 @@ Route::group(['middleware' => 'LoginCheck'], function(){
         ]);
 
         // ledger
-        Route::get('{id}/ledger', [
-            'as' => 'ledger', 'uses' => 'EventController@showEventLedger'
+        Route::get('{eventId}/ledger', [
+            'as' => 'ledger', 'uses' => 'LedgerController@showEventLedger'
+        ]);
+        // ledger API
+        Route::get('{eventId}/ledger/account/record/search', [
+            'as' => 'ledger/account/record/search', 'uses' => 'LedgerController@accountRecordSearch'
         ]);
 
         // manage

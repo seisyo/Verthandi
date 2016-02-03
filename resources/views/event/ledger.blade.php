@@ -2,11 +2,38 @@
 
 {{-- Custom css section --}}
 @section('custom_css')
+<link rel="stylesheet" href="{{url('assets/css/plugins/select2/select2.min.css')}}">
 @endsection
 
 {{-- Custom js section --}}
 @section('custom_js')
+<script src="{{url('assets/js/plugins/select2/select2.full.min.js')}}"></script>
+<script>
+    var result = '{{$accountList}}';
+    var accountList = $.parseJSON(result.replace(/&quot;/g, '"'));
 
+    $(document).ready(function() {
+
+        $("select.account").select2({
+            placeholder: "會計科目",
+            allowClear: true
+        });
+
+        $("select.account").change(function() {
+            $.ajax({
+                type: 'GET',
+                url: "{{route('event::ledger/account/record/search', ['eventId' => $eventInfo->id])}}",
+                data: {
+
+                },
+                success: function(result){
+                    alert(result.content);
+                }
+            });
+        });
+
+    });
+</script>
 @endsection
 
 {{-- Sidebar default/event --}}
@@ -26,10 +53,10 @@
         <a href="{{route('event::manage')}}">活動帳簿管理</a>
     </li>
     <li>
-        <a href="{{url('event/' . $eventInfo->id . '/ledger')}}">{{$eventInfo->name}}</a>
+        <a href="{{route('event::main', ['eventId' => $eventInfo->id])}}">{{$eventInfo->name}}</a>
     </li>
     <li>
-        <a href="{{url('event/' . $eventInfo->id . '/ledger')}}">分類帳</a>
+        <a href="{{route('event::ledger', ['eventId' => $eventInfo->id])}}">分類帳</a>
     </li>
 @endsection
 
@@ -41,11 +68,15 @@
                 
                 <div class="ibox-title">
                     <div class="row">
-                        
-                        <div class="col-md-3">
-                            <div class="input-group">
-                                <input type="text" placeholder="搜尋" class="input-sm form-control">
-                            </div>
+                        <div class="col-md-12">
+                            <select class="form-control account">
+                                <option></option>
+                            </select>
+                            <script>
+                                $.each(accountList, function(key, value){
+                                    $('select.account').append("<option value=" + value.full_id + ">" + value.full_id + " " + value.name + "</option>")
+                                });
+                            </script>
                         </div>
                     </div>
                 </div>
@@ -77,7 +108,6 @@
                                         <td>800</td>
                                         <td>---</td>
                                         <td>
-                                            
                                             <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#edituser">
                                                 編輯
                                             </button>
@@ -96,13 +126,12 @@
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                                                            <button type="button" class="btn btn-success">確定修改</button>
+                                                            <button type="button" class="btn btn-primary">確定修改</button>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <!-- modal end -->
-                                
                                         </td>
                                     </tr>
                                 </tbody>
