@@ -27,7 +27,13 @@
                     account_id: $("select.account").val()
                 },
                 success: function(result){
-                    alert(result.content);
+                    var datas = $.parseJSON(result.content);
+                    //hide all tr
+                    $("tbody > tr").hide();
+                    $.each(datas, function(key, value){
+                        
+                        $("tbody").append("<tr><td>" + value.trade_at + "</td><td>" + value.trade_name + "</td><td>" + value.debit_value + "</td><td>" + value.credit_value + "</td><td>" + value.direction + "</td><td>" + "xxxx" + "</td><td>" + value.trade_comment + "</td></tr>");
+                    });
                 }
             });
         });
@@ -108,7 +114,7 @@
                                         <td>800</td>
                                         <td>---</td>
                                         <td>
-                                            <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#edituser">
+                                            <!-- <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#edituser">
                                                 編輯
                                             </button>
                                             
@@ -130,7 +136,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <!-- modal end -->
                                         </td>
                                     </tr>

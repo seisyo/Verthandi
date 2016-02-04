@@ -17,6 +17,7 @@ class LedgerController extends Controller
     public function showEventLedger($eventId)
     {
         $accountArray = DB::select('select full_id, name from full_id where cast(concat(parent_id,id) as INTEGER) not in (select parent_id from account)');
+        
         return view('event.ledger')->with(['eventList' => Event::all(),
                                            'eventInfo' => Event::find($eventId), 
                                            'accountList' => json_encode($accountArray)
@@ -48,10 +49,32 @@ class LedgerController extends Controller
         }
         // success or fail
         if (!$validator->messages()->isEmpty()) {
+            
             $result = ['type' => 'Failed', 'content' => $validator->messages()];
             return response()->json($result);
+
         } else {
-            return response()->json(['type' => 'Success', 'content' => $request->get('account_id')]);
+            // to save all data to response
+            $results = [];
+            // catch all trade relate to the account id
+            $diarys = Diary::where('account_id', '=', $accountId)->where('account_parent_id', '=', $accountParentId)->get();
+            foreach ($diarys as $diary) {
+                // check it's the correct event_id
+                if ($diary->trade->event_id == (int)$eventId) {
+                    
+                    $tempArray = [
+                        'trade_at' => $diary->trade->trade_at,
+                        'trade_name' => $diary->trade->name,
+                        'direction' => $diary->direction,
+                        'debit_value' => ($diary->direction) ? ($diary->amount) : (0),
+                        'credit_value' => ($diary->direction) ? (0) : ($diary->amount),
+                        'trade_comment' => $diary->trade->comment
+                    ];
+                    array_push($results, $tempArray);
+                }
+               
+            }
+            return response()->json(['type' => 'Success', 'content' => json_encode($results)]);
         }        
         
     }
