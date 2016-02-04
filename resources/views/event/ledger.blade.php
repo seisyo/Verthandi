@@ -24,7 +24,7 @@
                 type: 'GET',
                 url: "{{route('event::ledger/account/record/search', ['eventId' => $eventInfo->id])}}",
                 data: {
-
+                    account_id: $("select.account").val()
                 },
                 success: function(result){
                     alert(result.content);
@@ -69,7 +69,7 @@
                 <div class="ibox-title">
                     <div class="row">
                         <div class="col-md-12">
-                            <select class="form-control account">
+                            <select class="form-control account" name="ledger-account">
                                 <option></option>
                             </select>
                             <script>
