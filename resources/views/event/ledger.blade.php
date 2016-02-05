@@ -3,6 +3,11 @@
 {{-- Custom css section --}}
 @section('custom_css')
 <link rel="stylesheet" href="{{url('assets/css/plugins/select2/select2.min.css')}}">
+<style>
+    #search-id > .select2-container {
+        z-index: 2;
+    }
+</style>
 @endsection
 
 {{-- Custom js section --}}
