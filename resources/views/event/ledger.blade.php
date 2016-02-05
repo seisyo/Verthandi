@@ -37,11 +37,11 @@
                     $.each(datas, function(key, value){
                         // account_direction -> diary_direction 
                         if (value.account_direction) {
-                            (value.direction) ? (debitTotal = debitTotal + value.debit_value) : (creditTotal = creditTotal + value.credit_value);
+                            (value.direction) ? (debitTotal = debitTotal + Number(value.debit_value)) : (creditTotal = creditTotal + Number(value.credit_value));
                             balance = debitTotal - creditTotal;
                             $("tbody").append("<tr><td>" + value.trade_at + "</td><td>" + value.trade_name + "</td><td>" + value.debit_value + "</td><td>" + value.credit_value + "</td><td>" + balance + "</td><td>" + value.trade_comment + '</td><td><a href="{{route("event::diary", ["eventId" => $eventInfo->id])}}"><button type="button" class="btn btn-default btn-sm">編輯</button></a></td></tr>');
                         } else {
-                            (value.direction) ? (debitTotal = debitTotal + value.debit_value) : (creditTotal = creditTotal + value.credit_value);
+                            (value.direction) ? (debitTotal = debitTotal + Number(value.debit_value)) : (creditTotal = creditTotal + Number(value.credit_value));
                             balance = creditTotal - debitTotal;
                             $("tbody").append("<tr><td>" + value.trade_at + "</td><td>" + value.trade_name + "</td><td>" + value.debit_value + "</td><td>" + value.credit_value + "</td><td>" + balance + "</td><td>" + value.trade_comment + '</td><td><a href="{{route("event::diary", ["eventId" => $eventInfo->id])}}"><button type="button" class="btn btn-default btn-sm">編輯</button></a></td></tr>');
                         };
