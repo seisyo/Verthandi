@@ -28,11 +28,36 @@
                 },
                 success: function(result){
                     var datas = $.parseJSON(result.content);
-                    //hide all tr
-                    $("tbody > tr").hide();
+                    //remove all tr data 
+                    $("tbody > tr").remove();
+                    // to record the amount
+                    var debitTotal = 0;
+                    var creditTotal = 0;
+                    var balance = 0;
                     $.each(datas, function(key, value){
                         
-                        $("tbody").append("<tr><td>" + value.trade_at + "</td><td>" + value.trade_name + "</td><td>" + value.debit_value + "</td><td>" + value.credit_value + "</td><td>" + value.direction + "</td><td>" + "xxxx" + "</td><td>" + value.trade_comment + "</td></tr>");
+                        if (value.account_direction) {
+                            if (value.direction) {
+                                debitTotal = debitTotal + value.debit_value;
+                                balance = debitTotal - creditTotal;
+                                $("tbody").append("<tr><td>" + value.trade_at + "</td><td>" + value.trade_name + "</td><td>" + value.debit_value + "</td><td>" + value.credit_value + "</td><td>" + balance + "</td><td>" + value.trade_comment + '</td><td><button type="button" class="btn btn-default btn-sm">編輯</button></td></tr>');
+                            } else {
+                                creditTotal = creditTotal + value.credit_value;
+                                balance = debitTotal - creditTotal;                          
+                                $("tbody").append("<tr><td>" + value.trade_at + "</td><td>" + value.trade_name + "</td><td>" + value.debit_value + "</td><td>" + value.credit_value + "</td><td>" + balance + "</td><td>" + value.trade_comment + '</td><td><button type="button" class="btn btn-default btn-sm">編輯</button></td></tr>');
+                            };
+                        } else {
+                            if (value.direction) {
+                                debitTotal = debitTotal + value.debit_value;
+                                balance = creditTotal - debitTotal;
+                                $("tbody").append("<tr><td>" + value.trade_at + "</td><td>" + value.trade_name + "</td><td>" + value.debit_value + "</td><td>" + value.credit_value + "</td><td>" + balance + "</td><td>" + value.trade_comment + '</td><td><button type="button" class="btn btn-default btn-sm">編輯</button></td></tr>');
+                            } else {
+                                creditTotal = creditTotal + value.credit_value;
+                                balance = creditTotal - debitTotal;                          
+                                $("tbody").append("<tr><td>" + value.trade_at + "</td><td>" + value.trade_name + "</td><td>" + value.debit_value + "</td><td>" + value.credit_value + "</td><td>" + balance + "</td><td>" + value.trade_comment + '</td><td><button type="button" class="btn btn-default btn-sm">編輯</button></td></tr>');
+                            };
+                        };
+                        
                     });
                 }
             });
@@ -98,7 +123,7 @@
                                         <th class="col-md-2">交易名稱</th>
                                         <th class="col-md-1">借方</th>
                                         <th class="col-md-1">貸方</th>
-                                        <th class="col-md-1">方向</th>
+                                        <!-- <th class="col-md-1">方向</th> -->
                                         <th class="col-md-1">餘額</th>
                                         <th class="col-md-2">備註</th>
                                         <th class="col-md-1">操作</th>
@@ -106,39 +131,7 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>2015-11-29</td>
-                                        <td>行銷組購買文具</td>
-                                        <td>0</td>
-                                        <td>800</td>
-                                        <td>貸</td>
-                                        <td>800</td>
-                                        <td>---</td>
-                                        <td>
-                                            <!-- <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#edituser">
-                                                編輯
-                                            </button>
-                                            
-                                            <div class="modal fade" id="edituser">
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                            <h4 class="modal-title" id="myModalLabel">編輯交易分錄</h4>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <div class="row">
-                                                                
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                                                            <button type="button" class="btn btn-primary">確定修改</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div> -->
-                                            <!-- modal end -->
-                                        </td>
+
                                     </tr>
                                 </tbody>
                             </table>
