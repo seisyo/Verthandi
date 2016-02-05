@@ -35,27 +35,15 @@
                     var creditTotal = 0;
                     var balance = 0;
                     $.each(datas, function(key, value){
-                        
+                        // account_direction -> diary_direction 
                         if (value.account_direction) {
-                            if (value.direction) {
-                                debitTotal = debitTotal + value.debit_value;
-                                balance = debitTotal - creditTotal;
-                                $("tbody").append("<tr><td>" + value.trade_at + "</td><td>" + value.trade_name + "</td><td>" + value.debit_value + "</td><td>" + value.credit_value + "</td><td>" + balance + "</td><td>" + value.trade_comment + '</td><td><button type="button" class="btn btn-default btn-sm">編輯</button></td></tr>');
-                            } else {
-                                creditTotal = creditTotal + value.credit_value;
-                                balance = debitTotal - creditTotal;                          
-                                $("tbody").append("<tr><td>" + value.trade_at + "</td><td>" + value.trade_name + "</td><td>" + value.debit_value + "</td><td>" + value.credit_value + "</td><td>" + balance + "</td><td>" + value.trade_comment + '</td><td><button type="button" class="btn btn-default btn-sm">編輯</button></td></tr>');
-                            };
+                            (value.direction) ? (debitTotal = debitTotal + value.debit_value) : (creditTotal = creditTotal + value.credit_value);
+                            balance = debitTotal - creditTotal;
+                            $("tbody").append("<tr><td>" + value.trade_at + "</td><td>" + value.trade_name + "</td><td>" + value.debit_value + "</td><td>" + value.credit_value + "</td><td>" + balance + "</td><td>" + value.trade_comment + '</td><td><button type="button" class="btn btn-default btn-sm">編輯</button></td></tr>');
                         } else {
-                            if (value.direction) {
-                                debitTotal = debitTotal + value.debit_value;
-                                balance = creditTotal - debitTotal;
-                                $("tbody").append("<tr><td>" + value.trade_at + "</td><td>" + value.trade_name + "</td><td>" + value.debit_value + "</td><td>" + value.credit_value + "</td><td>" + balance + "</td><td>" + value.trade_comment + '</td><td><button type="button" class="btn btn-default btn-sm">編輯</button></td></tr>');
-                            } else {
-                                creditTotal = creditTotal + value.credit_value;
-                                balance = creditTotal - debitTotal;                          
-                                $("tbody").append("<tr><td>" + value.trade_at + "</td><td>" + value.trade_name + "</td><td>" + value.debit_value + "</td><td>" + value.credit_value + "</td><td>" + balance + "</td><td>" + value.trade_comment + '</td><td><button type="button" class="btn btn-default btn-sm">編輯</button></td></tr>');
-                            };
+                            (value.direction) ? (debitTotal = debitTotal + value.debit_value) : (creditTotal = creditTotal + value.credit_value);
+                            balance = debitTotal - creditTotal;
+                            $("tbody").append("<tr><td>" + value.trade_at + "</td><td>" + value.trade_name + "</td><td>" + value.debit_value + "</td><td>" + value.credit_value + "</td><td>" + balance + "</td><td>" + value.trade_comment + '</td><td><button type="button" class="btn btn-default btn-sm">編輯</button></td></tr>');
                         };
                         
                     });
