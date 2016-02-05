@@ -47,6 +47,22 @@
         
         $(".footable").footable();
 
+        $("#search-id").select2({
+            placeholder: "搜尋",
+            allowClear: true
+        });
+
+        $("#search-id").change(function() {
+            if ($("#search-id").val() != "") {  
+                // let all <tr> hide 
+                $("tbody > tr").hide();
+                // show the selected tr
+                $("#" + $("#search-id").val()).show();
+            } else {
+                $("tbody > tr").show();
+            }
+        });
+
         $("#add-transaction").on('show.bs.modal', function(){
             
             $("select.account").select2({
@@ -103,12 +119,11 @@
 
             <div class="ibox-title">
                 <div class="row">
-                    <div class="col-md-12">
-
+                    
+                    <div class="col-md-2">
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-transaction">
                             ＋新增交易分錄
                         </button>
-
                         <div class="modal fade modal-wide" id="add-transaction">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
@@ -173,12 +188,21 @@
                                             $("#transaction-add-form").submit();
                                         });
                                     </script>
-
                                 </div>
                             </div>
                         </div>
                         <!-- modal end -->
                     </div>
+
+                    <div class="col-md-4 pull-right">
+                        <select class="form-control" id="search-id">
+                            <option></option>
+                            @foreach($tradeList as $trade)
+                                <option value="{{$trade->id}}">{{date("Y-m-d", strtotime($trade->trade_at)) . ' ' . $trade->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
                 </div>
             </div>
 
@@ -203,7 +227,7 @@
                                     </thead>
                                     <tbody>
                                         @foreach($tradeList as $trade)
-                                        <tr>
+                                        <tr id="{{$trade->id}}">
                                             <td>{{date("Y-m-d", strtotime($trade->trade_at))}}</td>
                                             <td>{{$trade->name}}</td>
                                             <td>{{$trade->handler}}</td>

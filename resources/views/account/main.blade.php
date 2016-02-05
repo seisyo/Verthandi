@@ -182,7 +182,7 @@
                     <div class="col-md-3 pull-right" id="search-div">
 
                         <select class="form-control" id="search-id">
-                            <option></option>
+                            <option value=""></option>
                             @foreach ($accountList as $account)
                             @if ($account->id !==0)
                             <option value="{{$account->parent_id . $account->id}}">{{(int)($account->parent_id . $account->id) .'  '. $account->name}}</option>

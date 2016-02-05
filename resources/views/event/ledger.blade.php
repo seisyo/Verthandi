@@ -39,11 +39,11 @@
                         if (value.account_direction) {
                             (value.direction) ? (debitTotal = debitTotal + value.debit_value) : (creditTotal = creditTotal + value.credit_value);
                             balance = debitTotal - creditTotal;
-                            $("tbody").append("<tr><td>" + value.trade_at + "</td><td>" + value.trade_name + "</td><td>" + value.debit_value + "</td><td>" + value.credit_value + "</td><td>" + balance + "</td><td>" + value.trade_comment + '</td><td><button type="button" class="btn btn-default btn-sm">編輯</button></td></tr>');
+                            $("tbody").append("<tr><td>" + value.trade_at + "</td><td>" + value.trade_name + "</td><td>" + value.debit_value + "</td><td>" + value.credit_value + "</td><td>" + balance + "</td><td>" + value.trade_comment + '</td><td><a href="{{route("event::diary", ["eventId" => $eventInfo->id])}}"><button type="button" class="btn btn-default btn-sm">編輯</button></a></td></tr>');
                         } else {
                             (value.direction) ? (debitTotal = debitTotal + value.debit_value) : (creditTotal = creditTotal + value.credit_value);
                             balance = debitTotal - creditTotal;
-                            $("tbody").append("<tr><td>" + value.trade_at + "</td><td>" + value.trade_name + "</td><td>" + value.debit_value + "</td><td>" + value.credit_value + "</td><td>" + balance + "</td><td>" + value.trade_comment + '</td><td><button type="button" class="btn btn-default btn-sm">編輯</button></td></tr>');
+                            $("tbody").append("<tr><td>" + value.trade_at + "</td><td>" + value.trade_name + "</td><td>" + value.debit_value + "</td><td>" + value.credit_value + "</td><td>" + balance + "</td><td>" + value.trade_comment + '</td><td><a href="{{route("event::diary", ["eventId" => $eventInfo->id])}}"><button type="button" class="btn btn-default btn-sm">編輯</button></a></td></tr>');
                         };
                         
                     });
@@ -111,7 +111,6 @@
                                         <th class="col-md-2">交易名稱</th>
                                         <th class="col-md-1">借方</th>
                                         <th class="col-md-1">貸方</th>
-                                        <!-- <th class="col-md-1">方向</th> -->
                                         <th class="col-md-1">餘額</th>
                                         <th class="col-md-2">備註</th>
                                         <th class="col-md-1">操作</th>
