@@ -39,7 +39,8 @@ class AccountController extends Controller
             return redirect()->route('account::main');
 
         } else {
-            DB::table('account')->insert([
+            
+            $result = DB::table('account')->insert([
                 'id' => $id,
                 'name' => $request->get('name'),
                 'parent_id' => $request->get('parent_id'),
@@ -47,11 +48,14 @@ class AccountController extends Controller
                 'comment' => $request->get('comment')
             ]);
 
-            Session::flash('toast_message', ['type' => 'success', 'content' => '成功新增會計科目「' . $request->get('name') . '」']);
-            
-            return redirect()->route('account::main');
+            if ($result) {
+                Session::flash('toast_message', ['type' => 'success', 'content' => '成功新增會計科目「' . $request->get('name') . '」']);
+                return redirect()->route('account::main');
+            } else {
+                Session::flash('toast_message', ['type' => 'error', 'content' => '新增會計科目「' . $request->get('name') . '」失敗']);
+                return redirect()->route('account::main');
+            }
         }
-        
     }
 
     public function editAccount(Request $request)
@@ -75,13 +79,19 @@ class AccountController extends Controller
             return redirect()->route('account::main')->with($errorname, $validator->messages());
 
         } else {
-            DB::table('account')->where('id', '=', $request->get('id'))->where('parent_id', '=', $request->get('parent_id'))->update([
+            
+            $result = DB::table('account')->where('id', '=', $request->get('id'))->where('parent_id', '=', $request->get('parent_id'))->update([
                 'name' => $request->get('name'),
                 'comment' => $request->get('comment')
             ]);
 
-            Session::flash('toast_message', ['type' => 'success', 'content'=> '成功編輯會計科目「' . $request->get('name') . '」']);
-            return redirect()->route('account::main');
+            if ($result) {
+                Session::flash('toast_message', ['type' => 'success', 'content'=> '成功編輯會計科目「' . $request->get('name') . '」']);
+                return redirect()->route('account::main');
+            } else {
+                Session::flash('toast_message', ['type' => 'error', 'content'=> '編輯會計科目「' . $request->get('name') . '」失敗']);
+                return redirect()->route('account::main');
+            }
         }
     }
 
@@ -97,18 +107,23 @@ class AccountController extends Controller
         $deleteAccountName = $query->get()[0]->name;
 
         if ($check === null) {
-            $query->delete();
+            
+            $result = $query->delete();
 
-            Session::flash('toast_message', ['type' => 'success', 'content' => '成功刪除會計科目「' . $deleteAccountName . '」']);
-            return redirect()->route('account::main');
+            if ($result) {
+                Session::flash('toast_message', ['type' => 'success', 'content' => '成功刪除會計科目「' . $deleteAccountName . '」']);
+                return redirect()->route('account::main');
+            } else {
+                Session::flash('toast_message', ['type' => 'error', 'content' => '刪除會計科目「' . $deleteAccountName . '」失敗']);
+                return redirect()->route('account::main');
+            }
+            
         } else {
 
             Session::flash('toast_message', ['type' => 'warning', 'content' => '刪除會計科目「' . $deleteAccountName . '」失敗（無法刪除父科目）']);
             return redirect()->route('account::main');
-        }
-     
-        
 
+        }
     }
 
     public function searchAllAccount()

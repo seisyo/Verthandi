@@ -37,14 +37,18 @@ class EventController extends Controller
             'event_at' => 'required|date'
         ]);
         
-        Event::create([
+        $result = Event::create([
             'name' => $request->get('name'),
             'event_at' => date("Y-m-d", strtotime($request->get('event_at')))
         ]);
 
-        Session::flash('toast_message', ['type' => 'success', 'content' => '成功新增活動「' . $request->get('name') . '」']);
-        
-        return redirect()->route('event::manage');
+        if ($result) {
+            Session::flash('toast_message', ['type' => 'success', 'content' => '成功新增活動「' . $request->get('name') . '」']);
+            return redirect()->route('event::manage');
+        } else {
+            Session::flash('toast_message', ['type' => 'error', 'content' => '新增活動「' . $request->get('name') . '」失敗']);
+            return redirect()->route('event::manage');
+        } 
     }
 
     public function editEvent(Request $request)
@@ -64,20 +68,22 @@ class EventController extends Controller
         if ($validator->fails()) {
 
             $errorname = 'errors' . $request->get('id');
-            
             return redirect()->route('event::manage')->with($errorname, $validator->messages());
 
         } else {
 
-            Event::find($request->get('id'))->update([
+            $result = Event::find($request->get('id'))->update([
                 'name' => $request->get('name'),
                 'event_at' => date("Y-m-d", strtotime($request->get('event_at')))
             ]);
 
-            Session::flash('toast_message', ['type' => 'success', 'content' => '成功更新活動「' . Event::find($request->get('id'))->name . '」']);
-            
-            return redirect()->route('event::manage');
-
+            if ($result) {
+                Session::flash('toast_message', ['type' => 'success', 'content' => '成功更新活動「' . Event::find($request->get('id'))->name . '」']);
+                return redirect()->route('event::manage');
+            } else {
+                Session::flash('toast_message', ['type' => 'error', 'content' => '更新活動「' . Event::find($request->get('id'))->name . '」失敗']);
+                return redirect()->route('event::manage');
+            }
         }
     }
 
@@ -88,10 +94,16 @@ class EventController extends Controller
         ]);
 
         $deleteEvent = Event::find($request->get('id'))->name;
-        Event::find($request->get('id'))->delete();
+        
+        $result = Event::find($request->get('id'))->delete();
 
-        Session::flash('toast_message', ['type' => 'success', 'content' => '成功刪除活動「' . $deleteEvent . '」']);
-        return redirect()->route('event::manage');
+        if ($result) {
+            Session::flash('toast_message', ['type' => 'success', 'content' => '成功刪除活動「' . $deleteEvent . '」']);
+            return redirect()->route('event::manage');
+        } else {
+            Session::flash('toast_message', ['type' => 'error', 'content' => '刪除活動「' . $deleteEvent . '」失敗']);
+            return redirect()->route('event::manage');
+        }        
     }
 
     public function searchAllEvent()
@@ -110,12 +122,9 @@ class EventController extends Controller
         ]);
 
         if ($validator->fails()) {
-
             $result = ['type' => 'Failed', 'content' => $validator->messages()];
             return response()->json($result);
-
         } else {
-
             $gets = Event::find($request->get('id'));
             return response()->json(['type' => 'Success', 'content' => $gets]);
         }

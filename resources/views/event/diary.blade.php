@@ -24,6 +24,9 @@
     .select2-dropdown{
         z-index: 3051;
     }
+    #search-div > .select2-container {
+        z-index: 2;
+    }
 </style>
 @endsection
 
@@ -194,7 +197,7 @@
                         <!-- modal end -->
                     </div>
 
-                    <div class="col-md-4 pull-right">
+                    <div class="col-md-4 pull-right" id="search-div">
                         <select class="form-control" id="search-id">
                             <option></option>
                             @foreach($tradeList as $trade)

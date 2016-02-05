@@ -36,7 +36,7 @@ class UserController extends Controller
         //generate default password
         $default_password = str_random(12);
         
-        DB::transaction(function() use ($request, $default_password){
+        $transaction = DB::transaction(function() use ($request, $default_password){
             //add new user to users table
             User::create([
                 'username' => $request->get('username'),
@@ -55,17 +55,23 @@ class UserController extends Controller
                 'phone' => $request->get('phone')
             ]);
         });
+        if (is_null($transaction)) {
+            //send password to user
+            $mail = $request->get('email');
+
+            Mail::send('component.confirm_mail', ['password' => $default_password], function($message) use ($mail){
+                $message->from(env('MAIL_USERNAME'), 'SITCON財務組');
+                $message->to($mail)->subject('SITCON財務系統認證信');
+            });
+
+            Session::flash('toast_message', ['type' => 'success', 'content' => '已將密碼認證信寄送至「' . $request->get('email') . '」']);
+            return redirect()->route('user::main');
+
+        } else {
+            Session::flash('toast_message', ['type' => 'error', 'content' => '新增使用者失敗']);
+            return redirect()->route('user::main');
+        }
         
-        //send password to user
-        $mail = $request->get('email');
-
-        Mail::send('component.confirm_mail', ['password' => $default_password], function($message) use ($mail){
-            $message->from(env('MAIL_USERNAME'), 'SITCON財務組');
-            $message->to($mail)->subject('SITCON財務系統認證信');
-        });
-
-        Session::flash('toast_message', ['type' => 'success', 'content' => '已將密碼認證信寄送至「' . $request->get('email') . '」']);
-        return redirect()->route('user::main');
         
     }
 
@@ -121,7 +127,7 @@ class UserController extends Controller
             
         }else{
 
-            DB::transaction(function() use ($request){
+            $transaction = DB::transaction(function() use ($request){
                 User::find($request->get('id'))->update([
                     'nickname' => $request->get('nickname'),
                     'permission' => $request->get('permission')
@@ -134,9 +140,15 @@ class UserController extends Controller
                     'email' => $request->get('email')            
                 ]);
             });
-           
-            Session::flash('toast_message', ['type' => 'success', 'content' => '成功更新使用者「' . User::find($request->get('id'))->username . '」']);
-            return redirect()->route('user::main');
+            
+            if (is_null($transaction)) { 
+                Session::flash('toast_message', ['type' => 'success', 'content' => '成功更新使用者「' . User::find($request->get('id'))->username . '」']);
+                return redirect()->route('user::main');
+            } else {
+                Session::flash('toast_message', ['type' => 'error', 'content' => '更新使用者失敗']);
+                return redirect()->route('user::main');
+            }          
+            
         }
         
     }
@@ -147,12 +159,18 @@ class UserController extends Controller
             'id' => 'required|exists:user,id'
         ]);
 
-        User::find($request->get('id'))->update([
+        $result = User::find($request->get('id'))->update([
             'status' => 'disable'
         ]);
 
-        Session::flash('toast_message', ['type' => 'success', 'content' => '成功停用使用者「' . User::find($request->get('id'))->username . '」']);
-        return redirect()->route('user::main');
+        if ($result) {
+            Session::flash('toast_message', ['type' => 'success', 'content' => '成功停用使用者「' . User::find($request->get('id'))->username . '」']);
+            return redirect()->route('user::main');
+        } else {
+            Session::flash('toast_message', ['type' => 'error', 'content' => '停用使用者「' . User::find($request->get('id'))->username . '」失敗']);
+            return redirect()->route('user::main');
+        }
+        
     }
 
     public function activateUser(Request $request)
@@ -161,12 +179,18 @@ class UserController extends Controller
             'id' => 'required|exists:user,id'
         ]);
 
-        User::find($request->get('id'))->update([
+        $result = User::find($request->get('id'))->update([
             'status' => 'enable'
         ]);
 
-        Session::flash('toast_message', ['type' => 'success', 'content' => '成功啟用使用者「' . User::find($request->get('id'))->username . '」']);
-        return redirect()->route('user::main');
+        if ($result) {
+            Session::flash('toast_message', ['type' => 'success', 'content' => '成功啟用使用者「' . User::find($request->get('id'))->username . '」']);
+            return redirect()->route('user::main');
+        } else {
+            Session::flash('toast_message', ['type' => 'error', 'content' => '啟用使用者「' . User::find($request->get('id'))->username . '」失敗']);
+            return redirect()->route('user::main');
+        }
+        
     }
 
     public function deleteUser(Request $request)
@@ -177,13 +201,19 @@ class UserController extends Controller
 
         $deleteName = User::find($request->get('id'))->username;
 
-        DB::transaction(function () use ($request){
+        $transaction = DB::transaction(function () use ($request){
             UserDetail::find($request->get('id'))->delete();
             User::find($request->get('id'))->delete();
         });
 
-        Session::flash('toast_message', ['type' => 'success', 'content' => '成功刪除使用者「' . $deleteName . '」']);
-        return redirect()->route('user::main');
+        if (is_null($transaction)) {
+            Session::flash('toast_message', ['type' => 'success', 'content' => '成功刪除使用者「' . $deleteName . '」']);
+            return redirect()->route('user::main');
+        } else {
+            Session::flash('toast_message', ['type' => 'error', 'content' => '刪除使用者「' . $deleteName . '」失敗']);
+            return redirect()->route('user::main');
+        }
+        
     }
 
     public function searchAllUser()
