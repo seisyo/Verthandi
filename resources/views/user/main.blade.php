@@ -154,9 +154,8 @@ $(document).ready(function(){
                                 <thead>
                                     <tr>
                                         <th class="col-md-2">帳號</th>
-                                        <th class="">名稱</th>
+                                        <th class="">暱稱</th>
                                         <th class="col-md-2">權限</th>
-                                        <th class="col-md-1">狀態</th>
                                         <th class="col-md-3">操作</th>
                                     </tr>
                                 </thead>
@@ -168,7 +167,6 @@ $(document).ready(function(){
                                             <td>{{$user->username}}</td>
                                             <td>{{$user->nickname}}</td>
                                             <td>@include('component.permission', ['from' => $user->permission])</td>
-                                            <td>{{$user->status}}</td>
                                             <td>
                                                 <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="{{'#edit-user'.$user->id}}">
                                                     編輯
@@ -262,9 +260,8 @@ $(document).ready(function(){
                                 <thead>
                                     <tr>
                                         <th class="col-md-2">帳號</th>
-                                        <th class="">名稱</th>
+                                        <th class="">暱稱</th>
                                         <th class="col-md-2">權限</th>
-                                        <th class="col-md-1">狀態</th>
                                         <th class="col-md-3">操作</th>
                                     </tr>
                                 </thead>
@@ -276,7 +273,6 @@ $(document).ready(function(){
                                             <td>{{$user->username}}</td>
                                             <td>{{$user->nickname}}</td>
                                             <td>@include('component.permission', ['from' => $user->permission])</td>
-                                            <td>{{$user->status}}</td>
                                             <td>
                                                 <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="{{'#edit-user'.$user->id}}">
                                                     編輯

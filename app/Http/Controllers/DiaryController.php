@@ -47,7 +47,7 @@ class DiaryController extends Controller
             'event_id' => 'required|exists:event,id',
             'trade_at' => 'required|date',
             'name' => 'required|max:95',
-            'handler' => 'required|max:15',
+            'handler' => 'max:15',
             'comment' => 'string',
             'debit_array' => 'required|json',
             'credit_array' => 'required|json',
@@ -254,7 +254,7 @@ class DiaryController extends Controller
             'trade_id' => 'required|exists:trade,id',
             'trade_at' => 'required|date',
             'name' => 'required|max:95',
-            'handler' => 'required|max:15',
+            'handler' => 'max:15',
             'comment' => 'string',
             'debit_array' => 'required|json',
             'credit_array' => 'required|json'

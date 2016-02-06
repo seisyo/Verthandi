@@ -219,11 +219,11 @@
                                 <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="8">
                                     <thead>
                                         <tr>
-                                            <th data-toggle="true" class="col-md-2">交易日</th>
+                                            <th data-toggle="true" class="col-md-2">交易日期</th>
                                             <th>交易內容</th>
-                                            <th class="col-md-1">經手人</th>
-                                            <th class="col-md-1">記帳人</th>
-                                            <th class="col-md-2">記帳日</th>
+                                            <th class="col-md-1">經手人員</th>
+                                            <th class="col-md-1">記帳人員</th>
+                                            <th class="col-md-2">記帳日期</th>
                                             <th class="col-md-2">操作</th>
                                             <th data-hide="all"></th>
                                         </tr>

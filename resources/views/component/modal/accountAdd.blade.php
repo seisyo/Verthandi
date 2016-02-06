@@ -1,7 +1,7 @@
 <div class="col-md-12">
     
     <div class="form-group">
-        <label class="col-md-3 control-label">父科目編號*</label>
+        <label class="col-md-3 control-label">父科目編號＊</label>
         <div class="col-md-9">
             <select class="form-control aa" name="parent_id" id="parent-id">
                 <option></option>
@@ -15,7 +15,7 @@
     <div class="hr-line-dashed"></div>
 
     <div class="form-group">
-        <label class="col-md-3 control-label">科目編號*</label>
+        <label class="col-md-3 control-label">新科目編號＊</label>
         <div class="col-md-9">
             <h3 id="parentable-id" name="id"></h3>   
         </div>
@@ -24,7 +24,7 @@
     <div class="hr-line-dashed"></div>
 
     <div class="form-group">
-        <label class="col-md-3 control-label">科目名稱*</label>
+        <label class="col-md-3 control-label">新科目名稱＊</label>
         <div class="col-md-9">
             <input type="text" class="form-control" name="name">
         </div>
@@ -33,7 +33,7 @@
     <div class="hr-line-dashed"></div>
 
     <div class="form-group">
-        <label class="col-md-3 control-label">會計方向*</label>
+        <label class="col-md-3 control-label">新科目方向＊</label>
         <div class="col-md-9">
             <select class="input-sm form-control input-s-sm inline" name="direction">  
                 <option value="1">借</option>

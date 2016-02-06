@@ -5,7 +5,7 @@
             
             <div class="col-md-12">
                 <div class="form-group" id="sandbox-container">
-                    <label>交易日期*</label>
+                    <label>交易日期＊</label>
                     <input type="text" class="form-control" name="trade_at" value="{{old('trade_at')}}"> 
                     <script>
                         $('#sandbox-container input').datepicker("setDate", new Date());
@@ -14,13 +14,13 @@
             </div>
             <div class="col-md-12">
                 <div class="form-group">
-                    <label>交易內容*</label>
+                    <label>交易內容＊</label>
                     <input type="text" class="form-control" name="name" value="{{old('name')}}">
                 </div>
             </div>
             <div class="col-md-12">
                 <div class="form-group">
-                    <label>經手人*</label>
+                    <label>經手人員</label>
                     <input type="text" class="form-control" name="handler" value="{{old('handler')}}">
                 </div>
             </div>
@@ -51,7 +51,7 @@
             
             <div class="col-md-6" id="add_account_row_debit">
                 <div class="row">
-                    <label>借方</label>
+                    <label>借方＊</label>
                 </div>
                 <div class="row">
                     <div class="form-group col-md-1">
@@ -90,7 +90,7 @@
             
             <div class="col-md-6" id="add_account_row_credit"> 
                 <div class="row">
-                    <label>貸方</label>
+                    <label>貸方＊</label>
                 </div>
                 <div class="row">
                     <div class="form-group col-md-1">

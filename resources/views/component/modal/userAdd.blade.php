@@ -1,7 +1,7 @@
 <div class="col-md-12">
 
     <div class="form-group">
-        <label class="col-md-2 control-label">帳號</label>
+        <label class="col-md-2 control-label">帳號＊</label>
         <div class="col-md-10">
             <input type="text" class="form-control" name="username">
         </div>
@@ -10,7 +10,7 @@
     <div class="hr-line-dashed"></div>
 
     <div class="form-group">
-        <label class="col-md-2 control-label">暱稱</label>
+        <label class="col-md-2 control-label">暱稱＊</label>
         <div class="col-md-10">
             <input type="text" class="form-control" name="nickname">
         </div>
@@ -19,7 +19,7 @@
     <div class="hr-line-dashed"></div>
 
     <div class="form-group">
-        <label class="col-md-2 control-label">真實姓名</label>
+        <label class="col-md-2 control-label">姓名＊</label>
         <div class="col-md-5">
             <input type="text" class="form-control" placeholder="姓" name="last_name">
         </div>
@@ -31,7 +31,7 @@
     <div class="hr-line-dashed"></div>
 
     <div class="form-group">
-        <label class="col-md-2 control-label">電話號碼</label>
+        <label class="col-md-2 control-label">電話＊</label>
         <div class="col-md-10">
             <input type="text" class="form-control" name="phone">
         </div>
@@ -40,7 +40,7 @@
     <div class="hr-line-dashed"></div>
 
     <div class="form-group">
-        <label class="col-md-2 control-label">信箱</label>
+        <label class="col-md-2 control-label">信箱＊</label>
         <div class="col-md-10">
             <input type="text" class="form-control" name="email">
         </div>
@@ -49,7 +49,7 @@
     <div class="hr-line-dashed"></div>
 
     <div class="form-group">
-        <label class="col-md-2 control-label">權限</label>
+        <label class="col-md-2 control-label">權限＊</label>
         <div class="col-md-10">
             <select class="input-md form-control" name="permission">
                 <option value="1">系統管理員</option>

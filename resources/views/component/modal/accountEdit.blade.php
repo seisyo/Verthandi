@@ -1,7 +1,7 @@
 <div class="col-md-12">
 
     <div class="form-group">
-        <label class="col-md-2 control-label">科目名稱</label>
+        <label class="col-md-2 control-label">科目名稱＊</label>
         <div class="col-md-10">
             <input type="text" class="form-control" name="name" value="{{$account->name}}">
         </div>
