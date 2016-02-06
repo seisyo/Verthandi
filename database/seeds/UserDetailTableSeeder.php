@@ -18,8 +18,8 @@ class UserDetailTableSeeder extends Seeder
 
         UserDetail::create([
             'user_id' => 1,
-            'first_name' => '聖翔',
-            'last_name' => '徐',
+            'first_name' => '啦',
+            'last_name' => '我',
             'email' => 'seisyo@seisyo.com',
             'phone' => '0912345678'
         ]);

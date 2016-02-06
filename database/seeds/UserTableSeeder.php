@@ -18,7 +18,7 @@ class UserTableSeeder extends Seeder
 
         User::create([
             'username' => 'admin',
-            'password' => Hash::make('12345678'),
+            'password' => Hash::make('sitconfinancial'),
             'nickname' => 'seisyo',
             'permission' => 1,
             'status' => 'admin'

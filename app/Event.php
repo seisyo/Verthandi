@@ -11,7 +11,7 @@ class Event extends Model
 
     protected $table = 'event';
     protected $guarded = ['id'];
-    protected $fillable = ['name', 'event_at'];
+    protected $fillable = ['name', 'event_at', 'principal', 'explanation'];
     protected $dates = ['deleted_at'];
 
     public function trade()

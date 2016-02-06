@@ -153,6 +153,7 @@
                                     <th class="">活動名稱</th>
                                     <th class="col-md-2">創建日期</th>
                                     <th class="col-md-2">活動日期</th>
+                                    <th class="col-md-2">活動負責人</th>
                                     <th class="col-md-2">操作</th>
                                 </tr>
                             </thead>
@@ -164,6 +165,7 @@
                                     <td><a href="{{url('event/' . $event->id . '/main')}}">{{$event->name}}</a></td>
                                     <td>{{date("Y-m-d", strtotime($event->created_at))}}</td>
                                     <td>{{$event->event_at}}</td>
+                                    <td>{{$event->principal}}</td>
                                     <td>
                                         
                                         <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="{{'#edit-event'.$event->id}}">

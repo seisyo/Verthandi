@@ -18,7 +18,9 @@ class EventTableSeeder extends Seeder
 
         Event::create([
             'name' => 'SITCON 2016',
-            'event_at' => '2016-02-27'
+            'event_at' => '2016-02-27',
+            'principal' => 'MouseMs',
+            'explanation' => '學生計算機年會'
         ]);
     }
 }

@@ -33,13 +33,17 @@ class EventController extends Controller
     public function addEvent(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|max:45',
-            'event_at' => 'required|date'
+            'name' => 'required|max:45|unique:event,name',
+            'event_at' => 'required|date',
+            'principal' => 'required|max:15',
+            'explanation' => 'string'
         ]);
         
         $result = Event::create([
             'name' => $request->get('name'),
-            'event_at' => date("Y-m-d", strtotime($request->get('event_at')))
+            'event_at' => date("Y-m-d", strtotime($request->get('event_at'))),
+            'principal' => $request->get('principal'),
+            'explanation' => $request->get('explanation')
         ]);
 
         if ($result) {
@@ -53,16 +57,24 @@ class EventController extends Controller
 
     public function editEvent(Request $request)
     {
+        $originalName = Event::find($request->get('id'))->name;
+        
+        ($originalName === $request->get('name')) ? ($change = False) : ($change = True);
+
         $validator = Validator::make(
         [
             'id' => $request->get('id'),
             'name' => $request->get('name'),
-            'event_at' => $request->get('event_at')
+            'event_at' => $request->get('event_at'),
+            'principal' => $request->get('principal'),
+            'explanation' => $request->get('explanation')
         ],
         [
             'id' => 'required|exists:event,id',
-            'name' => 'required|max:45',
-            'event_at' => 'required|date'
+            'name' => ($change) ? ('required|max:45|unique:event,name') : ('required|max:45'),
+            'event_at' => 'required|date',
+            'principal' => 'required|max:15',
+            'explanation' => 'string'
         ]);
 
         if ($validator->fails()) {
@@ -74,7 +86,9 @@ class EventController extends Controller
 
             $result = Event::find($request->get('id'))->update([
                 'name' => $request->get('name'),
-                'event_at' => date("Y-m-d", strtotime($request->get('event_at')))
+                'event_at' => date("Y-m-d", strtotime($request->get('event_at'))),
+                'principal' => $request->get('principal'),
+                'explanation' => $request->get('explanation')
             ]);
 
             if ($result) {
