@@ -13,10 +13,7 @@ use App\DiaryAttachedFiles;
 use Session;
 use Validator;
 use DB;
-use Input;
 use Storage;
-use File;
-use Hash;
 
 class EventController extends Controller
 {
@@ -107,15 +104,31 @@ class EventController extends Controller
             'id' => 'required|exists:event,id'
         ]);
 
-        $deleteEvent = Event::find($request->get('id'))->name;
-        
-        $result = Event::find($request->get('id'))->delete();
+        $deleteEventName = Event::find($request->get('id'))->name;
+        $deleteEvent = Event::find($request->get('id'));
 
-        if ($result) {
-            Session::flash('toast_message', ['type' => 'success', 'content' => '成功刪除活動「' . $deleteEvent . '」']);
+        $transaction = DB::transaction(function() use ($deleteEvent){
+            foreach ($deleteEvent->trade as $trade) {
+                foreach ($trade->diary as $diary) {
+                    // echo($diary . '<tr>');
+                    $diary->delete();
+                }
+                foreach ($trade->diaryAttachedFiles as $file) {
+                    // echo($file . '<tr>');
+                    Storage::delete(join(DIRECTORY_SEPARATOR, ['diary', $file->event_id, $file->trade_id, $file->file_name]));
+                    $file->delete();
+                }
+                // echo($trade . '<tr>');
+                $trade->delete();
+            }
+            $deleteEvent->delete();
+        });
+
+        if (is_null($transaction)) {
+            Session::flash('toast_message', ['type' => 'success', 'content' => '成功刪除活動「' . $deleteEventName . '」']);
             return redirect()->route('event::manage');
         } else {
-            Session::flash('toast_message', ['type' => 'error', 'content' => '刪除活動「' . $deleteEvent . '」失敗']);
+            Session::flash('toast_message', ['type' => 'error', 'content' => '刪除活動「' . $deleteEventName . '」失敗']);
             return redirect()->route('event::manage');
         }        
     }

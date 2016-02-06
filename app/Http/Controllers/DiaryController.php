@@ -471,7 +471,7 @@ class DiaryController extends Controller
                 // delete the relate file's
                 $files = DiaryAttachedFiles::where('event_id', '=', $eventId)->where('trade_id', '=', $request->get('trade_id'))->get();
                 foreach ($files as $file) {
-                    Storage::delete(join(DIRECTORY_SEPARATOR, ['diary', $file->event_id, $file->trade_id, $file->file_name]));
+                    // Storage::delete(join(DIRECTORY_SEPARATOR, ['diary', $file->event_id, $file->trade_id, $file->file_name]));
                     $file->delete();
                 }
                 // delete the relate diarys
@@ -536,7 +536,7 @@ class DiaryController extends Controller
         } else {
             $file = DiaryAttachedFiles::where('file_name', '=', $request->get('file_name'))->first();      
             
-            Storage::delete(join(DIRECTORY_SEPARATOR, ['diary', $file->event_id, $file->trade_id, $file->file_name]));
+            // Storage::delete(join(DIRECTORY_SEPARATOR, ['diary', $file->event_id, $file->trade_id, $file->file_name]));
             $file->delete();
             
             return response()->json(['type' => 'Success', 'content' => '已刪除']);
