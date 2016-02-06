@@ -205,7 +205,6 @@
                                 <tr>
                                     <th class="col-md-2">科目編號</th>
                                     <th class="">科目名稱</th>
-                                    <th class="col-md-1">方向</th>
                                     <th>父科目</th>
                                     <th class="col-md-2">操作</th>
                                 </tr>
@@ -233,12 +232,6 @@
                                         <td><span style="margin-left:30%"></span>{{'－'.$account->name}}</td>
                                         @elseif (strlen((int)($account->parent_id . $account->id)) === 5)
                                         <td><span style="margin-left:40%"></span>{{'－'.$account->name}}</td>
-                                        @endif
-                                        <!-- print account direction -->
-                                        @if ($account->direction)
-                                        <td>借</td>
-                                        @else
-                                        <td>貸</td>
                                         @endif
                                         <!-- print acccount's parent name -->
                                         <td>{{$account->parent_name}}</td>
