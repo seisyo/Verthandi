@@ -30,7 +30,7 @@ class EventController extends Controller
     public function addEvent(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|max:45|unique:event,name',
+            'name' => 'required|max:45',
             'event_at' => 'required|date',
             'principal' => 'required|max:15',
             'explanation' => 'string'
@@ -54,10 +54,6 @@ class EventController extends Controller
 
     public function editEvent(Request $request)
     {
-        $originalName = Event::find($request->get('id'))->name;
-        
-        ($originalName === $request->get('name')) ? ($change = False) : ($change = True);
-
         $validator = Validator::make(
         [
             'id' => $request->get('id'),
@@ -68,7 +64,7 @@ class EventController extends Controller
         ],
         [
             'id' => 'required|exists:event,id',
-            'name' => ($change) ? ('required|max:45|unique:event,name') : ('required|max:45'),
+            'name' => 'required|max:45',
             'event_at' => 'required|date',
             'principal' => 'required|max:15',
             'explanation' => 'string'
