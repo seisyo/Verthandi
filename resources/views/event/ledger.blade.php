@@ -15,7 +15,7 @@
     $(document).ready(function() {
 
         $('.loading').hide();
-        
+
         $("select.account").select2({
             placeholder: "會計科目",
             allowClear: true
@@ -30,14 +30,14 @@
                 },
                 success: function(result){
                     if (result.content === '[]') {
-                        $("tbody > tr").remove();
-                        $(".ibox-content > .alert").remove();
+                        // $("tbody > tr").remove();
+                        // $(".ibox-content > .alert").remove();
                         $(".ibox-content").append('<div class="alert alert-success">查無資料</div>');
                     } else {
                         var datas = $.parseJSON(result.content);
                         //remove all tr data 
-                        $("tbody > tr").remove();
-                        $(".ibox-content > .alert").remove();
+                        // $("tbody > tr").remove();
+                        // $(".ibox-content > .alert").remove();
                         // to record the amount
                         var debitTotal = 0;
                         var creditTotal = 0;
@@ -58,6 +58,8 @@
                     };
                 },
                 beforeSend:function(){
+                    $("tbody > tr").remove();
+                    $(".ibox-content > .alert").remove();
                     $('.loading').show();
                 },
                 complete:function(){
