@@ -27,26 +27,33 @@
                     account_id: $("select.account").val()
                 },
                 success: function(result){
-                    var datas = $.parseJSON(result.content);
-                    //remove all tr data 
-                    $("tbody > tr").remove();
-                    // to record the amount
-                    var debitTotal = 0;
-                    var creditTotal = 0;
-                    var balance = 0;
-                    $.each(datas, function(key, value){
-                        // account_direction -> diary_direction 
-                        if (Number(value.account_direction)) {
-                            (Number(value.direction)) ? (debitTotal = debitTotal + Number(value.debit_value)) : (creditTotal = creditTotal + Number(value.credit_value));
-                            balance = debitTotal - creditTotal;
-                            $("tbody").append("<tr><td>" + value.trade_at + "</td><td>" + value.trade_name + "</td><td>" + value.debit_value + "</td><td>" + value.credit_value + "</td><td>" + balance + "</td><td>" + value.trade_comment + '</td><td><a href="{{route("event::diary", ["eventId" => $eventInfo->id])}}"><button type="button" class="btn btn-default btn-sm">編輯</button></a></td></tr>');
-                        } else {
-                            (Number(value.direction)) ? (debitTotal = debitTotal + Number(value.debit_value)) : (creditTotal = creditTotal + Number(value.credit_value));
-                            balance = creditTotal - debitTotal;
-                            $("tbody").append("<tr><td>" + value.trade_at + "</td><td>" + value.trade_name + "</td><td>" + value.debit_value + "</td><td>" + value.credit_value + "</td><td>" + balance + "</td><td>" + value.trade_comment + '</td><td><a href="{{route("event::diary", ["eventId" => $eventInfo->id])}}"><button type="button" class="btn btn-default btn-sm">編輯</button></a></td></tr>');
-                        };
-                        
-                    });
+                    if (result.content === '[]') {
+                        $("tbody > tr").remove();
+                        $(".ibox-content > .alert").remove();
+                        $(".ibox-content").append('<div class="alert alert-success">查無資料</div>');
+                    } else {
+                        var datas = $.parseJSON(result.content);
+                        //remove all tr data 
+                        $("tbody > tr").remove();
+                        $(".ibox-content > .alert").remove();
+                        // to record the amount
+                        var debitTotal = 0;
+                        var creditTotal = 0;
+                        var balance = 0;
+                        $.each(datas, function(key, value){
+                            // account_direction -> diary_direction 
+                            if (Number(value.account_direction)) {
+                                (Number(value.direction)) ? (debitTotal = debitTotal + Number(value.debit_value)) : (creditTotal = creditTotal + Number(value.credit_value));
+                                balance = debitTotal - creditTotal;
+                                $("tbody").append("<tr><td>" + value.trade_at + "</td><td>" + value.trade_name + "</td><td>" + value.debit_value + "</td><td>" + value.credit_value + "</td><td>" + balance + "</td><td>" + value.trade_comment + '</td><td><a href="{{route("event::diary", ["eventId" => $eventInfo->id])}}"><button type="button" class="btn btn-default btn-sm">編輯</button></a></td></tr>');
+                            } else {
+                                (Number(value.direction)) ? (debitTotal = debitTotal + Number(value.debit_value)) : (creditTotal = creditTotal + Number(value.credit_value));
+                                balance = creditTotal - debitTotal;
+                                $("tbody").append("<tr><td>" + value.trade_at + "</td><td>" + value.trade_name + "</td><td>" + value.debit_value + "</td><td>" + value.credit_value + "</td><td>" + balance + "</td><td>" + value.trade_comment + '</td><td><a href="{{route("event::diary", ["eventId" => $eventInfo->id])}}"><button type="button" class="btn btn-default btn-sm">編輯</button></a></td></tr>');
+                            };
+                            
+                        });
+                    };
                 }
             });
         });
