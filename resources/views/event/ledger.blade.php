@@ -11,9 +11,11 @@
 <script>
     var result = '{{$accountList}}';
     var accountList = $.parseJSON(result.replace(/&quot;/g, '"'));
-
+    
     $(document).ready(function() {
 
+        $('.loading').hide();
+        
         $("select.account").select2({
             placeholder: "會計科目",
             allowClear: true
@@ -54,6 +56,17 @@
                             
                         });
                     };
+                },
+                beforeSend:function(){
+                    $('.loading').show();
+                },
+                complete:function(){
+                    $('.loading').hide();
+                },
+                error: function(){
+                    $("tbody > tr").remove();
+                    $(".ibox-content > .alert").remove();
+                    $(".ibox-content").append('<div class="alert alert-danger">錯誤發生</div>');
                 }
             });
         });
@@ -129,7 +142,7 @@
                                     </tr>
                                 </tbody>
                             </table>
-
+                            <div class="loading">資料讀取中......</div>
                         </div>
                     </div>
                 </div>
