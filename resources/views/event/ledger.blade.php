@@ -22,54 +22,59 @@
         });
 
         $("select.account").change(function() {
-            $.ajax({
-                type: 'GET',
-                url: "{{route('event::ledger/account/record/search', ['eventId' => $eventInfo->id])}}",
-                data: {
-                    account_id: $("select.account").val()
-                },
-                success: function(result){
-                    if (result.content === '[]') {
-                        // $("tbody > tr").remove();
-                        // $(".ibox-content > .alert").remove();
-                        $(".ibox-content").append('<div class="alert alert-success">查無資料</div>');
-                    } else {
-                        var datas = $.parseJSON(result.content);
-                        // to record the amount
-                        var debitTotal = 0;
-                        var creditTotal = 0;
-                        var balance = 0;
-                        $.each(datas, function(key, value){
-                            // account_direction -> diary_direction 
-                            if (Number(value.account_direction)) {
-                                (Number(value.direction)) ? (debitTotal = debitTotal + Number(value.debit_value)) : (creditTotal = creditTotal + Number(value.credit_value));
-                                balance = debitTotal - creditTotal;
-                                $("tbody").append("<tr><td>" + value.trade_at + "</td><td>" + value.trade_name + "</td><td>" + value.debit_value + "</td><td>" + value.credit_value + "</td><td>" + balance + "</td><td>" + value.trade_comment + '</td><td><a href="{{route("event::diary", ["eventId" => $eventInfo->id])}}"><button type="button" class="btn btn-default btn-sm">編輯</button></a></td></tr>');
-                            } else {
-                                (Number(value.direction)) ? (debitTotal = debitTotal + Number(value.debit_value)) : (creditTotal = creditTotal + Number(value.credit_value));
-                                balance = creditTotal - debitTotal;
-                                $("tbody").append("<tr><td>" + value.trade_at + "</td><td>" + value.trade_name + "</td><td>" + value.debit_value + "</td><td>" + value.credit_value + "</td><td>" + balance + "</td><td>" + value.trade_comment + '</td><td><a href="{{route("event::diary", ["eventId" => $eventInfo->id])}}"><button type="button" class="btn btn-default btn-sm">編輯</button></a></td></tr>');
-                            };
-                            
-                        });
-                    };
-                },
-                beforeSend:function(){
-                    //remove all tr data 
-                    $("tbody > tr").remove();
-                    $(".ibox-content > .alert").remove();
-                    $('.loading').show();
-                },
-                complete:function(){
-                    $('.loading').hide();
-                },
-                error: function(){
-                    //remove all tr data 
-                    $("tbody > tr").remove();
-                    $(".ibox-content > .alert").remove();
-                    $(".ibox-content").append('<div class="alert alert-danger">錯誤發生</div>');
-                }
-            });
+            if ($("select.account").val() !== '') {
+                $.ajax({
+                    type: 'GET',
+                    url: "{{route('event::ledger/account/record/search', ['eventId' => $eventInfo->id])}}",
+                    data: {
+                        account_id: $("select.account").val()
+                    },
+                    success: function(result){
+                        if (result.content === '[]') {
+                            // $("tbody > tr").remove();
+                            // $(".ibox-content > .alert").remove();
+                            $(".ibox-content").append('<div class="alert alert-success">查無資料</div>');
+                        } else {
+                            var datas = $.parseJSON(result.content);
+                            // to record the amount
+                            var debitTotal = 0;
+                            var creditTotal = 0;
+                            var balance = 0;
+                            $.each(datas, function(key, value){
+                                // account_direction -> diary_direction 
+                                if (Number(value.account_direction)) {
+                                    (Number(value.direction)) ? (debitTotal = debitTotal + Number(value.debit_value)) : (creditTotal = creditTotal + Number(value.credit_value));
+                                    balance = debitTotal - creditTotal;
+                                    $("tbody").append("<tr><td>" + value.trade_at + "</td><td>" + value.trade_name + "</td><td>" + value.debit_value + "</td><td>" + value.credit_value + "</td><td>" + balance + "</td><td>" + value.trade_comment + '</td><td><a href="{{route("event::diary", ["eventId" => $eventInfo->id])}}"><button type="button" class="btn btn-default btn-sm">詳細</button></a></td></tr>');
+                                } else {
+                                    (Number(value.direction)) ? (debitTotal = debitTotal + Number(value.debit_value)) : (creditTotal = creditTotal + Number(value.credit_value));
+                                    balance = creditTotal - debitTotal;
+                                    $("tbody").append("<tr><td>" + value.trade_at + "</td><td>" + value.trade_name + "</td><td>" + value.debit_value + "</td><td>" + value.credit_value + "</td><td>" + balance + "</td><td>" + value.trade_comment + '</td><td><a href="{{route("event::diary", ["eventId" => $eventInfo->id])}}"><button type="button" class="btn btn-default btn-sm">詳細</button></a></td></tr>');
+                                };
+                                
+                            });
+                        };
+                    },
+                    beforeSend:function(){
+                        //remove all tr data 
+                        $("tbody > tr").remove();
+                        $(".ibox-content > .alert").remove();
+                        $('.loading').show();
+                    },
+                    complete:function(){
+                        $('.loading').hide();
+                    },
+                    error: function(){
+                        //remove all tr data 
+                        $("tbody > tr").remove();
+                        $(".ibox-content > .alert").remove();
+                        $(".ibox-content").append('<div class="alert alert-danger">錯誤發生</div>');
+                    }
+                });
+            } else {
+                $("tbody > tr").remove();
+                $(".ibox-content > .alert").remove();
+            };
         });
 
     });
@@ -90,7 +95,7 @@
         <a href="{{route('index')}}">首頁</a>
     </li>
     <li>
-        <a href="{{route('event::manage')}}">活動帳簿管理</a>
+        <a href="{{route('event::manage::main')}}">活動帳簿管理</a>
     </li>
     <li>
         <a href="{{route('event::main', ['eventId' => $eventInfo->id])}}">{{$eventInfo->name}}</a>
@@ -110,7 +115,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <select class="form-control account" name="ledger-account">
-                                <option></option>
+                                <option value=""></option>
                             </select>
                             <script>
                                 $.each(accountList, function(key, value){

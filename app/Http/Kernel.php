@@ -29,6 +29,10 @@ class Kernel extends HttpKernel
         // 'auth' => \App\Http\Middleware\Authenticate::class,
         // 'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         // 'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
-        'LoginCheck' => 'App\Http\Middleware\LoginCheckMiddleware'
+        'LoginCheck' => 'App\Http\Middleware\LoginCheckMiddleware',
+        'UserPagePermission' => 'App\Http\Middleware\UserPagePermissionMiddleware',
+        'AccountPagePermission' => 'App\Http\Middleware\AccountPagePermissionMiddleware',
+        'EventManagePagePermission' => 'App\Http\Middleware\EventManagePagePermissionMiddleware',
+        'DiaryPagePermission' => 'App\Http\Middleware\DiaryPagePermissionMiddleware'
     ];
 }

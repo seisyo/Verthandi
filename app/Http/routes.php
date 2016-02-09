@@ -27,35 +27,60 @@ Route::group(['middleware' => 'LoginCheck'], function(){
         'as' => 'index', 'uses' => 'LoginController@showIndex'
     ]);
 
+
     //event
     Route::group(['as' => 'event::', 'prefix' => 'event'], function(){
-        //every event
-        Route::get('{eventId}/main', [
-            'as' => 'main', 'uses' => 'EventController@showEventMain'
-        ]);
         
-        // diary
+        // Event Manage
+        Route::group(['as' => 'manage::', 'prefix' => 'manage', 'middleware' => 'EventManagePagePermission'], function(){
+
+            Route::get('main', [
+                'as' => 'main', 'uses' => 'EventController@showEventManage'
+            ]);
+            Route::post('add',[
+                'as' => 'add', 'uses' => 'EventController@addEvent'
+            ]);
+            Route::post('edit',[
+                'as' => 'edit', 'uses' => 'EventController@editEvent'
+            ]);
+            Route::post('delete',[
+                'as' => 'delete', 'uses' => 'EventController@deleteEvent'
+            ]);
+            
+            //API
+            Route::get('/search/all', [
+                'as' => 'searchAll', 'uses' => 'EventController@searchAllEvent'
+            ]);
+            Route::get('/search/id', [
+                'as' => 'searchById', 'uses' => 'EventController@searchByIdEvent'
+            ]);
+        });
+        
+        // Diary
         Route::get('{eventId}/diary',[
             'as' => 'diary', 'uses' => 'DiaryController@showEventDiary'
-        ]);
-        Route::post('{eventId}/diary/add',[
-            'as' => 'diary/add', 'uses' => 'DiaryController@addEventDiary'
-        ]);
-        Route::post('{eventId}/diary/edit',[
-            'as' => 'diary/edit', 'uses' => 'DiaryController@editEventDiary'
-        ]);
-        Route::post('{eventId}/diary/delete',[
-            'as' => 'diary/delete', 'uses' => 'DiaryController@deleteEventDiary'
         ]);
         Route::get('diary/file/downloader/{fileName}/', [
             'as' => 'diary/file/downloader', 'uses' => 'DiaryController@downloadAttachedFile'
         ]);
-        // diary API
-        Route::get('diary/file/deleter', [
-            'as' => 'diary/file/deleter', 'uses' => 'DiaryController@deleteAttachedFile'
-        ]);
+        Route::group(['middleware' => 'DiaryPagePermission'], function(){
+            
+            Route::post('{eventId}/diary/add',[
+            'as' => 'diary/add', 'uses' => 'DiaryController@addEventDiary'
+            ]);
+            Route::post('{eventId}/diary/edit',[
+                'as' => 'diary/edit', 'uses' => 'DiaryController@editEventDiary'
+            ]);
+            Route::post('{eventId}/diary/delete',[
+                'as' => 'diary/delete', 'uses' => 'DiaryController@deleteEventDiary'
+            ]);
+            // diary API
+            Route::get('diary/file/deleter', [
+                'as' => 'diary/file/deleter', 'uses' => 'DiaryController@deleteAttachedFile'
+            ]);
+        });
 
-        // ledger
+        // Ledger
         Route::get('{eventId}/ledger', [
             'as' => 'ledger', 'uses' => 'LedgerController@showEventLedger'
         ]);
@@ -64,33 +89,15 @@ Route::group(['middleware' => 'LoginCheck'], function(){
             'as' => 'ledger/account/record/search', 'uses' => 'LedgerController@accountRecordSearch'
         ]);
 
-        // manage
-        Route::post('add',[
-            'as' => 'add', 'uses' => 'EventController@addEvent'
+        //every event
+        Route::get('{eventId}/main', [
+            'as' => 'main', 'uses' => 'EventController@showEventMain'
         ]);
-        Route::post('edit',[
-            'as' => 'edit', 'uses' => 'EventController@editEvent'
-        ]);
-        Route::post('delete',[
-            'as' => 'delete', 'uses' => 'EventController@deleteEvent'
-        ]);
-
-        //API
-        Route::get('/search/all', [
-            'as' => 'searchAll', 'uses' => 'EventController@searchAllEvent'
-        ]);
-        Route::get('/search/id', [
-            'as' => 'searchById', 'uses' => 'EventController@searchByIdEvent'
-        ]);
-        
     });
-    //event manage
-    Route::get('event/manage', [
-        'as' => 'event::manage', 'uses' => 'EventController@showEventManage'
-    ]);
 
-    //account
-    Route::group(['as' => 'account::', 'prefix' => 'account'], function(){
+
+    // Account
+    Route::group(['as' => 'account::', 'prefix' => 'account', 'middleware' => 'AccountPagePermission'], function(){
         Route::get('/', [
             'as' => 'main', 'uses' => 'AccountController@showAccount'
         ]);
@@ -116,8 +123,9 @@ Route::group(['middleware' => 'LoginCheck'], function(){
         ]);
     });
 
-    //user 
-    Route::group(['as' => 'user::', 'prefix' => 'user'], function(){
+
+    // User 
+    Route::group(['as' => 'user::', 'prefix' => 'user', 'middleware' => 'UserPagePermission'], function(){
         Route::get('/', [
             'as' => 'main', 'uses' => 'UserController@showUser'
         ]);
@@ -148,7 +156,8 @@ Route::group(['middleware' => 'LoginCheck'], function(){
         ]);
     });
 
-    //password
+
+    //Password
     Route::group(['as' => 'password::', 'prefix' => 'password'], function(){
         Route::get('/',[
             'as' => 'main', 'uses' => 'PasswordController@show'
@@ -158,7 +167,8 @@ Route::group(['middleware' => 'LoginCheck'], function(){
         ]);
     });
 
-    //logout
+
+    //Logout
     Route::get('/logout', [
         'as' => 'logout', 'uses' => 'LoginController@logout'
     ]);

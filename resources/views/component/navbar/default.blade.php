@@ -25,7 +25,7 @@
                 </div>
             </li>
             <li class="">
-                <a href="{{route('event::manage')}}"><i class="fa fa-futbol-o"></i> <span class="nav-label">活動管理</span> </a>
+                <a href="{{route('event::manage::main')}}"><i class="fa fa-futbol-o"></i> <span class="nav-label">活動管理</span> </a>
             </li>
             <li class="">
                 <a href="{{route('index')}}"><i class="fa fa-area-chart"></i> <span class="nav-label">報表輸出</span> </a>

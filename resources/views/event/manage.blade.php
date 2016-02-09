@@ -38,7 +38,7 @@
 
         
         $("#search-id").change(function(){
-            var url = "{{route('event::searchById')}}";
+            var url = "{{route('event::manage::searchById')}}";
 
             setTimeout(function(){
                 DoAjax(url, {id: $("#search-id").val()},
@@ -68,7 +68,7 @@
     <a href="{{route('index')}}">首頁</a>
 </li>
 <li>
-    <a href="{{route('event::manage')}}">活動帳簿管理</a>
+    <a href="{{route('event::manage::main')}}">活動帳簿管理</a>
 </li>
 @endsection
 
@@ -97,7 +97,7 @@
                                         <h4 class="modal-title" id="myModalLabel">新增帳簿</h4>
                                     </div>
                                     
-                                    <form class="form-horizontal" method="post" action="{{route('event::add')}}">
+                                    <form class="form-horizontal" method="post" action="{{route('event::manage::add')}}">
                                         
                                         <div class="modal-body">
                                             @if(Session::has(('errors')))
@@ -181,7 +181,7 @@
                                                         <h4 class="modal-title" id="myModalLabel">編輯帳簿</h4>
                                                     </div>
 
-                                                    <form class="form-horizontal" method="post" action="{{route('event::edit')}}">
+                                                    <form class="form-horizontal" method="post" action="{{route('event::manage::edit')}}">
                                                         
                                                         <div class="modal-body">
                                                             @if(Session::has(('errors'.$event->id)))
@@ -228,7 +228,7 @@
                                                     </div>
                                                     
                                                     <div class="modal-footer">
-                                                        <form class="form-horizontal" method="post" action="{{route('event::delete')}}">
+                                                        <form class="form-horizontal" method="post" action="{{route('event::manage::delete')}}">
                                                             <input type="hidden" name="id" value="{{$event->id}}">
                                                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                                             <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
