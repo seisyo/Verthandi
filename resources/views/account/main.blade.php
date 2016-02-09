@@ -216,7 +216,7 @@
                                     
                                     @if ($account->id !== 0)
                                         <!-- print account id -->
-                                        @if ($account->parent_id === 0)
+                                        @if ((int)$account->parent_id === 0)
                                         <td>{{(int)(str_pad($account->parent_id . $account->id, 6, '0', STR_PAD_RIGHT))}}</td>
                                         @else
                                         <td>{{(int)(str_pad($account->parent_id . $account->id, 5, '0', STR_PAD_RIGHT))}}</td>
