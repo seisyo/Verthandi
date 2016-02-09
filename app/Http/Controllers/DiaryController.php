@@ -78,7 +78,7 @@ class DiaryController extends Controller
             [
                 'account_id' => 'required|exists:account,id',
                 'account_parent_id' => 'required|exists:account,parent_id',
-                'amount' => 'required|numeric|min:1'
+                'amount' => 'required|numeric|integer|min:1'
             ]);
             
             //merge the error message
@@ -106,7 +106,7 @@ class DiaryController extends Controller
             [
                 'account_id' => 'required|exists:account,id',
                 'account_parent_id' => 'required|exists:account,parent_id',
-                'amount' => 'required|numeric|min:1'
+                'amount' => 'required|numeric|integer|min:1'
             ]);
 
             //merge the error message
@@ -285,7 +285,7 @@ class DiaryController extends Controller
             [
                 'account_id' => 'required|exists:account,id',
                 'account_parent_id' => 'required|exists:account,parent_id',
-                'amount' => 'required|numeric|min:1'
+                'amount' => 'required|numeric|integer|min:1'
             ]);
             //merge the error message
             if ($validator->fails()) {
@@ -312,7 +312,7 @@ class DiaryController extends Controller
             [
                 'account_id' => 'required|exists:account,id',
                 'account_parent_id' => 'required|exists:account,parent_id',
-                'amount' => 'required|numeric|min:1'
+                'amount' => 'required|numeric|integer|min:1'
             ]);
             //merge the error message
             if ($validator->fails()) {
