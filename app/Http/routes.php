@@ -84,12 +84,12 @@ Route::group(['middleware' => 'LoginCheck'], function(){
         Route::get('{eventId}/ledger', [
             'as' => 'ledger', 'uses' => 'LedgerController@showEventLedger'
         ]);
-        // ledger API
+        // Ledger API
         Route::get('{eventId}/ledger/account/record/search', [
             'as' => 'ledger/account/record/search', 'uses' => 'LedgerController@accountRecordSearch'
         ]);
 
-        //every event
+        //Every Event
         Route::get('{eventId}/main', [
             'as' => 'main', 'uses' => 'EventController@showEventMain'
         ]);

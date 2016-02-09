@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 
 use App\Account;
 use App\Event;
+use App\Diary;
 
 use Session;
 use Validator;
@@ -102,27 +103,32 @@ class AccountController extends Controller
             'parent_id' => 'required|exists:account,parent_id'
         ]);
 
-        $check = Account::where('parent_id', '=', $request->get('parent_id') . $request->get('id'))->first();
+        // Check the account whether has the pareant
+        $checkParent = Account::where('parent_id', '=', $request->get('parent_id') . $request->get('id'))->first();
+        // Save the account name
         $query = DB::table('account')->where('id', '=', $request->get('id'))->where('parent_id', '=', $request->get('parent_id'));
         $deleteAccountName = $query->get()[0]->name;
+        if ($checkParent === null) {
+            // Check the account whether be used in Diary
+            $checkDiary = DB::select('select * from diary where account_id = :accountId and account_parent_id = :accountParentId',['accountId' => $request->get('id'), 'accountParentId' => $request->get('parent_id')]);
 
-        if ($check === null) {
-            
-            $result = $query->delete();
-
-            if ($result) {
-                Session::flash('toast_message', ['type' => 'success', 'content' => '成功刪除會計科目「' . $deleteAccountName . '」']);
-                return redirect()->route('account::main');
+            if (empty($checkDiary)) {
+                $result = $query->delete();
+                
+                if ($result) {
+                    Session::flash('toast_message', ['type' => 'success', 'content' => '成功刪除會計科目「' . $deleteAccountName . '」']);
+                    return redirect()->route('account::main');
+                } else {
+                    Session::flash('toast_message', ['type' => 'error', 'content' => '刪除會計科目「' . $deleteAccountName . '」失敗']);
+                    return redirect()->route('account::main');
+                }
             } else {
-                Session::flash('toast_message', ['type' => 'error', 'content' => '刪除會計科目「' . $deleteAccountName . '」失敗']);
+                Session::flash('toast_message', ['type' => 'warning', 'content' => '刪除會計科目「' . $deleteAccountName . '」失敗（無法刪除已使用科目）']);
                 return redirect()->route('account::main');
             }
-            
         } else {
-
             Session::flash('toast_message', ['type' => 'warning', 'content' => '刪除會計科目「' . $deleteAccountName . '」失敗（無法刪除父科目）']);
             return redirect()->route('account::main');
-
         }
     }
 
