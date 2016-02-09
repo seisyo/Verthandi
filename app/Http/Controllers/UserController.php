@@ -140,7 +140,12 @@ class UserController extends Controller
                     'email' => $request->get('email')            
                 ]);
             });
-            
+            // if change own permission
+            if ((int)$request->get('id') === Session::get('user')->id) {
+                Session::forget('user');
+                Session::put('user',User::find($request->get('id')));
+            }
+
             if (is_null($transaction)) { 
                 Session::flash('toast_message', ['type' => 'success', 'content' => '成功更新使用者「' . User::find($request->get('id'))->username . '」']);
                 return redirect()->route('user::main');

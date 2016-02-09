@@ -38,7 +38,7 @@ class LoginController extends Controller
         if (Hash::check($request->get('password'), $password)) {
             if ($userInfo->status === 'enable' || $userInfo->status === 'admin') {
                 Session::put('user', $userInfo);
-    
+                Session::flash('toast_message', ['type' => 'success', 'content' => '嗨！' . Session::get('user')->nickname]);
                 return redirect()->route('index');
             } else {
                 Session::flash('message', ['content' => '非合法使用者']);

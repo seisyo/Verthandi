@@ -16,7 +16,7 @@ class UserPagePermissionMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if (in_array((int)Session::get('user')->permission, [1])) {
+        if (in_array((int)Session::get('user')->permission, [1,2])) {
             return $next($request);
         } else {
             Session::flash('toast_message', ['type' => 'warning', 'content' => '此帳號無權限進入「人員管理」頁面']);
