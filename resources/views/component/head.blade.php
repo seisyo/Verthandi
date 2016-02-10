@@ -1,11 +1,12 @@
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
 
 <title>SITCON財務系統 | {{$title}}</title>
 
+<!-- Mainly css -->
 <link href="{{url('assets/css/all.css')}}" rel="stylesheet">
 <link href="{{url('assets/font-awesome/css/font-awesome.css')}}" rel="stylesheet">
-
+<!-- Custom and plugin css -->
 @yield('custom_css')
 
 <!-- Mainly scripts -->

@@ -7,7 +7,6 @@
 <link rel="stylesheet" href="{{url('assets/css/plugins/footable/footable.core.css')}}">
 <link rel="stylesheet" href="{{url('assets/css/plugins/select2/select2.min.css')}}">
 <link rel="stylesheet" href="{{url('assets/css/custom/lightbox.css')}}">
-<!-- <link rel="stylesheet" href="{{url('assets/css/images/')}}"> -->
 <style>
     .modal.modal-wide .modal-dialog {
         width: 60%;
@@ -40,7 +39,6 @@
 <script src="{{url('assets/js/custom/delete_transaction.js')}}"></script>
 <script src="{{url('assets/js/custom/modal_autoopen.js')}}"></script>
 <script src="{{url('assets/js/custom/modal_reset.js')}}"></script>
-<script src="{{url('assets/js/custom/lightbox.min.js')}}"></script>
 <script>
     
     var result = '{{$accountList}}';
@@ -405,7 +403,7 @@
                                                             @foreach($fileLinkList as $fileLink)
                                                             @if($fileLink->trade_id === $trade->id)
                                                                 <li>
-                                                                    <a href="{{route('event::diary/file/downloader', ['fileName' => $fileLink->file_name])}}" target="_blank">
+                                                                    <a href="{{route('event::diary/file/downloader', ['fileName' => $fileLink->file_name])}}" data-lightbox="{{'album' . $fileLink->trade_id}}" data-title="{{$fileLink->file_name}}">
                                                                         {{$fileLink->file_name}}
                                                                     </a>
                                                                 </li>
@@ -440,6 +438,7 @@
     </div>
 </div>
 </div>
+<script src="{{url('assets/js/custom/lightbox.min.js')}}"></script>
 <script>
     modal_reset(".modal");
 </script>

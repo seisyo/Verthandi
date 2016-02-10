@@ -2,6 +2,7 @@
 
 {{-- Custom css section --}}
 @section('custom_css')
+<link rel="stylesheet" href="{{url('assets/css/custom/lightbox.css')}}">
 @endsection
 
 {{-- Custom js section --}}
