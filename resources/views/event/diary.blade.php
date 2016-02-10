@@ -121,7 +121,7 @@
             <div class="ibox-title">
                 <div class="row">
                     
-                    @if(in_array((int)Session::get('user')->permission, [2, 3]))
+                    @if(in_array((int)Session::get('user')->permission, [1, 2, 3]))
                     <div class="col-md-2">
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-transaction">
                             ＋新增交易分錄
@@ -223,7 +223,7 @@
                                             <th class="col-md-2">經手人員</th>
                                             <th class="col-md-2">記帳人員</th>
                                             <th class="col-md-2">記帳日期</th>
-                                            @if(in_array((int)Session::get('user')->permission, [2, 3]))
+                                            @if(in_array((int)Session::get('user')->permission, [1, 2, 3]))
                                             <th class="col-md-2">操作</th>
                                             @endif
                                             <th data-hide="all"></th>
@@ -237,7 +237,7 @@
                                             <td>{{$trade->handler}}</td>
                                             <td>{{$trade->user->userDetail->last_name . $trade->user->userDetail->first_name}}</td>
                                             <td>{{date("Y-m-d", strtotime($trade->created_at))}}</td>
-                                            @if(in_array((int)Session::get('user')->permission, [2, 3]))
+                                            @if(in_array((int)Session::get('user')->permission, [1, 2, 3]))
                                             <td>
 
                                                 <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="{{'#edit-transaction' . $trade->id}}">
