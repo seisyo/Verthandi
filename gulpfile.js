@@ -37,7 +37,9 @@ elixir(function(mix) {
     
     mix.copy("resources/assets/js/plugins", "public/assets/js/plugins");
 
-    //custom js
+    // custom js
     mix.copy("resources/assets/js/custom", "public/assets/js/custom");
-
+    // custom css
+    mix.copy("resources/assets/css/custom", "public/assets/css/custom");
+    mix.copy("resources/assets/css/images", "public/assets/css/images");
 });

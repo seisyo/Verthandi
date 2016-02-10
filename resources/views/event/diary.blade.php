@@ -2,10 +2,12 @@
 
 {{-- Custom css section --}}
 @section('custom_css')
-<link href="{{url('assets/css/plugins/datapicker/datepicker3.css')}}" rel="stylesheet">
+<link rel="stylesheet" href="{{url('assets/css/plugins/datapicker/datepicker3.css')}}">
 <link rel="stylesheet" href="{{url('assets/css/plugins/toastr/toastr.min.css')}}">
-<link href="{{url('assets/css/plugins/footable/footable.core.css')}}" rel="stylesheet">
+<link rel="stylesheet" href="{{url('assets/css/plugins/footable/footable.core.css')}}">
 <link rel="stylesheet" href="{{url('assets/css/plugins/select2/select2.min.css')}}">
+<link rel="stylesheet" href="{{url('assets/css/custom/lightbox.css')}}">
+<!-- <link rel="stylesheet" href="{{url('assets/css/images/')}}"> -->
 <style>
     .modal.modal-wide .modal-dialog {
         width: 60%;
@@ -38,6 +40,7 @@
 <script src="{{url('assets/js/custom/delete_transaction.js')}}"></script>
 <script src="{{url('assets/js/custom/modal_autoopen.js')}}"></script>
 <script src="{{url('assets/js/custom/modal_reset.js')}}"></script>
+<script src="{{url('assets/js/custom/lightbox.min.js')}}"></script>
 <script>
     
     var result = '{{$accountList}}';
@@ -219,8 +222,8 @@
                                         <tr>
                                             <th data-toggle="true" class="col-md-2">交易日期</th>
                                             <th>交易內容</th>
-                                            <th class="col-md-1">經手人員</th>
-                                            <th class="col-md-1">記帳人員</th>
+                                            <th class="col-md-2">經手人員</th>
+                                            <th class="col-md-2">記帳人員</th>
                                             <th class="col-md-2">記帳日期</th>
                                             @if(in_array((int)Session::get('user')->permission, [2, 3]))
                                             <th class="col-md-2">操作</th>
@@ -359,7 +362,7 @@
                                                         <table class="table table-bordered">
                                                             <thead>
                                                                 <th class="col-md-1">編號</th>
-                                                                <th class="col-md-2">借方</th>
+                                                                <th class="col-md-3">借方</th>
                                                                 <th class="col-md-1">金額</th>
                                                             </thead>
                                                             <tbody>
@@ -380,7 +383,7 @@
                                                         <table class="table table-bordered">
                                                             <thead>
                                                                 <th class="col-md-1">編號</th>
-                                                                <th class="col-md-2">貸方</th>
+                                                                <th class="col-md-3">貸方</th>
                                                                 <th class="col-md-1">金額</th>
                                                             </thead>
                                                             <tbody>
