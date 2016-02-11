@@ -376,7 +376,7 @@
                                                             </tbody>
                                                         </table>
                                                     </div>
-
+                                                    
                                                     <div class="col-md-4">
                                                         <table class="table table-bordered">
                                                             <thead>
@@ -403,7 +403,7 @@
                                                             @foreach($fileLinkList as $fileLink)
                                                             @if($fileLink->trade_id === $trade->id)
                                                                 <li>
-                                                                    <a href="{{route('event::diary/file/downloader', ['fileName' => $fileLink->file_name])}}" data-lightbox="{{'album' . $fileLink->trade_id}}" data-title="{{$fileLink->file_name}}">
+                                                                    <a href="{{route('event::diary/file/downloader', ['fileName' => $fileLink->file_name])}}" data-lightbox="{{'outside-review' . $fileLink->trade_id}}" data-title="{{$fileLink->file_name}}">
                                                                         {{$fileLink->file_name}}
                                                                     </a>
                                                                 </li>
@@ -441,5 +441,8 @@
 <script src="{{url('assets/js/custom/lightbox.min.js')}}"></script>
 <script>
     modal_reset(".modal");
+    lightbox.option({
+      'showImageNumberLabel': true
+    })
 </script>
 @endsection

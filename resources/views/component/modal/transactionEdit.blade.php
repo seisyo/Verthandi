@@ -39,7 +39,7 @@
                         <div class="row">
                             <div class="row">
                                 <div class="col-md-2">
-                                    <a href="{{route('event::diary/file/downloader', ['fileName' => $fileLink->file_name])}}" target="_blank">
+                                    <a href="{{route('event::diary/file/downloader', ['fileName' => $fileLink->file_name])}}" data-lightbox="{{'inside-review' . $fileLink->trade_id}}" data-title="{{$fileLink->file_name}}">
                                         {{$fileLink->file_name}}
                                     </a>
                                 </div>
