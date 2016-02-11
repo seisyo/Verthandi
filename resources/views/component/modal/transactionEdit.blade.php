@@ -73,7 +73,7 @@
             </div>
             <div class="col-md-12">
                 <div class="form-group">
-                    <label>新增檔案</label>
+                    <label>新增檔案（jpeg, png, jpg, pdf）</label>
                     <input type="file" name="diary_attached_files[]" multiple>
                 </div>
             </div>

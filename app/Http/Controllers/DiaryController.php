@@ -128,7 +128,7 @@ class DiaryController extends Controller
 
         // check the upload file
         $files = $request->file('diary_attached_files');
-            
+        dd($request->hasFile('diary_attached_files'));    
         if ($request->hasFile('diary_attached_files')) {
             
             foreach ($files as $file) {
@@ -137,7 +137,7 @@ class DiaryController extends Controller
                     $validatorTotal->messages()->merge(new MessageBag(['上傳收據相片失敗']));
                 } else {
                     // check the file name
-                    if (!in_array($file->getClientOriginalExtension(), ['jpeg', 'png', 'jpg'])) {
+                    if (!in_array($file->getClientOriginalExtension(), ['jpeg', 'png', 'jpg', 'pdf'])) {
                         $validatorTotal->messages()->merge(new MessageBag(['上傳收據相片檔名不符']));
                     }
                     // check the file size
@@ -339,15 +339,15 @@ class DiaryController extends Controller
             foreach ($files as $file) {
                 
                 if (!$file->isValid()) {
-                    $validatorTotal->messages()->merge(new MessageBag(['上傳收據相片失敗']));
+                    $validatorTotal->messages()->merge(new MessageBag(['上傳收據檔案失敗']));
                 } else {
                     // check the file name
-                    if (!in_array($file->getClientOriginalExtension(), ['jpeg', 'png', 'jpg'])) {
-                        $validatorTotal->messages()->merge(new MessageBag(['上傳收據相片檔名不符']));
+                    if (!in_array($file->getClientOriginalExtension(), ['jpeg', 'png', 'jpg', 'pdf'])) {
+                        $validatorTotal->messages()->merge(new MessageBag(['上傳收據檔案檔名不符']));
                     }
                     // check the file size
                     if ($file->getMaxFilesize() < $file->getClientSize()) {
-                        $validatorTotal->messages()->merge(new MessageBag(['上傳收據相片檔名過大']));
+                        $validatorTotal->messages()->merge(new MessageBag(['上傳收據檔案過大']));
                     }
                 }
             }
