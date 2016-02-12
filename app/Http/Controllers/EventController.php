@@ -45,10 +45,10 @@ class EventController extends Controller
 
         if ($result) {
             Session::flash('toast_message', ['type' => 'success', 'content' => '成功新增活動「' . $request->get('name') . '」']);
-            return redirect()->route('event::manage');
+            return redirect()->route('event::manage::main');
         } else {
             Session::flash('toast_message', ['type' => 'error', 'content' => '新增活動「' . $request->get('name') . '」失敗']);
-            return redirect()->route('event::manage');
+            return redirect()->route('event::manage::main');
         } 
     }
 
@@ -86,10 +86,10 @@ class EventController extends Controller
 
             if ($result) {
                 Session::flash('toast_message', ['type' => 'success', 'content' => '成功更新活動「' . Event::find($request->get('id'))->name . '」']);
-                return redirect()->route('event::manage');
+                return redirect()->route('event::manage::main');
             } else {
                 Session::flash('toast_message', ['type' => 'error', 'content' => '更新活動「' . Event::find($request->get('id'))->name . '」失敗']);
-                return redirect()->route('event::manage');
+                return redirect()->route('event::manage::main');
             }
         }
     }
@@ -106,15 +106,12 @@ class EventController extends Controller
         $transaction = DB::transaction(function() use ($deleteEvent){
             foreach ($deleteEvent->trade as $trade) {
                 foreach ($trade->diary as $diary) {
-                    // echo($diary . '<tr>');
                     $diary->delete();
                 }
                 foreach ($trade->diaryAttachedFiles as $file) {
-                    // echo($file . '<tr>');
                     Storage::delete(join(DIRECTORY_SEPARATOR, ['diary', $file->event_id, $file->trade_id, $file->file_name]));
                     $file->delete();
                 }
-                // echo($trade . '<tr>');
                 $trade->delete();
             }
             $deleteEvent->delete();
@@ -122,10 +119,10 @@ class EventController extends Controller
 
         if (is_null($transaction)) {
             Session::flash('toast_message', ['type' => 'success', 'content' => '成功刪除活動「' . $deleteEventName . '」']);
-            return redirect()->route('event::manage');
+            return redirect()->route('event::manage::main');
         } else {
             Session::flash('toast_message', ['type' => 'error', 'content' => '刪除活動「' . $deleteEventName . '」失敗']);
-            return redirect()->route('event::manage');
+            return redirect()->route('event::manage::main');
         }        
     }
 

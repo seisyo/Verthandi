@@ -12,7 +12,11 @@
             <label>活動日期＊</label>
             <input type="text" class="form-control" name="event_at"> 
             <script>
-                $('#event-date input').datepicker();
+                $('#event-date input').datepicker({
+                    format: 'yyyy-mm-dd',
+                    todayHighlight: true,
+                    autoclose: true
+                });
             </script>
         </div>
     </div>

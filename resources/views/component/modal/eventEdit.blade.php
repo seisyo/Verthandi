@@ -10,9 +10,13 @@
     <div class="col-md-12">
         <div class="form-group" id="{{'event-date' . $event->id}}">
             <label>活動日期＊</label>
-            <input type="text" class="form-control" name="event_at" value="{{date('m/d/Y', strtotime($event->event_at))}}"> 
+            <input type="text" class="form-control" name="event_at" value="{{date('Y-m-d', strtotime($event->event_at))}}"> 
             <script>
-                $("{{'#' . 'event-date' . $event->id . ' input'}}").datepicker({});
+                $("{{'#' . 'event-date' . $event->id . ' input'}}").datepicker({
+                    format: 'yyyy-mm-dd',
+                    todayHighlight: true,
+                    autoclose: true
+                });
             </script>
         </div>
     </div>
