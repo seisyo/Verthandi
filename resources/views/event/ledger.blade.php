@@ -95,7 +95,7 @@
         <a href="{{route('index')}}">首頁</a>
     </li>
     <li>
-        <a href="{{route('event::manage::main')}}">活動帳簿管理</a>
+        <a href="{{route('event::manage::main')}}">活動管理</a>
     </li>
     <li>
         <a href="{{route('event::main', ['eventId' => $eventInfo->id])}}">{{$eventInfo->name}}</a>

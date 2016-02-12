@@ -127,8 +127,7 @@ class DiaryController extends Controller
         }
 
         // check the upload file
-        $files = $request->file('diary_attached_files');
-        dd($request->hasFile('diary_attached_files'));    
+        $files = $request->file('diary_attached_files');   
         if ($request->hasFile('diary_attached_files')) {
             
             foreach ($files as $file) {

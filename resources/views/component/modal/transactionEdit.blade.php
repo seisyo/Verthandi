@@ -6,9 +6,13 @@
             <div class="col-md-12">
                 <div class="form-group" id="sandbox-container">
                     <label>交易日期＊</label>
-                    <input type="text" class="form-control" name="trade_at" value="{{date('m/d/Y', strtotime($trade->trade_at))}}"> 
+                    <input type="text" class="form-control" name="trade_at" value="{{date('Y-m-d', strtotime($trade->trade_at))}}"> 
                     <script>
-                        $('#sandbox-container input').datepicker({});
+                        $('#sandbox-container input').datepicker({
+                            format: 'yyyy-mm-dd',
+                            todayHighlight: true,
+                            autoclose: true
+                        });
                     </script>
                 </div> 
             </div>

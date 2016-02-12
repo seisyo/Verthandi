@@ -8,7 +8,11 @@
                     <label>交易日期＊</label>
                     <input type="text" class="form-control" name="trade_at" value="{{old('trade_at')}}"> 
                     <script>
-                        $('#sandbox-container input').datepicker("setDate", new Date());
+                        $('#sandbox-container input').datepicker({
+                            format: 'yyyy-mm-dd',
+                            todayHighlight: true,
+                            autoclose: true
+                        });
                     </script>
                 </div> 
             </div>
