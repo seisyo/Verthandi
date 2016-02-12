@@ -26,7 +26,7 @@
     <div class="form-group">
         <label class="col-md-3 control-label">新科目名稱＊</label>
         <div class="col-md-9">
-            <input type="text" class="form-control" name="name">
+            <input type="text" class="form-control" name="name" value="{{old('name')}}">
         </div>
     </div>
 
@@ -47,7 +47,7 @@
     <div class="form-group">
         <label class="col-md-3 control-label">備註</label>
         <div class="col-md-9">
-            <textarea class="form-control" name="comment"></textarea>
+            <textarea class="form-control" name="comment">{{old('comment')}}</textarea>
         </div>
     </div>
     

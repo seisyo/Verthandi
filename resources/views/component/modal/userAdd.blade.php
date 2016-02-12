@@ -3,7 +3,7 @@
     <div class="form-group">
         <label class="col-md-2 control-label">帳號＊</label>
         <div class="col-md-10">
-            <input type="text" class="form-control" name="username">
+            <input type="text" class="form-control" name="username" value="{{old('username')}}">
         </div>
     </div>
 
@@ -12,7 +12,7 @@
     <div class="form-group">
         <label class="col-md-2 control-label">暱稱＊</label>
         <div class="col-md-10">
-            <input type="text" class="form-control" name="nickname">
+            <input type="text" class="form-control" name="nickname" value="{{old('nickname')}}">
         </div>
     </div>
 
@@ -21,10 +21,10 @@
     <div class="form-group">
         <label class="col-md-2 control-label">姓名＊</label>
         <div class="col-md-5">
-            <input type="text" class="form-control" placeholder="姓" name="last_name">
+            <input type="text" class="form-control" placeholder="姓" name="last_name" value="{{old('last_name')}}">
         </div>
         <div class="col-md-5">
-            <input type="text" class="form-control" placeholder="名" name="first_name">
+            <input type="text" class="form-control" placeholder="名" name="first_name" value="{{old('first_name')}}">
         </div>
     </div>
 
@@ -33,7 +33,7 @@
     <div class="form-group">
         <label class="col-md-2 control-label">電話＊</label>
         <div class="col-md-10">
-            <input type="text" class="form-control" name="phone">
+            <input type="text" class="form-control" name="phone" value="{{old('phone')}}">
         </div>
     </div>
 
@@ -42,7 +42,7 @@
     <div class="form-group">
         <label class="col-md-2 control-label">信箱＊</label>
         <div class="col-md-10">
-            <input type="text" class="form-control" name="email">
+            <input type="text" class="form-control" name="email" value="{{old('email')}}">
         </div>
     </div>
 

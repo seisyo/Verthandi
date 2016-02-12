@@ -32,7 +32,7 @@ class UserController extends Controller
             'email' => 'required|e-mail|unique:user_detail,email',
             'permission' => 'required|numeric|max:4|min:1'
         ]);
-
+        $request->flash();
         //generate default password
         $default_password = str_random(12);
         

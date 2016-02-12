@@ -35,6 +35,7 @@ class EventController extends Controller
             'principal' => 'required|max:15',
             'explanation' => 'string'
         ]);
+        $request->flash();
         
         $result = Event::create([
             'name' => $request->get('name'),

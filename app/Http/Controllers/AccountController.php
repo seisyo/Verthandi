@@ -29,7 +29,8 @@ class AccountController extends Controller
             'direction' => 'required|boolean',
             'comment' => 'string'
         ]);
-
+        $request->flash();
+        
         $id = DB::select('select max(id)+1 as useable_id from account where cast(parent_id  as INTEGER) = ?', [$request->get('parent_id')])[0]->useable_id;
         // if $id return null, it presents this parent does't have child account, so return 1 
         if ($id === null) {
