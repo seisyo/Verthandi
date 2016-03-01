@@ -33,9 +33,12 @@ class AccountController extends Controller
         
         $id = DB::select('select max(id)+1 as useable_id from account where cast(parent_id  as INTEGER) = ?', [$request->get('parent_id')])[0]->useable_id;
         // if $id return null, it presents this parent does't have child account, so return 1 
+        
         if ($id === null) {
             $id = 1;
-        } elseif ($id > 9) {
+        } 
+
+        if ($id > 9) {
             
             Session::flash('toast_message', ['type' => 'warning', 'content' => '無法再新增子科目於此父科目']);
             return redirect()->route('account::main');
