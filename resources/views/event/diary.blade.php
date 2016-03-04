@@ -54,11 +54,12 @@
         });
 
         $("#search-id").change(function() {
-            if ($("#search-id").val() != "") {  
+            if ($("#search-id").val() != "") {   
                 // let all <tr> hide 
                 $("tbody > tr").hide();
                 // show the selected tr
-                $("#" + $("#search-id").val()).show();
+                $("#trade" + $("#search-id").val()).show();
+                $(".table-bordered > tbody >tr").show();
             } else {
                 $("tbody > tr").show();
             }
@@ -231,7 +232,7 @@
                                     </thead>
                                     <tbody>
                                         @foreach($tradeList as $trade)
-                                        <tr id="{{$trade->id}}">
+                                        <tr id="{{'trade' . $trade->id}}">
                                             <td>{{date("Y-m-d", strtotime($trade->trade_at))}}</td>
                                             <td>{{$trade->name}}</td>
                                             <td>{{$trade->handler}}</td>
