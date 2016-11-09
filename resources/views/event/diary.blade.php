@@ -8,6 +8,9 @@
 <link rel="stylesheet" href="{{url('assets/css/plugins/select2/select2.min.css')}}">
 <link rel="stylesheet" href="{{url('assets/css/custom/lightbox.css')}}">
 <style>
+    .footable-row-detail-inner {
+        width: 90%;
+    }
     .modal.modal-wide .modal-dialog {
         width: 60%;
     }
@@ -357,7 +360,7 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     
-                                                    <div class="col-md-4">
+                                                    <div class="col-md-6">
                                                         <table class="table table-bordered">
                                                             <thead>
                                                                 <th class="col-md-1">編號</th>
@@ -378,7 +381,7 @@
                                                         </table>
                                                     </div>
                                                     
-                                                    <div class="col-md-4">
+                                                    <div class="col-md-6">
                                                         <table class="table table-bordered">
                                                             <thead>
                                                                 <th class="col-md-1">編號</th>
