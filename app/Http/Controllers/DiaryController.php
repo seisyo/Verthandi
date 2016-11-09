@@ -21,7 +21,7 @@ class DiaryController extends Controller
 {
     public function showEventDiary($eventId)
     {
-        $accountArray = DB::select('select full_id, name from full_id where cast(concat(parent_id,id) as INTEGER) not in (select parent_id from account)');
+        $accountArray = DB::select('select full_id, name from full_id where cast(concat(parent_id,id) as UNSIGNED) not in (select parent_id from account)');
         return view('event.diary')->with(['eventList' => Event::all(), 
                                           'eventInfo' => Event::find($eventId), 
                                           'tradeList' => Trade::where('event_id', '=', $eventId)->orderBy('trade_at', 'asc')->get(), 

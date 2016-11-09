@@ -23,7 +23,7 @@ class Diary extends Model
 
     public function getAccountAttribute()
     {
-        return DB::select("select RPAD(cast(concat(parent_id,id) as INTEGER),5,'0') as fullId, name from account where id = :id and parent_id = :parent_id", ['id' => $this->account_id, 'parent_id' => $this->account_parent_id])[0];
+        return DB::select("select RPAD(cast(concat(parent_id,id) as UNSIGNED),5,'0') as fullId, name from account where id = :id and parent_id = :parent_id", ['id' => $this->account_id, 'parent_id' => $this->account_parent_id])[0];
     }
 
 }

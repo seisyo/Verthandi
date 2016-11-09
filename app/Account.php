@@ -23,7 +23,7 @@ class Account extends Model
     {
         if($this->parent_id !== 0){
             //parent_id + id = 01 or 00 must be cast to INTEGER like 1 or 0 than can be selected.
-            return DB::select('select name from account where cast(concat(parent_id,id) as INTEGER) = ?', [$this->parent_id])[0]->name;
+            return DB::select('select name from account where cast(concat(parent_id,id) as UNSIGNED) = ?', [$this->parent_id])[0]->name;
         } else {
             return '';
         }
