@@ -12,7 +12,7 @@ class MakeAccountFullIdView extends Migration
      */
     public function up()
     {
-        DB::statement("create view full_id as (select *,RPAD(cast(concat(parent_id,id) as INTEGER),5,'0') as full_id from account)");
+        DB::statement("create view full_id as (select *,RPAD(cast(concat(parent_id,id) as UNSIGNED),5,'0') as full_id from account)");
     }
 
     /**
