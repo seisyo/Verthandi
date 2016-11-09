@@ -16,16 +16,32 @@ use DB;
 use Storage;
 use File;
 use Response;
+use Cache;
 
 class DiaryController extends Controller
 {
+    public function __construct() {
+        if(!Cache::has('accountList')){
+            Cache::put('accountList', DB::select('select full_id, name from full_id where cast(concat(parent_id,id) as UNSIGNED) not in (select parent_id from account)'), 60);
+        }
+
+        if(!Cache::has('events')) {
+            Cache::put('events', Event::all(), 60);
+        }
+    }
+
     public function showEventDiary($eventId, $page=1)
     {
         $pageSize = 10;
-        $accountArray = DB::select('select full_id, name from full_id where cast(concat(parent_id,id) as UNSIGNED) not in (select parent_id from account)');
-        return view('event.diary')->with(['eventList' => Event::all(), 
+        $accountArray = Cache::get('accountList');
+
+        if(!Cache::has('tradeList-' . $eventId . '-' . $page)) {
+            Cache::put('tradeList-' . $eventId . '-' . $page, Trade::where('event_id', '=', $eventId)->orderBy('trade_at', 'asc')->skip(($page-1)*$pageSize)->take($pageSize)->get(), 60);
+        }
+        
+        return view('event.diary')->with(['eventList' => Cache::get('events'), 
                                           'eventInfo' => Event::find($eventId), 
-                                          'tradeList' => Trade::where('event_id', '=', $eventId)->orderBy('trade_at', 'asc')->skip(($page-1)*$pageSize)->take($pageSize)->get(), 
+                                          'tradeList' => Cache::get('tradeList-' . $eventId . '-' . $page), 
                                           'accountList' => json_encode($accountArray),
                                           'fileLinkList' => DiaryAttachedFiles::where('event_id', '=', $eventId)->get(),
                                           'totalPageNumber' => ceil(Trade::where('event_id', '=', $eventId)->count() / $pageSize),
@@ -177,7 +193,6 @@ class DiaryController extends Controller
                     $debitAccountId = substr($debitConcatId, strlen($debitConcatId) - 1);
                     $debitAccountParentId = substr($debitConcatId, 0, strlen($debitConcatId) - 1);
 
-                    //dd($debitAccountParentId);
                     Diary::create([
                         'direction' => 1,
                         'amount' => $debit->amount,
@@ -228,6 +243,9 @@ class DiaryController extends Controller
             
         }
         
+        
+        Cache::forget('tradeList-' . $eventId . '-' . $page);
+
         if (is_null($transaction)) {
             Session::flash('toast_message', ['type' => 'success', 'content' => '成功新增交易「' . $request->get('name') . '」']);
             return redirect()->route('event::diary', ['eventId' => $eventId]);

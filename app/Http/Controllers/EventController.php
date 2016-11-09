@@ -14,17 +14,24 @@ use Session;
 use Validator;
 use DB;
 use Storage;
+use Cache;
 
 class EventController extends Controller
 {
+    public function __construct() {
+        if(!Cache::has('events')) {
+            Cache::put('events', Event::all(), 60);
+        }
+    }
+
     public function showEventMain($id)
     {
-        return view('event.main')->with(['eventList' => Event::all(), 'eventInfo' => Event::find($id)]);
+        return view('event.main')->with(['eventList' => Cache::get('events'), 'eventInfo' => Event::find($id)]);
     }
 
     public function showEventManage()
     {
-        return view('event.manage')->with(['eventList' => Event::all()]);
+        return view('event.manage')->with(['eventList' => Cache::get('events')]);
     }
 
     public function addEvent(Request $request)
@@ -45,6 +52,7 @@ class EventController extends Controller
         ]);
 
         if ($result) {
+            Cache::forget('events');
             Session::flash('toast_message', ['type' => 'success', 'content' => '成功新增活動「' . $request->get('name') . '」']);
             return redirect()->route('event::manage::main');
         } else {
@@ -119,6 +127,7 @@ class EventController extends Controller
         });
 
         if (is_null($transaction)) {
+            Cache::forget('events');
             Session::flash('toast_message', ['type' => 'success', 'content' => '成功刪除活動「' . $deleteEventName . '」']);
             return redirect()->route('event::manage::main');
         } else {
@@ -129,7 +138,7 @@ class EventController extends Controller
 
     public function searchAllEvent()
     {
-        return response()->json(Event::all());
+        return response()->json(Cache::get('events'));
     }
 
     public function searchByIdEvent(Request $request)

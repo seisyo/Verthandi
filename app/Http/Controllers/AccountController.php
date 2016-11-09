@@ -10,6 +10,7 @@ use App\Diary;
 use Session;
 use Validator;
 use DB;
+use Cache;
 
 class AccountController extends Controller
 {
@@ -54,6 +55,7 @@ class AccountController extends Controller
             ]);
 
             if ($result) {
+                Cache::forget('accountList');
                 Session::flash('toast_message', ['type' => 'success', 'content' => '成功新增會計科目「' . $request->get('name') . '」']);
                 return redirect()->route('account::main');
             } else {
@@ -91,6 +93,7 @@ class AccountController extends Controller
             ]);
 
             if ($result) {
+                Cache::forget('accountList');
                 Session::flash('toast_message', ['type' => 'success', 'content'=> '成功編輯會計科目「' . $request->get('name') . '」']);
                 return redirect()->route('account::main');
             } else {
@@ -120,6 +123,7 @@ class AccountController extends Controller
                 $result = $query->delete();
                 
                 if ($result) {
+                    Cache::forget('accountList');
                     Session::flash('toast_message', ['type' => 'success', 'content' => '成功刪除會計科目「' . $deleteAccountName . '」']);
                     return redirect()->route('account::main');
                 } else {
