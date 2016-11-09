@@ -57,7 +57,7 @@ Route::group(['middleware' => 'LoginCheck'], function(){
         });
         
         // Diary
-        Route::get('{eventId}/diary',[
+        Route::get('{eventId}/diary/{page?}',[
             'as' => 'diary', 'uses' => 'DiaryController@showEventDiary'
         ]);
         Route::get('diary/file/downloader/{fileName}/', [
