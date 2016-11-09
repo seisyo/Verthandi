@@ -21,12 +21,15 @@ class DiaryController extends Controller
 {
     public function showEventDiary($eventId, $page=1)
     {
+        $pageSize = 10;
         $accountArray = DB::select('select full_id, name from full_id where cast(concat(parent_id,id) as UNSIGNED) not in (select parent_id from account)');
         return view('event.diary')->with(['eventList' => Event::all(), 
                                           'eventInfo' => Event::find($eventId), 
-                                          'tradeList' => Trade::where('event_id', '=', $eventId)->orderBy('trade_at', 'asc')->skip(($page-1)*10)->take(10)->get(), 
+                                          'tradeList' => Trade::where('event_id', '=', $eventId)->orderBy('trade_at', 'asc')->skip(($page-1)*$pageSize)->take($pageSize)->get(), 
                                           'accountList' => json_encode($accountArray),
-                                          'fileLinkList' => DiaryAttachedFiles::where('event_id', '=', $eventId)->get()
+                                          'fileLinkList' => DiaryAttachedFiles::where('event_id', '=', $eventId)->get(),
+                                          'totalPageNumber' => ceil(Trade::where('event_id', '=', $eventId)->count() / $pageSize),
+                                          'currentPageNumber' => $page
                                         ]);
     }
 

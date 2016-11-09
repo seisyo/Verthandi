@@ -216,7 +216,7 @@
                         <div class="row">
                             <div class="col-md-12">
 
-                                <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="8">
+                                <table class="footable table table-stripped toggle-arrow-tiny" data-page="false">
                                     <thead>
                                         <tr>
                                             <th data-toggle="true" class="col-md-2">交易日期</th>
@@ -423,7 +423,23 @@
                                 <tfoot>
                                     <tr>
                                         <td colspan="7">
-                                            <!-- <ul class="pagination pull-right"></ul> -->
+                                            <nav aria-label="Page navigation">
+                                              <ul class="pagination pull-right">
+                                                <li class="{{$currentPageNumber==0?'disabled':''}}">
+                                                  <a href="{{route('event::diary', ['eventId' => $eventInfo->id, 'page'=>$currentPageNumber - 1])}}" aria-label="Previous">
+                                                    <span aria-hidden="true">&laquo;</span>
+                                                  </a>
+                                                </li>
+                                                @for($i = 1; $i <= $totalPageNumber; $i++)
+                                                    <li class="{{$i==$currentPageNumber?'active':''}}"><a href="{{route('event::diary', ['eventId' => $eventInfo->id, 'page'=>$i])}}">{{$i}}</a></li>
+                                                @endfor
+                                                <li class="{{$currentPageNumber==$totalPageNumber?'disabled':''}}">
+                                                  <a href="{{route('event::diary', ['eventId' => $eventInfo->id, 'page'=>$currentPageNumber + 1])}}" aria-label="Next">
+                                                    <span aria-hidden="true">&raquo;</span>
+                                                  </a>
+                                                </li>
+                                              </ul>
+                                            </nav>
                                         </td>
                                     </tr>
                                 </tfoot>
