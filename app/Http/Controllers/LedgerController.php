@@ -58,6 +58,9 @@ class LedgerController extends Controller
             $results = [];
             // catch all trade relate to the account id
             $diarys = Diary::where('account_id', '=', $accountId)->where('account_parent_id', '=', $accountParentId)->get();
+            $diarys = $diarys->sortBy(function($diary) {
+                return $diary->trade->trade_at;
+            });
             $accountDirection = DB::select('select direction from account where id = :account_id and parent_id = :account_parent_id', ['account_id' => $accountId, 'account_parent_id' => $accountParentId])[0]->direction;
             foreach ($diarys as $diary) {
                 // check it's the correct event_id
