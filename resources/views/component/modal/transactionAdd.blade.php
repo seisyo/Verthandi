@@ -77,7 +77,7 @@
                         </script>
                     </div>
                     <div class="form-group col-md-5">
-                        <input type="text" class="form-control amount" placeholder="金額">
+                        <input type="number" class="form-control amount" placeholder="金額">
                     </div>
                     <div class="col-md-1">
                         <button type="button" class="btn btn-outline btn-danger" id="debit_delbtn1">
@@ -115,7 +115,7 @@
                         </script>
                     </div>
                     <div class="form-group col-md-5">
-                        <input type="text" class="form-control amount" placeholder="金額">
+                        <input type="number" class="form-control amount" placeholder="金額">
                     </div>
                     <div class="col-md-1">
                         <button type="button" class="btn btn-outline btn-danger" id="credit_delbtn1">
