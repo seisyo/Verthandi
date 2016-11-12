@@ -36,7 +36,7 @@ class DiaryController extends Controller
         $accountArray = Cache::get('accountList');
 
         if(!Cache::has('tradeList-' . $eventId . '-' . $page)) {
-            Cache::put('tradeList-' . $eventId . '-' . $page, Trade::where('event_id', '=', $eventId)->orderBy('trade_at', 'asc')->skip(($page-1)*$pageSize)->take($pageSize)->get(), 60);
+            Cache::put('tradeList-' . $eventId . '-' . $page, Trade::where('event_id', '=', $eventId)->orderBy('trade_at', 'asc')->skip(($page-1)*$pageSize)->take($pageSize)->get(), 10);
         }
         
         return view('event.diary')->with(['eventList' => Cache::get('events'), 
@@ -171,7 +171,7 @@ class DiaryController extends Controller
         if (!$validatorTotal->messages()->isEmpty()) {
             
             $request->flash();
-            return redirect()->route('event::diary', ['eventId' => $eventId, 'currentPageNumber' => $request->get('current_page')])->with('errors', $validatorTotal->messages());
+            return redirect()->route('event::diary', ['eventId' => $eventId, 'page' => $request->get('current_page')])->with('errors', $validatorTotal->messages());
 
         } else {
 
@@ -244,13 +244,14 @@ class DiaryController extends Controller
             
         }
         
+        Cache::forget('tradeList-' . $eventId . '-' . $request->get('total_page'));
         
         if (is_null($transaction)) {
             Session::flash('toast_message', ['type' => 'success', 'content' => '成功新增交易「' . $request->get('name') . '」']);
-            return redirect()->route('event::diary', ['eventId' => $eventId, 'currentPageNumber' => $request->get('current_page')]);
+            return redirect()->route('event::diary', ['eventId' => $eventId, 'page' => $request->get('total_page')]);
         } else {
             Session::flash('toast_message', ['type' => 'error', 'content' => '新增交易「' . $request->get('name') . '」失敗']);
-            return redirect()->route('event::diary', ['eventId' => $eventId, 'currentPageNumber' => $request->get('current_page')]);
+            return redirect()->route('event::diary', ['eventId' => $eventId, 'page' => $request->get('current_page')]);
         }
     }
 
@@ -376,7 +377,7 @@ class DiaryController extends Controller
 
         if (!$validatorTotal->messages()->isEmpty()) {
 
-            return redirect()->route('event::diary', ['eventId' => $eventId, 'currentPageNumber' => $request->get('current_page') ])->with('errors' . $request->get('trade_id'), $validatorTotal->messages());
+            return redirect()->route('event::diary', ['eventId' => $eventId, 'page' => $request->get('current_page') ])->with('errors' . $request->get('trade_id'), $validatorTotal->messages());
 
         } else {
 
@@ -458,12 +459,14 @@ class DiaryController extends Controller
             });
         }
         
+        Cache::forget('tradeList-' . $eventId . '-' . $request->get('current_page'));
+
         if (is_null($transaction)) {
             Session::flash('toast_message', ['type' => 'success', 'content' => '成功編輯交易「' . $request->get('name') . '」']);
-            return redirect()->route('event::diary', ['eventId' => $eventId, 'currentPageNumber' => $request->get('current_page') ]);
+            return redirect()->route('event::diary', ['eventId' => $eventId, 'page' => $request->get('current_page') ]);
         } else {
             Session::flash('toast_message', ['type' => 'error', 'content' => '編輯交易「' . $request->get('name') . '」失敗']);
-            return redirect()->route('event::diary', ['eventId' => $eventId, 'currentPageNumber' => $request->get('current_page') ]);
+            return redirect()->route('event::diary', ['eventId' => $eventId, 'page' => $request->get('current_page') ]);
         }    
     }
 
@@ -480,7 +483,7 @@ class DiaryController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect()->route('event::diary', ['eventId' => $eventId, 'currentPageNumber' => $request->get('current_page')])->with('errors' . $request->get('trade_id'), $validator->messages());
+            return redirect()->route('event::diary', ['eventId' => $eventId, 'page' => $request->get('current_page')])->with('errors' . $request->get('trade_id'), $validator->messages());
         } else {
 
             // save the trade name
@@ -502,12 +505,14 @@ class DiaryController extends Controller
                 Trade::find($request->get('trade_id'))->delete();
             });
 
+            Cache::forget('tradeList-' . $eventId . '-' . $request->get('current_page'));
+
             if (is_null($transaction)) {
                 Session::flash('toast_message', ['type' => 'success', 'content' => '成功刪除交易「' . $deleteTrade . '」']);
-                return redirect()->route('event::diary', ['eventId' => $eventId, 'currentPageNumber' => $request->get('current_page')]);
+                return redirect()->route('event::diary', ['eventId' => $eventId, 'page' => $request->get('current_page')]);
             } else {
                 Session::flash('toast_message', ['type' => 'error', 'content' => '刪除交易「' . $deleteTrade . '」失敗']);
-                return redirect()->route('event::diary', ['eventId' => $eventId, 'currentPageNumber' => $request->get('current_page')]);
+                return redirect()->route('event::diary', ['eventId' => $eventId, 'page' => $request->get('current_page')]);
             } 
         }
     }

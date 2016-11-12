@@ -158,6 +158,7 @@
                                                 <input type="hidden" id="debit_array" name="debit_array">
                                                 <input type="hidden" id="credit_array" name="credit_array">
                                                 <input type="hidden" name="current_page" value="{{$currentPageNumber}}">
+                                                <input type="hidden" name="total_page" value="{{$totalPageNumber}}">
                                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                             </div>
                                         </div>
