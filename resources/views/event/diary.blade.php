@@ -157,6 +157,7 @@
                                                 @include('component.modal.transactionAdd')
                                                 <input type="hidden" id="debit_array" name="debit_array">
                                                 <input type="hidden" id="credit_array" name="credit_array">
+                                                <input type="hidden" name="current_page" value="{{$currentPageNumber}}">
                                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                             </div>
                                         </div>
@@ -275,6 +276,7 @@
                                                                         @include('component.modal.transactionEdit')
                                                                         <input type="hidden" id="{{'debit_array' . $trade->id}}" name="debit_array">
                                                                         <input type="hidden" id="{{'credit_array' . $trade->id}}" name="credit_array">
+                                                                        <input type="hidden" name="current_page" value="{{$currentPageNumber}}">
                                                                         <input type="hidden" name="trade_id" value="{{$trade->id}}">
                                                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                                                     </div>
@@ -342,6 +344,7 @@
                                                                 
                                                                 <form class="form-horizontal" method="post" action="{{route('event::diary/delete', ['id' => $eventInfo->id])}}">
                                                                     <input type="hidden" name="trade_id" value="{{$trade->id}}">
+                                                                    <input type="hidden" name="current_page" value="{{$currentPageNumber}}">
                                                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                                                     <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
                                                                     <button type="submit" class="btn btn-danger">確定刪除</button>
